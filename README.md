@@ -18,6 +18,31 @@ npm run dev
 
 Open [http://localhost:3001](http://localhost:3001) with your browser to see the landing page.
 
+## Cloudflare Pages Deployment
+
+This project is configured for Cloudflare Pages deployment.
+
+### Setup in Cloudflare Pages Dashboard:
+
+1. Go to Cloudflare Dashboard > Pages
+2. Create a new project
+3. Connect your GitHub repository: `mitchuski/agentprivacy`
+4. Configure build settings:
+   - **Framework preset**: Next.js
+   - **Build command**: `npm run build`
+   - **Build output directory**: `.next` (auto-detected)
+   - **Root directory**: `/` (if deploying from root)
+   - **Node version**: 18 or higher
+
+### Environment Variables:
+No environment variables are required for this project.
+
+### Build Settings:
+- **Build command**: `npm run build`
+- **Node version**: 18+
+
+Cloudflare Pages will automatically detect Next.js and handle the build process.
+
 ## Project Structure
 
 - `src/app/page.tsx` - Main landing page component
@@ -42,4 +67,3 @@ To build for production:
 npm run build
 npm start
 ```
-
