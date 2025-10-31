@@ -44,9 +44,12 @@ export default function RootLayout({
 
         <footer className="bg-background border-t border-surface/50 py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-sm text-text-muted">
+            <div className="text-sm text-text-muted flex flex-col gap-2">
               <a href="https://x.com/privacymage" target="_blank" rel="noopener noreferrer" className="hover:text-text transition-colors">
                 privacymage: x
+              </a>
+              <a href="https://t.me/agentprivacyai" target="_blank" rel="noopener noreferrer" className="hover:text-text transition-colors">
+                agentprivacy-tg
               </a>
             </div>
             <div className="flex flex-col items-center md:items-end gap-2">
