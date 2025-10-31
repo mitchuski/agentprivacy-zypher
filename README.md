@@ -28,11 +28,13 @@ This project is configured for Cloudflare Pages deployment.
 2. Create a new project
 3. Connect your GitHub repository: `mitchuski/agentprivacy`
 4. Configure build settings:
-   - **Framework preset**: Next.js
+   - **Framework preset**: `None` or `Custom` (DO NOT use "Next.js" preset - that's for Next.js runtime)
    - **Build command**: `npm run build`
-   - **Build output directory**: `.next` (auto-detected)
-   - **Root directory**: `/` (if deploying from root)
+   - **Build output directory**: `out` (this is the output for static export)
+   - **Root directory**: `/` (leave blank if deploying from root)
    - **Node version**: 18 or higher
+   
+   ⚠️ **IMPORTANT**: Do NOT select "Next.js" as the framework preset. That preset uses `@cloudflare/next-on-pages` which expects a different output structure. Since we're using `output: 'export'` for static files, we need to use "None" or "Custom" preset and manually set the build command and output directory.
 
 ### Environment Variables:
 No environment variables are required for this project.
