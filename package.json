@@ -6,9 +6,10 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "dev": "next dev -p 3001",
-    "build": "next build",
-    "start": "next start -p 3001",
+    "dev": "next dev -p 5000",
+    "build": "next build && echo Build completed successfully",
+    "postbuild": "node -e \"const fs = require('fs'); const path = require('path'); console.log('Checking for out directory...'); console.log('Current working directory:', process.cwd()); console.log('Directory listing:', fs.readdirSync('.').join(', ')); if (!fs.existsSync('out')) { console.error('ERROR: out directory not found after build'); process.exit(1); } else { console.log('✓ out directory created successfully'); console.log('out directory contents:', fs.readdirSync('out').slice(0, 10).join(', ')); }\"",
+    "start": "next start -p 5000",
     "lint": "next lint"
   },
   "dependencies": {
