@@ -48,10 +48,10 @@ export default function LandingPage() {
             className="text-center"
           >
             <h1 className="text-5xl md:text-6xl font-bold text-text mb-6">
-              AgentPrivacy
+              agentprivacy
             </h1>
             <p className="text-xl md:text-2xl text-text-muted mb-8">
-              Privacy-first personal payment and knowledge infrastructure for AI agents
+              privacy-first personal payment and knowledge for AI agents
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
               {/* Hide Get Started for now */}

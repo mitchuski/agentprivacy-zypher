@@ -9,7 +9,7 @@
     "dev": "next dev -p 5000",
     "build": "next build && echo Build completed successfully",
     "postbuild": "node -e \"const fs = require('fs'); const path = require('path'); console.log('Checking for out directory...'); console.log('Current working directory:', process.cwd()); console.log('Directory listing:', fs.readdirSync('.').join(', ')); if (!fs.existsSync('out')) { console.error('ERROR: out directory not found after build'); process.exit(1); } else { console.log('✓ out directory created successfully'); console.log('out directory contents:', fs.readdirSync('out').slice(0, 10).join(', ')); }\"",
-    "start": "next start -p 5000",
+    "start": "serve out -p 5000",
     "lint": "next lint"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "postcss": "^8.4.40",
+    "serve": "^14.2.5",
     "tailwindcss": "^3.4.7",
     "typescript": "^5"
   }

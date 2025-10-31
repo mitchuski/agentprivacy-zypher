@@ -8,20 +8,25 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "AgentPrivacy.ai - Privacy-First Payment Infrastructure for AI Agents",
-  description: "I'm just another swordsman, privacy is my blade. The blade slashes cookies. The agent keeps no trail. Building the Infrastructure for Private, Sovereign AI Agents.",
+  title: "agentprivacy.ai - just another mage swordsman",
+  description: "agentprivacy - just another mage swordsman",
   keywords: ["privacy", "AI agents", "zero-knowledge", "blockchain", "ERC-8004", "privacy pools", "x402"],
-  authors: [{ name: "AgentPrivacy.ai" }],
+  authors: [{ name: "agentprivacy.ai" }],
+  icons: {
+    icon: '/icon.svg',
+    shortcut: '/icon.svg',
+    apple: '/icon.svg',
+  },
   openGraph: {
-    title: "AgentPrivacy.ai - Privacy-First Payment Infrastructure",
-    description: "The blade slashes cookies. The agent keeps no trail.",
+    title: "agentprivacy.ai - just another mage swordsman",
+    description: "agentprivacy - just another mage swordsman",
     type: "website",
     url: "https://agentprivacy.ai",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AgentPrivacy.ai",
-    description: "Privacy-first personal payment and knowledge infrastructure for AI agents",
+    title: "agentprivacy.ai - just another mage swordsman",
+    description: "agentprivacy - just another mage swordsman",
   },
 };
 
