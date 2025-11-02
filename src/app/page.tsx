@@ -209,7 +209,8 @@ export default function LandingPage() {
             className="text-center mt-12"
           >
             <p className="text-lg text-text-muted max-w-3xl mx-auto">
-              Protecting privacy, collecting value, experience and knowledge along the way, to pool with allies and for mages to cast spells with later.
+              Protecting privacy, collecting value, experience and knowledge along the way. 
+              To pool with allies and for mages to cast spells with later.
             </p>
           </motion.div>
         </div>
