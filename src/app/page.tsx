@@ -20,6 +20,11 @@ export default function LandingPage() {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [ctaCurrentIndex, setCtaCurrentIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [message, setMessage] = useState('');
+  const [githubLink, setGithubLink] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -36,6 +41,36 @@ export default function LandingPage() {
 
     return () => clearInterval(interval);
   }, [ctaCarouselItems.length]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    // Use mailto: link which works immediately without any backend setup
+    const introText = "im just another mage looking to share their spellbook";
+    const fullMessage = `${introText} ${message}`;
+    const subject = encodeURIComponent('Contribution from agentprivacy.ai');
+    const body = encodeURIComponent(
+      `${fullMessage}${githubLink ? `\n\nGitHub Link: ${githubLink}` : ''}`
+    );
+    const mailtoLink = `mailto:mage@agentprivacy.ai?subject=${subject}&body=${body}`;
+    
+    // Open mailto link
+    window.location.href = mailtoLink;
+    
+    // Show success message
+    setSubmitStatus({ type: 'success', message: 'Opening your email client...' });
+    setMessage('');
+    setGithubLink('');
+    
+    setTimeout(() => {
+      setIsModalOpen(false);
+      setSubmitStatus({ type: null, message: '' });
+      setIsSubmitting(false);
+    }, 1500);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
       {/* Hero Section */}
@@ -65,6 +100,14 @@ export default function LandingPage() {
               >
                 Learn More
               </motion.a>
+              <motion.button
+                onClick={() => setIsModalOpen(true)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="btn-primary px-8 py-4 text-lg"
+              >
+                Contribute
+              </motion.button>
             </div>
             
             <motion.div
@@ -110,7 +153,7 @@ export default function LandingPage() {
           >
             <h2 className="text-4xl font-bold text-text mb-4">Features</h2>
             <p className="text-text-muted text-lg">
-              Building the Infrastructure for Private, Sovereign AI Agents
+              protocols, standards and implentations of private sovereign ai agent primitives.
             </p>
           </motion.div>
 
@@ -125,8 +168,7 @@ export default function LandingPage() {
               <div className="text-4xl mb-4">⚔️</div>
               <h3 className="text-xl font-semibold text-text mb-3">Swordsman Agent</h3>
               <p className="text-text-muted">
-                Financial privacy agent specialized in payment processing, privacy pool management, 
-                and autonomous negotiation. Handles x402 protocol integration and private transactions.
+                Privacy-preserving agent focused on slashing cookies, the autonomous negotiation of privacy terms, standards and protocols.
               </p>
             </motion.div>
 
@@ -140,8 +182,7 @@ export default function LandingPage() {
               <div className="text-4xl mb-4">🧙‍♂️</div>
               <h3 className="text-xl font-semibold text-text mb-3">Mage Agent</h3>
               <p className="text-text-muted">
-                Knowledge and data privacy agent for managing decentralized storage, 
-                confidential compute, and ZK credential composition.
+                Knowledge and information privacy agent for managing storage, identity, confidential compute, ZK credential composition.
               </p>
             </motion.div>
 
@@ -155,8 +196,7 @@ export default function LandingPage() {
               <div className="text-4xl mb-4">🤝</div>
               <h3 className="text-xl font-semibold text-text mb-3">MyTerms</h3>
               <p className="text-text-muted">
-                Cookie slashing and privacy negotiation with earnings routed to privacy pools. 
-                Maintain sovereignty over your data.
+                Cookie slashing and privacy negotiation. Maintain sovereignty over your data.
               </p>
             </motion.div>
           </div>
@@ -177,8 +217,7 @@ export default function LandingPage() {
               <div className="text-5xl mb-4">🕸️</div>
               <h2 className="text-3xl font-bold text-text mb-4">Privacy Pools</h2>
               <p className="text-lg text-text-muted max-w-3xl mx-auto">
-                Privacy pools powered by ERC-8004, x402 protocol, and verifiable relationship credentials (VRCs). 
-                The blade slashes cookies. The agent keeps no trail.
+                The blade slashes cookies. The swordsman keeps no trail. Collecting value, experience and knowledge along the way, to pool with allies later.
               </p>
             </div>
 
@@ -220,9 +259,6 @@ export default function LandingPage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold text-text mb-4">0xagentprivacy</h2>
-            <p className="text-text-muted text-lg max-w-4xl mx-auto">
-              A unified infrastructure for privacy-preserving agent payments and information sharing combining smart contracts, facilitator servers, agent SDKs, zero-knowledge circuits, and MyTerms integration.
-            </p>
           </motion.div>
 
           <div className="space-y-8">
@@ -240,14 +276,14 @@ export default function LandingPage() {
                   <div className="text-2xl">📜</div>
                   <div>
                     <p className="font-semibold text-text mb-1">Smart Contracts</p>
-                    <p className="text-sm text-text-muted">Identity, Association Sets, Privacy Pools, Intel Pools</p>
+                    <p className="text-sm text-text-muted">Identity, Association Sets, Privacy Pools, Intel Pools, x402, EIP8004</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-4 bg-surface/50 rounded-lg border border-surface/50 hover:border-primary/30 transition-colors">
                   <div className="text-2xl">🖥️</div>
                   <div>
                     <p className="font-semibold text-text mb-1">Facilitator Server</p>
-                    <p className="text-sm text-text-muted">x402 payment facilitator</p>
+                    <p className="text-sm text-text-muted">Server User-Agents</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-4 bg-surface/50 rounded-lg border border-surface/50 hover:border-primary/30 transition-colors">
@@ -380,6 +416,99 @@ export default function LandingPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* Contribute Modal */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsModalOpen(false)}
+              className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+            >
+              {/* Modal */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                onClick={(e) => e.stopPropagation()}
+                className="card bg-surface border-surface/50 max-w-lg w-full max-h-[90vh] overflow-y-auto"
+              >
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-2xl font-bold text-text">Share Your Spellbook</h2>
+                  <button
+                    onClick={() => setIsModalOpen(false)}
+                    className="text-text-muted hover:text-text text-2xl leading-none"
+                  >
+                    ×
+                  </button>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-medium text-text-muted mb-2">
+                      im just another mage looking to share their spellbook
+                    </label>
+                    <textarea
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder="...finish your thought here"
+                      required
+                      rows={4}
+                      className="w-full px-4 py-3 bg-background border border-surface/50 rounded-lg text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-text-muted mb-2">
+                      GitHub Link (optional)
+                    </label>
+                    <input
+                      type="url"
+                      value={githubLink}
+                      onChange={(e) => setGithubLink(e.target.value)}
+                      placeholder="https://github.com/..."
+                      className="w-full px-4 py-3 bg-background border border-surface/50 rounded-lg text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    />
+                  </div>
+
+                  {submitStatus.type && (
+                    <div
+                      className={`p-3 rounded-lg ${
+                        submitStatus.type === 'success'
+                          ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                          : 'bg-red-500/20 text-red-400 border border-red-500/30'
+                      }`}
+                    >
+                      {submitStatus.message}
+                    </div>
+                  )}
+
+                  <div className="flex gap-4">
+                    <button
+                      type="button"
+                      onClick={() => setIsModalOpen(false)}
+                      className="flex-1 btn-secondary py-3"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting || !message.trim()}
+                      className="flex-1 btn-primary py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? 'Sending...' : 'Send'}
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

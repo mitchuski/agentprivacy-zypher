@@ -51,6 +51,9 @@ export default function RootLayout({
               <a href="https://t.me/agentprivacyai" target="_blank" rel="noopener noreferrer" className="hover:text-text transition-colors">
                 agentprivacy-tg
               </a>
+              <div className="text-sm text-text-muted">
+                © 2025 agentprivacy just another ⚔️ 🧙‍♂️ 🤖 😊
+              </div>
             </div>
             <div className="flex flex-col items-center md:items-end gap-2">
               <a href="https://sync.soulbis.com/" target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-text transition-colors">
