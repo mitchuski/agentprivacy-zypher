@@ -153,7 +153,7 @@ export default function LandingPage() {
           >
             <h2 className="text-4xl font-bold text-text mb-4">Features</h2>
             <p className="text-text-muted text-lg">
-              protocols, standards and implentations of private sovereign ai agent primitives.
+              protocols, standards, apps and primitives of private sovereign AI agents.
             </p>
           </motion.div>
 
