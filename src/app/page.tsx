@@ -217,7 +217,7 @@ export default function LandingPage() {
               <div className="text-5xl mb-4">🕸️</div>
               <h2 className="text-3xl font-bold text-text mb-4">Privacy Pools</h2>
               <p className="text-lg text-text-muted max-w-3xl mx-auto">
-                The blade slashes cookies. The swordsman keeps no trail. Collecting value, experience and knowledge along the way, to pool with allies later.
+              The blade slashes cookies. The swordsman keeps no trail. Collecting value, experience and knowledge along the way, to pool with allies and for mages to cast spells with later.
               </p>
             </div>
 
