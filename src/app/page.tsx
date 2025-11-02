@@ -153,7 +153,7 @@ export default function LandingPage() {
           >
             <h2 className="text-4xl font-bold text-text mb-4">features</h2>
             <p className="text-text-muted text-lg">
-              protocols, standards, apps and primitives of private sovereign AI agents.
+            cypherpunk systems, protocols, standards, apps and primitives for private sovereign AI agents.
             </p>
           </motion.div>
 
@@ -208,9 +208,14 @@ export default function LandingPage() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-center mt-12"
           >
-            <p className="text-lg text-text-muted max-w-3xl mx-auto">
-              Protecting privacy, collecting value, experience and knowledge along the way. 
-              Loot will pool with allies and for mages to cast spells with later.
+            <p className="text-lg text-text-muted max-w-3xl mx-auto text-center">
+              ⚔️ Protecting privacy, collecting value, experience and knowledge along the way.
+              <br />
+              <br />
+              🧙‍♂️ Share loot and knowledge in privacy pools with allies.
+              <br />
+              <br />
+              🤝 Use the results to cast more powerful spells or buy more powerful gear.
             </p>
           </motion.div>
         </div>
