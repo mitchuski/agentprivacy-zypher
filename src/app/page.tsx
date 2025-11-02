@@ -141,7 +141,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* features Section */}
       <section id="features" className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -200,6 +200,18 @@ export default function LandingPage() {
               </p>
             </motion.div>
           </div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-center mt-12"
+          >
+            <p className="text-lg text-text-muted max-w-3xl mx-auto">
+              Protecting privacy, collecting value, experience and knowledge along the way, to pool with allies and for mages to cast spells with later.
+            </p>
+          </motion.div>
         </div>
       </section>
 
@@ -331,9 +343,9 @@ export default function LandingPage() {
             >
               <div className="text-center mb-8">
                 <div className="text-5xl mb-4">🕸️</div>
-                <h2 className="text-3xl font-bold text-text mb-4">start just another adventure</h2>
+                <h2 className="text-3xl font-bold text-text mb-4">just another adventure</h2>
                 <p className="text-lg text-text-muted max-w-3xl mx-auto">
-                The blade slashes cookies. The swordsman keeps no trail. Collecting value, experience and knowledge along the way, to pool with allies and for mages to cast spells with later.
+                The blade slashes cookies. The swordsman keeps no trail. the mage builds a spellbook.
                 </p>
               </div>
 
@@ -376,7 +388,7 @@ export default function LandingPage() {
             className="card bg-gradient-to-r from-primary/20 to-secondary/20 border-primary/30 text-center"
           >
             <h2 className="text-3xl font-bold text-text mb-4">
-              Ready to Get Started?
+            join us?
             </h2>
             <div className="mb-8">
               <p className="text-text-muted mb-4 text-lg">
