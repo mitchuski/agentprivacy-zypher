@@ -134,14 +134,14 @@ export default function LandingPage() {
                 </AnimatePresence>
               </div>
               <p className="text-primary font-medium pt-4 text-xl md:text-2xl">
-                And so are you. 🤝
+                and so are you. 🤝
               </p>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* features Section */}
+      {/* Features Section */}
       <section id="features" className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -151,7 +151,7 @@ export default function LandingPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-text mb-4">Features</h2>
+            <h2 className="text-4xl font-bold text-text mb-4">features</h2>
             <p className="text-text-muted text-lg">
               protocols, standards, apps and primitives of private sovereign AI agents.
             </p>
@@ -210,7 +210,7 @@ export default function LandingPage() {
           >
             <p className="text-lg text-text-muted max-w-3xl mx-auto">
               Protecting privacy, collecting value, experience and knowledge along the way. 
-              To pool with allies and for mages to cast spells with later.
+              Loot will pool with allies and for mages to cast spells with later.
             </p>
           </motion.div>
         </div>
