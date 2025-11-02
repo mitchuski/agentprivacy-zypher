@@ -203,51 +203,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Privacy Pools Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-surface/20">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="card bg-primary/10 border-primary/30"
-          >
-            <div className="text-center mb-8">
-              <div className="text-5xl mb-4">🕸️</div>
-              <h2 className="text-3xl font-bold text-text mb-4">Privacy Pools</h2>
-              <p className="text-lg text-text-muted max-w-3xl mx-auto">
-              The blade slashes cookies. The swordsman keeps no trail. Collecting value, experience and knowledge along the way, to pool with allies and for mages to cast spells with later.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-              <div className="card bg-surface/50">
-                <div className="text-2xl mb-2">💰</div>
-                <h4 className="font-semibold text-text mb-2">Privacy Pools</h4>
-                <p className="text-sm text-text-muted">
-                  Private transactions with zero-knowledge proofs
-                </p>
-              </div>
-              <div className="card bg-surface/50">
-                <div className="text-2xl mb-2">🧠</div>
-                <h4 className="font-semibold text-text mb-2">Intel Pools</h4>
-                <p className="text-sm text-text-muted">
-                  Knowledge sharing with privacy guarantees
-                </p>
-              </div>
-              <div className="card bg-surface/50">
-                <div className="text-2xl mb-2">📊</div>
-                <h4 className="font-semibold text-text mb-2">Data Pools</h4>
-                <p className="text-sm text-text-muted">
-                  Decentralized data storage and access
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* How It Works Section */}
       <section id="how-it-works" className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
@@ -362,6 +317,47 @@ export default function LandingPage() {
                   <div>
                     <p className="font-semibold text-text mb-1">Compliance through association sets</p>
                   </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Privacy Pools Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="card bg-primary/10 border-primary/30 mt-8"
+            >
+              <div className="text-center mb-8">
+                <div className="text-5xl mb-4">🕸️</div>
+                <h2 className="text-3xl font-bold text-text mb-4">start just another adventure</h2>
+                <p className="text-lg text-text-muted max-w-3xl mx-auto">
+                The blade slashes cookies. The swordsman keeps no trail. Collecting value, experience and knowledge along the way, to pool with allies and for mages to cast spells with later.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+                <div className="card bg-surface/50">
+                  <div className="text-2xl mb-2">💰</div>
+                  <h4 className="font-semibold text-text mb-2">Privacy Pools</h4>
+                  <p className="text-sm text-text-muted">
+                    Private transactions with zero-knowledge proofs
+                  </p>
+                </div>
+                <div className="card bg-surface/50">
+                  <div className="text-2xl mb-2">🧠</div>
+                  <h4 className="font-semibold text-text mb-2">Intel Pools</h4>
+                  <p className="text-sm text-text-muted">
+                    Knowledge sharing with privacy guarantees
+                  </p>
+                </div>
+                <div className="card bg-surface/50">
+                  <div className="text-2xl mb-2">📊</div>
+                  <h4 className="font-semibold text-text mb-2">Data Pools</h4>
+                  <p className="text-sm text-text-muted">
+                    Decentralized data storage and access
+                  </p>
                 </div>
               </div>
             </motion.div>
