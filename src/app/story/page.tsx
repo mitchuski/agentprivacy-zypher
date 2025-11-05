@@ -254,7 +254,7 @@ export default function StoryPage() {
           </div>
 
           {/* Content Area */}
-          <div className="card bg-surface border-surface/50 min-h-[400px] relative">
+          <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeAct}
@@ -315,13 +315,13 @@ export default function StoryPage() {
                 
                 {/* Footer for all acts */}
                 {activeAct >= 1 && activeAct <= 9 && markdownContent && (
-                  <div className="mt-8 pt-6 border-t border-surface/50">
+                  <div className="mt-8 pt-6 border-t border-surface/50 mb-20 sm:mb-0">
                     <button
                       onClick={copyProverb}
-                      className="inline-flex items-start gap-4 px-4 py-2 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 group text-left max-w-[calc(100%-220px)]"
+                      className="w-full sm:w-auto inline-flex flex-col sm:flex-row items-start gap-2 sm:gap-4 px-4 py-2 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 group text-left"
                       title="Copy proverb"
                     >
-                      <div className="text-primary font-semibold text-sm min-w-[90px]">
+                      <div className="text-primary font-semibold text-sm sm:min-w-[90px]">
                         {copiedProverb ? (
                           <motion.span
                             initial={{ scale: 0 }}
@@ -336,7 +336,7 @@ export default function StoryPage() {
                           </span>
                         )}
                       </div>
-                      <div className="text-text-muted italic text-sm flex-1">
+                      <div className="text-text-muted italic text-sm flex-1 break-words">
                         {getProverb(activeAct)}
                       </div>
                     </button>
@@ -346,11 +346,11 @@ export default function StoryPage() {
             </AnimatePresence>
             
             {/* Previous, Copy and Next Buttons */}
-            <div className="absolute bottom-4 right-4 flex items-center gap-2">
+            <div className="absolute bottom-4 right-2 sm:right-4 flex items-center gap-1 sm:gap-2 justify-end flex-wrap-reverse" style={{ maxWidth: 'calc(100% - 0.5rem)' }}>
               {hasPrevious && (
                 <button
                   onClick={goToPrevious}
-                  className="px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all duration-200 text-primary hover:text-primary/80"
+                  className="px-2 sm:px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all duration-200 text-primary hover:text-primary/80 flex-shrink-0"
                   title="Previous act/page"
                 >
                   <svg
@@ -368,19 +368,19 @@ export default function StoryPage() {
               {markdownContent && (
                 <button
                   onClick={copyToClipboard}
-                  className="px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all duration-200 group"
+                  className="px-2 sm:px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
                   title="Copy story text"
                 >
                   {copied ? (
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      className="text-primary text-sm font-medium"
+                      className="text-primary text-xs sm:text-sm font-medium"
                     >
                       cast
                     </motion.div>
                   ) : (
-                    <span className="text-primary text-sm font-medium group-hover:text-primary/80 transition-colors">
+                    <span className="text-primary text-xs sm:text-sm font-medium group-hover:text-primary/80 transition-colors">
                       learn 🧙‍♂️
                     </span>
                   )}
@@ -389,7 +389,7 @@ export default function StoryPage() {
               {hasNext && (
                 <button
                   onClick={goToNext}
-                  className="px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all duration-200 text-primary hover:text-primary/80"
+                  className="px-2 sm:px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all duration-200 text-primary hover:text-primary/80 flex-shrink-0"
                   title="Next act/page"
                 >
                   <svg
