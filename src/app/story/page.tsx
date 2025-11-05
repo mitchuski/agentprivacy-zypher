@@ -139,6 +139,7 @@ export default function StoryPage() {
 
   const getProverb = (act: number): string => {
     const proverbs: { [key: number]: string } = {
+      0: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
       1: "The swordsman who never strikes guards nothing; the mage who never casts commands nothing.",
       2: "What the swordsman executes, the mage authorised; what the mage composes, the swordsman proves capable; what both accomplish, the spellbook verifies.",
       3: "the swordsman alone rages, mage alone dreams, action alone blinds—sovereignty demands all three to intertwine.",
@@ -148,6 +149,7 @@ export default function StoryPage() {
       7: "One mirror observing both swordsman and mage collapses dignity into surveillance; two mirrors, each watching the other, preserve dignity through mutual witness.",
       8: "When one holds the sword, the vault, and the pen, corruption conceals itself—divide these across swordsman and mage, and betrayal becomes impossible to hide.",
       9: "just another swordsman slashes, just another mage casts, vaults unlock, shields conceal, spellbooks confirm truth. Privacy is the natural state.",
+      10: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
     };
     return proverbs[act] || "";
   };
@@ -314,8 +316,8 @@ export default function StoryPage() {
                 </div>
                 
                 {/* Footer for all acts */}
-                {activeAct >= 1 && activeAct <= 9 && markdownContent && (
-                  <div className="mt-8 pt-6 border-t border-surface/50 mb-20 sm:mb-0">
+                {(activeAct === 0 || (activeAct >= 1 && activeAct <= 9) || activeAct === 10) && markdownContent && (
+                  <div className="mt-8 pt-6 border-t border-surface/50 mb-20 sm:mb-0 pr-28 sm:pr-36 md:pr-44 lg:pr-52">
                     <button
                       onClick={copyProverb}
                       className="w-full sm:w-auto inline-flex flex-col sm:flex-row items-start gap-2 sm:gap-4 px-4 py-2 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 group text-left"
@@ -336,7 +338,7 @@ export default function StoryPage() {
                           </span>
                         )}
                       </div>
-                      <div className="text-text-muted italic text-sm flex-1 break-words">
+                      <div className="text-text-muted italic text-sm flex-1 break-words max-w-full sm:max-w-none">
                         {getProverb(activeAct)}
                       </div>
                     </button>
