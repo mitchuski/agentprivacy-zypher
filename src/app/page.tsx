@@ -112,9 +112,7 @@ export default function LandingPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
               {/* Hide Get Started for now */}
               <motion.a
-                href="https://sync.soulbis.com/s/privacy-is-value"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/story"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-secondary px-8 py-4 text-lg"
@@ -438,9 +436,7 @@ export default function LandingPage() {
             </div>
             <div className="flex justify-center">
               <motion.a
-                href="https://sync.soulbis.com/s/privacy-is-value"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/story"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-secondary px-8 py-4 text-lg"
