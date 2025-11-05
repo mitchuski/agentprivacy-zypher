@@ -55,14 +55,11 @@ export default function RootLayout({
               </div>
             </div>
             <div className="flex flex-col items-center md:items-end gap-2">
-              <a href="https://app.towns.com/t/0x9a2911db70f60d9253119e6061549ef069902409/" target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-text transition-colors">
-                agentprivacy town
+              <a href="https://x.com/privacymage" target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-text transition-colors">
+                privacymage: x
               </a>
               <a href="https://t.me/agentprivacyai" target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-text transition-colors">
                 agentprivacy-tg
-              </a>
-              <a href="https://x.com/privacymage" target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-text transition-colors">
-                privacymage: x
               </a>
               <a href="https://sync.soulbis.com/" target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-text transition-colors">
                 soulbis research
