@@ -48,5 +48,13 @@
   .btn-secondary {
     @apply bg-surface hover:bg-surface/80 text-text border border-surface/50 px-4 py-2 rounded-lg font-medium transition-colors;
   }
+
+  .spellbook-cast {
+    @apply text-text-muted/40 font-normal;
+  }
+
+  .spellbook-cast-bracket {
+    @apply text-text-muted/25;
+  }
 }
 

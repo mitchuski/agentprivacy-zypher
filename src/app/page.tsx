@@ -73,6 +73,27 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
+      {/* Navigation Header */}
+      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center gap-8">
+              <a href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
+                agentprivacy
+              </a>
+              <div className="flex items-center gap-6">
+                <a
+                  href="/story"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  Story
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
       {/* Hero Section */}
       <section className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
@@ -351,7 +372,7 @@ export default function LandingPage() {
                 <div className="text-5xl mb-4">🕸️</div>
                 <h2 className="text-3xl font-bold text-text mb-4">just another adventure</h2>
                 <p className="text-lg text-text-muted max-w-3xl mx-auto">
-                The blade slashes cookies. The swordsman keeps no trail. the mage builds a spellbook.
+                The blade slashes cookies. The swordsman keeps no trail. The mage builds a spellbook.
                 </p>
               </div>
 

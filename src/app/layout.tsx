@@ -13,9 +13,9 @@ export const metadata: Metadata = {
   keywords: ["privacy", "AI agents", "zero-knowledge", "blockchain", "ERC-8004", "privacy pools", "x402"],
   authors: [{ name: "agentprivacy.ai" }],
   icons: {
-    icon: '/icon.svg',
-    shortcut: '/icon.svg',
-    apple: '/icon.svg',
+    icon: '/icon.png',
+    shortcut: '/icon.png',
+    apple: '/icon.png',
   },
   openGraph: {
     title: "agentprivacy.ai - just another mage swordsman",
@@ -44,18 +44,23 @@ export default function RootLayout({
 
         <footer className="bg-background border-t border-surface/50 py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-sm text-text-muted flex flex-col gap-2">
-              <a href="https://app.towns.com/t/0x9a2911db70f60d9253119e6061549ef069902409/" target="_blank" rel="noopener noreferrer" className="hover:text-text transition-colors">
-                agentprivacy town
-              </a>
-              <a href="https://t.me/agentprivacyai" target="_blank" rel="noopener noreferrer" className="hover:text-text transition-colors">
-                agentprivacy-tg
-              </a>
+            <div className="flex items-center gap-3">
+              <img 
+                src="/assets/agentprivacyai.logo.png" 
+                alt="agentprivacy" 
+                className="h-12 w-auto"
+              />
               <div className="text-sm text-text-muted">
                 © 2025 agentprivacy just another ⚔️ 🧙‍♂️ 🤖 😊
               </div>
             </div>
             <div className="flex flex-col items-center md:items-end gap-2">
+              <a href="https://app.towns.com/t/0x9a2911db70f60d9253119e6061549ef069902409/" target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-text transition-colors">
+                agentprivacy town
+              </a>
+              <a href="https://t.me/agentprivacyai" target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-text transition-colors">
+                agentprivacy-tg
+              </a>
               <a href="https://x.com/privacymage" target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-text transition-colors">
                 privacymage: x
               </a>
