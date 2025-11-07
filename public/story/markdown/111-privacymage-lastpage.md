@@ -8,7 +8,7 @@ But more importantly, I told you this was about understanding **sovereignty's fo
 
 **The Spell (Mage)**—**delegation as projection**, the power to extend agency across distance, the projective art that says "I control what acts in my name."
 
-**The Shield (Zcash)**—**privacy through mathematics**, the power of cryptographic certainty, the absolute art that says "I control the visibility of my capital."
+**The Shield (Cryptography)**—**privacy through mathematics**, the power of cryptographic certainty, the absolute art that says "I control the visibility of my capital."
 
 **The Story (Soulbae)**—**verification through narration**, the power to make invisible operations visible, the transparency art that says "I verify what you actually do through stories I can read and cryptography can prove."
 
@@ -74,7 +74,7 @@ The blade slashes surveillance focus. The spell weaves aligned focus. The shield
 
 This is the pattern. This is the way.
 
-🗡️ → 🍪💥 → 📖 → 🛡️ → 🐉 → 🛡️⚡ → 💎 → 📚
+🗡️ → 🍪💥 → 📖 → 🛡️ → 🐉 → 🛡️⚡ → 💎 → 📚🧙‍♂️ → 🧬 → △
 
 ---
 

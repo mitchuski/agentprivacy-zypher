@@ -17,6 +17,7 @@ const getActVideo = (act: number): string | null => {
     7: '/assets/magesplitmirror.mp4', // Act VII: The Mirror That Never Completes - mage split mirror
     8: '/assets/soulbaediscoverswhyihastobe2.mp4', // Act VIII: Ancient Rule - soulbae discovers why it has to be two
     9: '/assets/soulbaecaptures7thcapital.mp4', // Act IX: Zcash Shield - soulbae captures 7th capital
+    10: '/assets/mageswordmeetsravenact10.mp4', // Act X: Topology of Revelation - mage sword meets raven
   };
   return videoMap[act] || null;
 };
@@ -62,7 +63,8 @@ const getActFilename = (act: number): string => {
     7: 'privacymage-theantimirror',
     8: 'viii-ancient-rule',
     9: 'ix-zcash-shield',
-    10: 'privacymage-lastpage',
+    10: 'topology-of-revelation',
+    11: 'privacymage-lastpage',
   };
   return filenames[act] || '';
 };
@@ -75,17 +77,22 @@ export default function StoryPage() {
   const [copied, setCopied] = useState(false);
   const [copiedProverb, setCopiedProverb] = useState(false);
 
-  const acts = [0, ...Array.from({ length: 10 }, (_, i) => i + 1)]; // 0 = first page, 1-9 = Acts, 10 = last page
+  const acts = [0, ...Array.from({ length: 11 }, (_, i) => i + 1)]; // 0 = first page, 1-10 = Acts, 11 = last page
 
   useEffect(() => {
     const loadMarkdown = async () => {
       setIsLoading(true);
       try {
-        // Load markdown for first page (0), acts (1-9), or last page (10)
-        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 9) || activeAct === 10) {
-          const filename = activeAct === 0 || activeAct === 7 || activeAct === 10 
-            ? `${String(activeAct).padStart(2, '0')}-${getActFilename(activeAct)}.md`
-            : `0${activeAct}-act-${getActFilename(activeAct)}.md`;
+        // Load markdown for first page (0), acts (1-10), or last page (11)
+        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 10) || activeAct === 11) {
+          let filename: string;
+          if (activeAct === 11) {
+            filename = '111-privacymage-lastpage.md';
+          } else if (activeAct === 0 || activeAct === 7 || activeAct === 10) {
+            filename = `${String(activeAct).padStart(2, '0')}-${getActFilename(activeAct)}.md`;
+          } else {
+            filename = `0${activeAct}-act-${getActFilename(activeAct)}.md`;
+          }
           
           const url = `/story/markdown/${filename}`;
           console.log(`Loading markdown for act ${activeAct}: ${url}`);
@@ -149,7 +156,8 @@ export default function StoryPage() {
       7: "One mirror observing both swordsman and mage collapses dignity into surveillance; two mirrors, each watching the other, preserve dignity through mutual witness.",
       8: "When one holds the sword, the vault, and the pen, corruption conceals itself—divide these across swordsman and mage, and betrayal becomes impossible to hide.",
       9: "just another swordsman slashes, just another mage casts, vaults unlock, shields conceal, spellbooks confirm truth. Privacy is the natural state.",
-      10: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
+      10: "The ravens fly 🐦‍⬛. The tree dreams 🌳. The All-Father wakes △.",
+      11: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
     };
     return proverbs[act] || "";
   };
@@ -224,7 +232,7 @@ export default function StoryPage() {
               {acts.map((act) => {
                 const getTabLabel = (actNum: number) => {
                   if (actNum === 0) return 'first page';
-                  if (actNum === 10) return 'last page';
+                  if (actNum === 11) return 'last page';
                   return `Act ${actNum}`;
                 };
                 
@@ -265,7 +273,7 @@ export default function StoryPage() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                {activeAct !== 0 && activeAct !== 10 && (
+                {activeAct !== 0 && activeAct !== 11 && (
                   <>
                     <div className="mb-6">
                       <h2 className="text-2xl font-bold text-text mb-2">Act {activeAct}</h2>
@@ -316,7 +324,7 @@ export default function StoryPage() {
                 </div>
                 
                 {/* Footer for all acts */}
-                {(activeAct === 0 || (activeAct >= 1 && activeAct <= 9) || activeAct === 10) && markdownContent && (
+                {(activeAct === 0 || (activeAct >= 1 && activeAct <= 10) || activeAct === 11) && markdownContent && (
                   <div className="mt-8 pt-6 border-t border-surface/50 mb-20 sm:mb-0 pr-28 sm:pr-36 md:pr-44 lg:pr-52">
                     <button
                       onClick={copyProverb}
