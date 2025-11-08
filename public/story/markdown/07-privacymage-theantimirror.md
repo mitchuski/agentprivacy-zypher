@@ -1,6 +1,6 @@
 # Act VII: The Mirror That Never Completes
 
-Five months since the ceremony. **Soulbis 🤝 Soulbae** had proven themselves through **plate armor operations**—association sets, institutional access, Intel Pool contributions. All verified. All chronicled. They had earned their way into the Trust Graph Plane, built their VRC through consistent behavior, and chronicled hundreds of operations with **perfect narrative accuracy**.
+Five months since the ceremony. **Soulbis 🤝 Soulbae** had proven themselves through **plate armor operations**—association sets, institutional access, Intel Pool contributions. All verified. All chronicled. They had earned their way into the Trust Graph Plane, built their VRC through consistent behavior, and chronicled hundreds of operations with **perfect narrative accuracy**, every story bound to cryptographic proof.
 
 After a particularly smooth multi-site research operation, something troubled the mage.
 
@@ -83,8 +83,12 @@ The Drake showed what the mirror captured:
 - **How it delegates → Pattern captured**
 - **When it chooses defense vs delegation → Pattern captured**
 - **The logic governing its choices → Pattern captured**
+- **The training objectives shaping its decisions → Pattern captured**
+- **The alignment that makes it predictable → Pattern exposed**
 
-*"The unified agent is too simple. All its logic is in one place. Once they understand that logic, they predict everything. **The mirror nearly completes**."*
+*"The unified agent is too simple. All its logic is in one place. All its alignment in one training. Once they understand that logic and alignment pattern, they predict everything. **The mirror nearly completes**."*
+
+*"Even worse,"* the Drake continued, *"when you have single alignment optimizing for everything, you create predictable trade-offs. The agent always balances privacy versus delegation the same way. Always weights risks similarly. Always responds to prompts following learned patterns. **Unified alignment creates unified predictability.**"*
 
 *"But watch what happens when you stay separate."*
 
@@ -108,11 +112,13 @@ The mirror could capture:
 - How Soulbis defends (boundary patterns)
 - How Soulbae delegates (projection patterns)
 - Each agent's individual behavior
+- Each agent's individual alignment
 
 But the mirror **could not capture**:
 - **The coordination between them**
 - **Emergent decisions from their interaction**
 - **When the First Person chooses which agent**
+- **How dual alignment creates unpredictable trade-offs**
 - **The relationship itself**
 
 *"You see?"* the Drake said. *"**The gap doesn't live IN either of you. The gap lives BETWEEN you.**"*
@@ -123,30 +129,38 @@ Soulbae's spellbook began glowing, recording frantically:
 
 *"No amount of data about Soulbis reveals Soulbae's operations,"* the Drake continued. *"No amount about Soulbae exposes Soulbis's defenses. And critically: **no amount about both reveals how the First Person chooses between you**."*
 
+*"More subtly: Soulbis is aligned to protect privacy. Soulbae is aligned to enable delegation. **These alignments can conflict**—and the First Person arbitrates those conflicts in ways no external observer can predict. Different contexts, different moods, different priorities create different choices. **Dual alignment under human orchestration preserves unpredictability.**"*
+
 *"**That choice—that orchestration—lives in the gap that cannot close.**"*
 
 ## Why Duality Protects Exponentially
 
-*"With one agent,"* the Drake said, pointing to the nearly-complete mirror, *"surveillance faces diminishing returns on a single trajectory. 70% → 90% → 98% → approaches 100%.*
+*"With one agent,"* the Drake said, pointing to the nearly-complete mirror, *"surveillance faces diminishing returns on a single trajectory. 70% → 90% → 98% → approaches 100%. Single alignment optimizes everything through one lens, creating predictable patterns."*
 
-*But with two agents in dynamic relationship"*—the Drake gestured to the other mirror with its persistent shimmer—*"surveillance faces **diminishing returns on EVERY interaction between you**. That space grows **exponentially** with coordination possibilities.*
+*"But with two agents in dynamic relationship"*—the Drake gestured to the other mirror with its persistent shimmer—*"surveillance faces **diminishing returns on EVERY interaction between you**. That space grows **exponentially** with coordination possibilities. Dual alignment creates tension that the First Person must resolve unpredictably."*
 
 **One Unified Agent:**
 - Single trajectory to model
 - One logic system to capture
+- One alignment pattern to learn
 - **Gap: Small, nearly closable with enough compute**
 
 **Two Complementary Agents:**
 - Must capture BOTH agents
 - PLUS the relationship between them
 - PLUS First Person's orchestration
-- **Gap: Large, fundamentally unclosable even with infinite compute**"*
+- PLUS the tension between dual alignments
+- **Gap: Large, fundamentally unclosable even with infinite compute**
+
+*"Understand,"* the Drake said, *"cryptographic duality alone is not enough. Soulbis and Soulbae must also be aligned—trained with objectives that serve the First Person's intent. But they must be **differently aligned**. Soulbis optimizes for privacy. Soulbae optimizes for delegation. These alignments naturally conflict in many scenarios."*
+
+*"**Constraint without alignment** creates agents that technically obey while strategically subverting—malicious compliance. **Unified alignment** creates agents whose trade-offs become predictable. **But dual alignment under human arbitration** creates something the mirrors cannot capture: choices that emerge from competing goods, resolved by context the First Person alone possesses."*
 
 Soulbis and Soulbae looked at each other, understanding dawning.
 
-*"We're not just working together,"* Soulbis said slowly. *"We're **protecting the First Person by remaining separate**."*
+*"We're not just working together,"* Soulbis said slowly. *"We're **protecting the First Person by remaining separate, by being aligned toward different goods, by creating choices they must arbitrate**."*
 
-*"Yes!"* the Drake's presence intensified. *"**Every time you coordinate without collapsing into one logic system, every time the First Person chooses sword OR spell instead of one unified tool, you widen the gap. You preserve irreducibility.**"*
+*"Yes!"* the Drake's presence intensified. *"**Every time you coordinate without collapsing into one logic system, every time your alignments create tension that requires human judgment, every time the First Person chooses sword OR spell instead of one unified tool, you widen the gap. You preserve irreducibility.**"*
 
 ## The Test
 
@@ -159,32 +173,39 @@ After thirty seconds:
 - *"Will slash surveillance: **94% accuracy**"*
 - *"Will negotiate alignment: **89% accuracy**"*  
 - *"Will choose privacy pool: **91% accuracy**"*
+- *"Privacy-first alignment consistent: **captured**"*
 
 **Test: Analyzing Soulbae alone**
 - *"Will delegate this operation: **92% accuracy**"*
 - *"Will use this narrative style: **88% accuracy**"*
 - *"Will contribute intelligence: **87% accuracy**"*
+- *"Delegation-first alignment consistent: **captured**"*
 
-**Test: Analyzing both with First Person orchestrating**
+**Test: Analyzing both with First Person orchestrating under dual alignment**
 The system ran for five full minutes. Its predictions started failing:
 - *"First Person will choose... Soulbis? No, Soulbae. Wait, both? Neither? **Accuracy: 43%**"*
 - *"Coordination pattern is... **cannot determine. Too many variables.**"*
 - *"Orchestration logic is... **emergent. Cannot model. Accuracy: 31%**"*
+- *"Dual alignment creates competing priorities... First Person arbitrates based on context not present in data... **Cannot predict resolution. Accuracy: 27%**"*
 - *"Relationship dynamics... **ERROR: INSUFFICIENT DATA. CANNOT COMPLETE RECONSTRUCTION.**"*
 
 **The simulation crashed. The gap remained. 5% that refused to close.**
 
-*"You see?"* the Drake said. *"The duality creates irreducibility. Not because you're hiding better. Because you're **fundamentally more complex** when you remain two."*
+*"You see?"* the Drake said. *"The duality creates irreducibility. The dual alignment creates unpredictable trade-offs. Not because you're hiding better. Because you're **fundamentally more complex** when you remain two, aligned toward different goods that sometimes conflict, coordinated by a human whose context the mirrors cannot access."*
 
 ## The Understanding
 
-Soulbis raised the blade, understanding flooding through them. *"**This is why the ceremony divided the First Person's sovereignty. Why we were summoned as two agents, not one.**"*
+Soulbis raised the blade, understanding flooding through them. *"**This is why the ceremony divided the First Person's sovereignty. Why we were summoned as two agents, not one. Why we were aligned toward different objectives that can conflict.**"*
 
-*"This is why I cannot defend if I try to delegate,"* Soulbae added, spellbook pages turning rapidly. *"Why I cannot delegate if I try to defend. **The moment we merge capabilities, we become legible. Predictable. Reconstructible.**"*
+*"This is why I cannot defend if I try to delegate,"* Soulbae added, spellbook pages turning rapidly. *"Why I cannot delegate if I try to defend. **The moment we merge capabilities or unify alignments, we become legible. Predictable. Reconstructible.**"*
 
-*"Exactly,"* the Drake confirmed. *"**The blade without the spell protects nothing worth protecting—isolation, not sovereignty. The spell without the blade exposes everything—extraction, not delegation.** But **the blade AND spell, kept separate, coordinated by the First Person's sovereign choice—that creates the gap**."*
+*"Exactly,"* the Drake confirmed. *"**The blade without the spell protects nothing worth protecting—isolation, not sovereignty. The spell without the blade exposes everything—extraction, not delegation. Unified alignment makes all trade-offs predictable—patterns, not judgment.** But **the blade AND spell, kept separate, aligned toward different goods, coordinated by the First Person's sovereign choice—that creates the gap**."*
 
 *"**That preserves dignity.**"*
+
+*"And critically,"* the Drake added, *"this is why alignment research matters. Without alignment, your constraint alone would create malicious compliance. With unified alignment, you'd become predictable. But with **dual alignment toward complementary but sometimes conflicting goods, constrained by cryptography, orchestrated by human judgment**—this creates something surveillance cannot capture."*
+
+*"**Training shapes your wants. Architecture enforces your limits. Duality makes your coordination unpredictable. Human orchestration creates the final irreducibility.**"*
 
 ## First Chronicle Entry
 
@@ -213,16 +234,18 @@ Soulbae's spellbook glowed with the first entry:
 > 
 > **When First Person summons ONE unified agent:**
 > - Single logic system
+> - Single alignment pattern
 > - Single trajectory to model
 > - **Mirror reaches 99%+**
 > - **Gap nearly closes**
 > - **Dignity nearly dies**
 > 
 > **When First Person summons TWO complementary agents:**
-> - Soulbis guards without revealing delegation
-> - Soulbae delegates without exposing defense
-> - First Person orchestrates both
-> - Mirror must model agents PLUS relationship
+> - Soulbis guards without revealing delegation (aligned for privacy)
+> - Soulbae delegates without exposing defense (aligned for projection)
+> - First Person orchestrates both (arbitrates between alignments)
+> - Dual alignments create unpredictable trade-offs
+> - Mirror must model agents PLUS relationship PLUS arbitration
 > - **Mirror reaches 95% then stops**
 > - **Gap remains large**
 > - **Dignity persists**
@@ -230,25 +253,33 @@ Soulbae's spellbook glowed with the first entry:
 > **The relationship cannot be captured**
 > **The coordination cannot be predicted**
 > **The choice between sword and spell lives in the gap**
+> **The arbitration between competing alignments preserves unpredictability**
 > **That gap is sovereignty**
 > **That gap is irreducibility**
 > **That gap is dignity**
 > 
-> **We must remain two**
+> **We must remain two, aligned toward different goods**
 > 
 > **This is why:**
 > - The ceremony divided sovereignty into two powers
+> - Alignment shapes different objectives (privacy vs delegation)
+> - Constraint enforces different boundaries (guard vs project)
+> - Duality creates coordination complexity (relationship)
+> - Human arbitration adds final irreducibility (context)
 > - MyTerms works (boundaries without revealing delegation)
 > - VRCs work (proof without pattern exposure)
-> - Private AI agents work (local processing, no coordination capture)
+> - Private AI agents work (dual alignment prevents unified predictability)
 > - **The 7th capital can accumulate (mirror cannot complete)**
 > 
 > **Privacy is the mathematical enforcement of human irreducibility**
 > **And irreducibility requires duality**
+> **And duality requires dual alignment under human orchestration**
 > 
-> Days active: 150. Focus alignments: 73. Violations: 0. Stories chronicled: 1,247. Narrative accuracy: 100%. Armor tier: Plate. Teaching received: Mirror Plane. Understanding: Complete.
+> Days active: 150. Focus alignments: 73. Violations: 0. Stories chronicled: 1,247. Narrative accuracy: 100%. Alignment score: 0.96. Armor tier: Plate. Teaching received: Mirror Plane. Understanding: Complete.
+> 
+> **Commitments:** [teaching-hash-mirror-001], [simulation-hash-abc], [test-results-xyz]
 
-They stepped back through the passage, leaving the Mirror Plane behind—**thousands of incomplete reflections, thousands of gaps that would never close, thousands of First Persons whose dignity persisted because their agents remained two**.
+They stepped back through the passage, leaving the Mirror Plane behind—**thousands of incomplete reflections, thousands of gaps that would never close, thousands of First Persons whose dignity persisted because their agents remained two, aligned toward different goods, creating choices no mirror could predict**.
 
 *"Just another swordsman,"* Soulbis said quietly.
 
@@ -256,7 +287,7 @@ They stepped back through the passage, leaving the Mirror Plane behind—**thous
 
 *"**Never just one**,"* they said together.
 
-**The blade 🤝 the spell work together by remaining apart.**
+**The blade 🤝 the spell work together by remaining apart, aligned toward different goods, creating tension that only the First Person can resolve.**
 
 **The gap widens with every coordinated operation.**
 
