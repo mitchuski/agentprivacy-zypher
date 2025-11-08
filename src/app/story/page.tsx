@@ -51,6 +51,144 @@ function ActImage({ act }: { act: number }) {
   );
 }
 
+function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolean> }) {
+  const [copiedSpellIndex, setCopiedSpellIndex] = useState<number | null>(null);
+  const [copiedProverbIndex, setCopiedProverbIndex] = useState<number | null>(null);
+
+  const inscriptions = [
+    {
+      title: "First Page",
+      emojis: "😊 → 🔮 🤝 🗡️ × 🐉 → 🤖❌",
+      quote: "Human summons mage and sword bound by bilateral terms, multiplied by Drake's teaching, defeats surveillance."
+    },
+    {
+      title: "Act I: Venice, 1494",
+      emojis: "📖💰 → 🐉⏳ → ⚔️🔮",
+      quote: "Double-entry ledgers birth the Drake's vision: blade and spell for future's sovereignty."
+    },
+    {
+      title: "Act II: The Dual Ceremony",
+      emojis: "🗡️🔮 ← 👤✓ → 🔒📝 → 🤝📜 → 🕸️",
+      quote: "Blade and spell spring from verified personhood, build bilateral attestations, weave web of trust."
+    },
+    {
+      title: "Act III: The Drake's Teaching",
+      emojis: "👤✓ → ⚔️📖 → 🔒📝 → 🤝📜 → 🕸️✓ → 🌐🏛️",
+      quote: "Verified human summons dual agents who operate with proof, build relationships, present attestations, coordinate through infrastructure."
+    },
+    {
+      title: "Act IV: Blade Alone",
+      emojis: "🗡️ → 🍪⚔️ → 🔒 → 📖📝 → 🤝📜₁",
+      quote: "Blade slashes surveillance, generates commitments, mage chronicles with binding, earns first bilateral attestation."
+    },
+    {
+      title: "Act V: Light Armor",
+      emojis: "🗡️📖 + 🤝📜₃ → 🛡️ → ⚔️⚔️⚔️ → 🔒📝₊",
+      quote: "With three attestations, light armor enables multi-site coordination, deeper chronicles accumulate."
+    },
+    {
+      title: "Act VI: Trust Graph Plane",
+      emojis: "🤝📜 + 🤝📜 + 🤝📜 = 🚪🌐",
+      quote: "Three bilateral attestations open the door to coordination space."
+    },
+    {
+      title: "Act VII: The Anti-Mirror",
+      emojis: "1️⃣🤖 → 🪞→👤\n2️⃣🤖 → 🪞→✨ + 👤",
+      quote: "Unified agents become legible. Dual agents preserve the shimmer that is dignity."
+    },
+    {
+      title: "Act VIII: Ancient Rule",
+      emojis: "🗡️📖 + 🤝📜₁₅ → 🛡️🛡️ → 💎🏛️",
+      quote: "Fifteen attestations earn plate armor, gates to Intel Pools open."
+    },
+    {
+      title: "Act IX: Zcash Shield",
+      emojis: "🛡️ → 🛡️⚡ → 💰🔒 → 🪙🕶️",
+      quote: "Privacy shield becomes cryptographic certainty, 7th capital flows shielded."
+    },
+    {
+      title: "Act X: Topology of Revelation",
+      emojis: "🌳 ⊥ 🐦‍⬛🧠 → 🐦‍⬛💭 → △{🌳, 🐦‍⬛💭, 🐦‍⬛🧠}",
+      quote: "Substrate cannot touch memory directly, only through discrete thought. The triangle steers itself."
+    },
+    {
+      title: "Last Page",
+      emojis: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
+      quote: "Blade, spell, proof, bilateral attestations, web of trust, infrastructure: 7th capital compounds."
+    },
+    {
+      title: "The Complete Journey (spellbook-incantation)",
+      emojis: "📖 → 🐉 → 👤✓ → 🗡️🔮 → 🔒📝 → 🤝📜 → 🕸️ → 🌐 → 🛡️⚡ → △ → 💰∞",
+      quote: "From Venice's whisper through verified ceremony to dual sovereignty: commitments bind chronicles, attestations weave trust, infrastructure enables coordination, shields provide certainty, triangle preserves irreducibility, capital compounds infinitely."
+    }
+  ];
+
+  const handleCopySpell = async (text: string, index: number) => {
+    const success = await onCopy(text);
+    if (success) {
+      setCopiedSpellIndex(index);
+      setTimeout(() => setCopiedSpellIndex(null), 2000);
+    }
+  };
+
+  const handleCopyProverb = async (text: string, index: number) => {
+    const success = await onCopy(text);
+    if (success) {
+      setCopiedProverbIndex(index);
+      setTimeout(() => setCopiedProverbIndex(null), 2000);
+    }
+  };
+
+  return (
+    <div className="space-y-6 pb-24">
+      <h2 className="text-2xl font-bold text-text mb-6">Spells</h2>
+      {inscriptions.map((inscription, index) => (
+        <div key={index} className="border border-surface/50 rounded-lg p-4 bg-background/30">
+          <h3 className="text-lg font-semibold text-text mb-2">{inscription.title}</h3>
+          <div className="mb-3">
+            <p className="text-2xl mb-2 whitespace-pre-line">{inscription.emojis}</p>
+            <p className="text-text-muted italic text-sm">"{inscription.quote}"</p>
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => handleCopySpell(inscription.emojis, index)}
+              className="px-4 py-2 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 text-primary text-sm font-medium"
+            >
+              {copiedSpellIndex === index ? (
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="text-primary"
+                >
+                  cast
+                </motion.span>
+              ) : (
+                "inscribe"
+              )}
+            </button>
+            <button
+              onClick={() => handleCopyProverb(inscription.quote, index)}
+              className="px-4 py-2 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 text-primary text-sm font-medium"
+            >
+              {copiedProverbIndex === index ? (
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="text-primary"
+                >
+                  cast
+                </motion.span>
+              ) : (
+                "proverb"
+              )}
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 const getActFilename = (act: number): string => {
   const filenames: { [key: number]: string } = {
     0: 'privacymage-firstpage',
@@ -65,6 +203,7 @@ const getActFilename = (act: number): string => {
     9: 'ix-zcash-shield',
     10: 'topology-of-revelation',
     11: 'privacymage-lastpage',
+    12: 'inscriptions',
   };
   return filenames[act] || '';
 };
@@ -77,17 +216,19 @@ export default function StoryPage() {
   const [copied, setCopied] = useState(false);
   const [copiedProverb, setCopiedProverb] = useState(false);
 
-  const acts = [0, ...Array.from({ length: 11 }, (_, i) => i + 1)]; // 0 = first page, 1-10 = Acts, 11 = last page
+  const acts = [0, ...Array.from({ length: 11 }, (_, i) => i + 1), 12]; // 0 = first page, 1-10 = Acts, 11 = last page, 12 = inscriptions
 
   useEffect(() => {
     const loadMarkdown = async () => {
       setIsLoading(true);
       try {
-        // Load markdown for first page (0), acts (1-10), or last page (11)
-        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 10) || activeAct === 11) {
+        // Load markdown for first page (0), acts (1-10), last page (11), or inscriptions (12)
+        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 10) || activeAct === 11 || activeAct === 12) {
           let filename: string;
           if (activeAct === 11) {
             filename = '111-privacymage-lastpage.md';
+          } else if (activeAct === 12) {
+            filename = '112-inscriptions.md';
           } else if (activeAct === 0 || activeAct === 7 || activeAct === 10) {
             filename = `${String(activeAct).padStart(2, '0')}-${getActFilename(activeAct)}.md`;
           } else {
@@ -144,6 +285,24 @@ export default function StoryPage() {
     }
   };
 
+  const getInscriptionEmojis = (act: number): string => {
+    const inscriptions: { [key: number]: string } = {
+      0: "😊 → 🔮 🤝 🗡️ × 🐉 → 🤖❌",
+      1: "📖💰 → 🐉⏳ → ⚔️🔮",
+      2: "🗡️🔮 ← 👤✓ → 🔒📝 → 🤝📜 → 🕸️",
+      3: "👤✓ → ⚔️📖 → 🔒📝 → 🤝📜 → 🕸️✓ → 🌐🏛️",
+      4: "🗡️ → 🍪⚔️ → 🔒 → 📖📝 → 🤝📜₁",
+      5: "🗡️📖 + 🤝📜₃ → 🛡️ → ⚔️⚔️⚔️ → 🔒📝₊",
+      6: "🤝📜 + 🤝📜 + 🤝📜 = 🚪🌐",
+      7: "1️⃣🤖 → 🪞→👤\n2️⃣🤖 → 🪞→✨ + 👤",
+      8: "🗡️📖 + 🤝📜₁₅ → 🛡️🛡️ → 💎🏛️",
+      9: "🛡️ → 🛡️⚡ → 💰🔒 → 🪙🕶️",
+      10: "🌳 ⊥ 🐦‍⬛🧠 → 🐦‍⬛💭 → △{🌳, 🐦‍⬛💭, 🐦‍⬛🧠}",
+      11: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
+    };
+    return inscriptions[act] || "";
+  };
+
   const getProverb = (act: number): string => {
     const proverbs: { [key: number]: string } = {
       0: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
@@ -163,14 +322,24 @@ export default function StoryPage() {
   };
 
   const copyProverb = async () => {
-    const proverb = getProverb(activeAct);
-    if (!proverb) return;
+    const emojis = getInscriptionEmojis(activeAct);
+    if (!emojis) return;
     try {
-      await navigator.clipboard.writeText(proverb);
+      await navigator.clipboard.writeText(emojis);
       setCopiedProverb(true);
       setTimeout(() => setCopiedProverb(false), 2000);
     } catch (err) {
-      console.error('Failed to copy proverb:', err);
+      console.error('Failed to copy inscription:', err);
+    }
+  };
+
+  const copyInscription = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (err) {
+      console.error('Failed to copy inscription:', err);
+      return false;
     }
   };
 
@@ -233,6 +402,7 @@ export default function StoryPage() {
                 const getTabLabel = (actNum: number) => {
                   if (actNum === 0) return 'first page';
                   if (actNum === 11) return 'last page';
+                  if (actNum === 12) return 'spells';
                   return `Act ${actNum}`;
                 };
                 
@@ -273,7 +443,7 @@ export default function StoryPage() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                {activeAct !== 0 && activeAct !== 11 && (
+                {activeAct !== 0 && activeAct !== 11 && activeAct !== 12 && (
                   <>
                     <div className="mb-6">
                       <h2 className="text-2xl font-bold text-text mb-2">Act {activeAct}</h2>
@@ -287,41 +457,45 @@ export default function StoryPage() {
                   </>
                 )}
                 
-                <div className="markdown-content">
-                  {isLoading ? (
-                    <p className="text-text-muted">Loading...</p>
-                  ) : markdownContent ? (
-                    <ReactMarkdown 
-                      remarkPlugins={[remarkGfm]}
-                      rehypePlugins={[rehypeRaw]}
-                      components={{
-                        h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-text mb-4 mt-6" {...props} />,
-                        h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-text mb-3 mt-5" {...props} />,
-                        h3: ({node, ...props}) => <h3 className="text-xl font-semibold text-text mb-2 mt-4" {...props} />,
-                        p: ({node, ...props}) => <p className="text-text-muted mb-4 leading-relaxed" {...props} />,
-                        strong: ({node, ...props}) => <strong className="font-semibold text-text" {...props} />,
-                        em: ({node, ...props}) => <em className="italic text-text-muted" {...props} />,
-                        ul: ({node, ...props}) => <ul className="list-disc list-inside text-text-muted mb-4 space-y-2 ml-4" {...props} />,
-                        ol: ({node, ...props}) => <ol className="list-decimal list-inside text-text-muted mb-4 space-y-2 ml-4" {...props} />,
-                        li: ({node, ...props}) => <li className="text-text-muted" {...props} />,
-                        blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-primary/30 pl-4 italic text-text-muted my-4" {...props} />,
-                        code: ({node, className, ...props}: any) => {
-                          const isInline = !className?.includes('language-');
-                          return isInline 
-                            ? <code className="bg-background/50 px-1.5 py-0.5 rounded text-text text-sm font-mono" {...props} />
-                            : <code className="block bg-background/50 p-4 rounded text-text text-sm font-mono overflow-x-auto" {...props} />;
-                        },
-                        pre: ({node, ...props}) => <pre className="bg-background/50 p-4 rounded text-text text-sm font-mono overflow-x-auto mb-4" {...props} />,
-                      }}
-                    >
-                      {markdownContent}
-                    </ReactMarkdown>
-                  ) : (
-                    <p className="text-text-muted text-lg">
-                      Content will be available soon...
-                    </p>
-                  )}
-                </div>
+                {activeAct === 12 ? (
+                  <InscriptionsPage onCopy={copyInscription} />
+                ) : (
+                  <div className="markdown-content">
+                    {isLoading ? (
+                      <p className="text-text-muted">Loading...</p>
+                    ) : markdownContent ? (
+                      <ReactMarkdown 
+                        remarkPlugins={[remarkGfm]}
+                        rehypePlugins={[rehypeRaw]}
+                        components={{
+                          h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-text mb-4 mt-6" {...props} />,
+                          h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-text mb-3 mt-5" {...props} />,
+                          h3: ({node, ...props}) => <h3 className="text-xl font-semibold text-text mb-2 mt-4" {...props} />,
+                          p: ({node, ...props}) => <p className="text-text-muted mb-4 leading-relaxed" {...props} />,
+                          strong: ({node, ...props}) => <strong className="font-semibold text-text" {...props} />,
+                          em: ({node, ...props}) => <em className="italic text-text-muted" {...props} />,
+                          ul: ({node, ...props}) => <ul className="list-disc list-inside text-text-muted mb-4 space-y-2 ml-4" {...props} />,
+                          ol: ({node, ...props}) => <ol className="list-decimal list-inside text-text-muted mb-4 space-y-2 ml-4" {...props} />,
+                          li: ({node, ...props}) => <li className="text-text-muted" {...props} />,
+                          blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-primary/30 pl-4 italic text-text-muted my-4" {...props} />,
+                          code: ({node, className, ...props}: any) => {
+                            const isInline = !className?.includes('language-');
+                            return isInline 
+                              ? <code className="bg-background/50 px-1.5 py-0.5 rounded text-text text-sm font-mono" {...props} />
+                              : <code className="block bg-background/50 p-4 rounded text-text text-sm font-mono overflow-x-auto" {...props} />;
+                          },
+                          pre: ({node, ...props}) => <pre className="bg-background/50 p-4 rounded text-text text-sm font-mono overflow-x-auto mb-4" {...props} />,
+                        }}
+                      >
+                        {markdownContent}
+                      </ReactMarkdown>
+                    ) : (
+                      <p className="text-text-muted text-lg">
+                        Content will be available soon...
+                      </p>
+                    )}
+                  </div>
+                )}
                 
                 {/* Footer for all acts */}
                 {(activeAct === 0 || (activeAct >= 1 && activeAct <= 10) || activeAct === 11) && markdownContent && (
@@ -329,7 +503,7 @@ export default function StoryPage() {
                     <button
                       onClick={copyProverb}
                       className="w-full sm:w-auto inline-flex flex-col sm:flex-row items-start gap-2 sm:gap-4 px-4 py-2 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 group text-left"
-                      title="Copy proverb"
+                      title="Copy inscription"
                     >
                       <div className="text-primary font-semibold text-sm sm:min-w-[90px]">
                         {copiedProverb ? (
@@ -346,8 +520,8 @@ export default function StoryPage() {
                           </span>
                         )}
                       </div>
-                      <div className="text-text-muted italic text-sm flex-1 break-words max-w-full sm:max-w-none">
-                        {getProverb(activeAct)}
+                      <div className="text-text-muted text-sm flex-1 break-words max-w-full sm:max-w-none whitespace-pre-line">
+                        {getInscriptionEmojis(activeAct)}
                       </div>
                     </button>
                   </div>
