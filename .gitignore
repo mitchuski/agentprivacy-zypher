@@ -34,3 +34,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# zero spellbook (excluded from git)
+/public/zero/
+/src/app/zero/
+
