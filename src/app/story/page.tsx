@@ -18,6 +18,7 @@ const getActVideo = (act: number): string | null => {
     8: '/assets/soulbaediscoverswhyihastobe2.mp4', // Act VIII: Ancient Rule - soulbae discovers why it has to be two
     9: '/assets/soulbaecaptures7thcapital.mp4', // Act IX: Zcash Shield - soulbae captures 7th capital
     10: '/assets/mageswordmeetsravenact10.mp4', // Act X: Topology of Revelation - mage sword meets raven
+    11: '/assets/mageswordgoldenratio.mp4', // Act XI: Balanced Spiral of Sovereignty - mage sword golden ratio
   };
   return videoMap[act] || null;
 };
@@ -92,14 +93,14 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
       quote: "Three bilateral attestations open the door to coordination space."
     },
     {
-      title: "Act VII: The Anti-Mirror",
+      title: "Act VII: The Mirror That Never Completes",
       emojis: "1️⃣🤖 → 🪞→👤\n2️⃣🤖 → 🪞→✨ + 👤",
       quote: "Unified agents become legible. Dual agents preserve the shimmer that is dignity."
     },
     {
       title: "Act VIII: Ancient Rule",
       emojis: "🗡️📖 + 🤝📜₁₅ → 🛡️🛡️ → 💎🏛️",
-      quote: "Fifteen attestations earn plate armor, gates to Intel Pools open."
+      quote: "Fifteen attestations earn Heavy, gates to Intel Pools open."
     },
     {
       title: "Act IX: Zcash Shield",
@@ -112,14 +113,19 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
       quote: "Substrate cannot touch memory directly, only through discrete thought. The triangle steers itself."
     },
     {
+      title: "Act XI: Balanced Spiral of Sovereignty",
+      emojis: "⚔️ ➗ 📖 = 🌀",
+      quote: "blade / spell = phi = sovereignty"
+    },
+    {
       title: "Last Page",
       emojis: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
       quote: "Blade, spell, proof, bilateral attestations, web of trust, infrastructure: 7th capital compounds."
     },
     {
-      title: "The Complete Journey (spellbook-incantation)",
-      emojis: "📖 → 🐉 → 👤✓ → 🗡️🔮 → 🔒📝 → 🤝📜 → 🕸️ → 🌐 → 🛡️⚡ → △ → 💰∞",
-      quote: "From Venice's whisper through verified ceremony to dual sovereignty: commitments bind chronicles, attestations weave trust, infrastructure enables coordination, shields provide certainty, triangle preserves irreducibility, capital compounds infinitely."
+      title: "First Person Spellbook Incantation",
+      emojis: "📖 → 🐉 → 👤✓ → 🗡️🔮 → 🔒📝 → 🤝📜 → 🕸️ → 🪞 → 🌐 → 🛡️⚡ → △ → 🌀 → ☯️",
+      quote: "Chronicle births dragon's gate, ceremony verifies passage, sovereignty splits to sword and spell: commitments bind, attestations connect, watchers weave, mirrors preserve, infrastructure coordinates, shields channel power, triangle stands irreducible, spiral balances revelation, sovereignty emerges from equilibrium."
     }
   ];
 
@@ -198,12 +204,13 @@ const getActFilename = (act: number): string => {
     4: 'iv-blade-alone',
     5: 'v-light-armour',
     6: 'vi-trust-graph-plane',
-    7: 'privacymage-theantimirror',
+    7: 'act-vii-theantimirrorenhanced',
     8: 'viii-ancient-rule',
     9: 'ix-zcash-shield',
     10: 'topology-of-revelation',
-    11: 'privacymage-lastpage',
-    12: 'inscriptions',
+    11: 'act-xi-balanced-spiral-of-sovereignty',
+    12: 'privacymage-lastpage',
+    13: 'inscriptions',
   };
   return filenames[act] || '';
 };
@@ -216,20 +223,20 @@ export default function StoryPage() {
   const [copied, setCopied] = useState(false);
   const [copiedProverb, setCopiedProverb] = useState(false);
 
-  const acts = [0, ...Array.from({ length: 11 }, (_, i) => i + 1), 12]; // 0 = first page, 1-10 = Acts, 11 = last page, 12 = inscriptions
+  const acts = [0, ...Array.from({ length: 11 }, (_, i) => i + 1), 12, 13]; // 0 = first page, 1-11 = Acts, 12 = last page, 13 = inscriptions
 
   useEffect(() => {
     const loadMarkdown = async () => {
       setIsLoading(true);
       try {
-        // Load markdown for first page (0), acts (1-10), last page (11), or inscriptions (12)
-        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 10) || activeAct === 11 || activeAct === 12) {
+        // Load markdown for first page (0), acts (1-11), last page (12), or inscriptions (13)
+        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 11) || activeAct === 12 || activeAct === 13) {
           let filename: string;
-          if (activeAct === 11) {
+          if (activeAct === 12) {
             filename = '111-privacymage-lastpage.md';
-          } else if (activeAct === 12) {
+          } else if (activeAct === 13) {
             filename = '112-inscriptions.md';
-          } else if (activeAct === 0 || activeAct === 7 || activeAct === 10) {
+          } else if (activeAct === 0 || activeAct === 7 || activeAct === 10 || activeAct === 11) {
             filename = `${String(activeAct).padStart(2, '0')}-${getActFilename(activeAct)}.md`;
           } else {
             filename = `0${activeAct}-act-${getActFilename(activeAct)}.md`;
@@ -298,7 +305,8 @@ export default function StoryPage() {
       8: "🗡️📖 + 🤝📜₁₅ → 🛡️🛡️ → 💎🏛️",
       9: "🛡️ → 🛡️⚡ → 💰🔒 → 🪙🕶️",
       10: "🌳 ⊥ 🐦‍⬛🧠 → 🐦‍⬛💭 → △{🌳, 🐦‍⬛💭, 🐦‍⬛🧠}",
-      11: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
+      11: "⚔️ ➗ 📖 = 🌀 = 1.618",
+      12: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
     };
     return inscriptions[act] || "";
   };
@@ -316,7 +324,8 @@ export default function StoryPage() {
       8: "When one holds the sword, the vault, and the pen, corruption conceals itself—divide these across swordsman and mage, and betrayal becomes impossible to hide.",
       9: "just another swordsman slashes, just another mage casts, vaults unlock, shields conceal, spellbooks confirm truth. Privacy is the natural state.",
       10: "The ravens fly 🐦‍⬛. The tree dreams 🌳. The All-Father wakes △.",
-      11: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
+      11: "The blade that becomes the spell loses both edges.",
+      12: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
     };
     return proverbs[act] || "";
   };
@@ -377,6 +386,12 @@ export default function StoryPage() {
                 >
                   story
                 </a>
+                <a
+                  href="/zero"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  zero
+                </a>
               </div>
             </div>
           </div>
@@ -401,8 +416,8 @@ export default function StoryPage() {
               {acts.map((act) => {
                 const getTabLabel = (actNum: number) => {
                   if (actNum === 0) return 'first page';
-                  if (actNum === 11) return 'last page';
-                  if (actNum === 12) return 'spells';
+                  if (actNum === 12) return 'last page';
+                  if (actNum === 13) return 'spells';
                   return `Act ${actNum}`;
                 };
                 
@@ -443,7 +458,7 @@ export default function StoryPage() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                {activeAct !== 0 && activeAct !== 11 && activeAct !== 12 && (
+                {activeAct !== 0 && activeAct !== 12 && activeAct !== 13 && (
                   <>
                     <div className="mb-6">
                       <h2 className="text-2xl font-bold text-text mb-2">Act {activeAct}</h2>
@@ -457,7 +472,7 @@ export default function StoryPage() {
                   </>
                 )}
                 
-                {activeAct === 12 ? (
+                {activeAct === 13 ? (
                   <InscriptionsPage onCopy={copyInscription} />
                 ) : (
                   <div className="markdown-content">
@@ -498,7 +513,7 @@ export default function StoryPage() {
                 )}
                 
                 {/* Footer for all acts */}
-                {(activeAct === 0 || (activeAct >= 1 && activeAct <= 10) || activeAct === 11) && markdownContent && (
+                {(activeAct === 0 || (activeAct >= 1 && activeAct <= 11) || activeAct === 12) && markdownContent && (
                   <div className="mt-8 pt-6 border-t border-surface/50 mb-20 sm:mb-0 pr-28 sm:pr-36 md:pr-44 lg:pr-52">
                     <button
                       onClick={copyProverb}
