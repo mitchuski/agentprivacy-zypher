@@ -131,9 +131,32 @@ export default function ZeroPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [copied, setCopied] = useState(false);
   const [copiedProverb, setCopiedProverb] = useState(false);
+  const [talesAvailable, setTalesAvailable] = useState<boolean | null>(null);
+
+  // Check if tales are available (local vs production)
+  useEffect(() => {
+    const checkTalesAvailability = async () => {
+      try {
+        const response = await fetch('/zero/markdown/01-tale-01.md');
+        setTalesAvailable(response.ok);
+      } catch {
+        setTalesAvailable(false);
+      }
+    };
+    checkTalesAvailability();
+  }, []);
 
   // Acts: 0 = first page, 1-30 = tales, 31 = last page, 32 = inscriptions
-  const acts = [0, ...Array.from({ length: 30 }, (_, i) => i + 1), 31, 32];
+  // In production (tales not available), only show first page
+  const allActs = [0, ...Array.from({ length: 30 }, (_, i) => i + 1), 31, 32];
+  const acts = talesAvailable === false ? [0] : allActs; // Only first page in production
+
+  // Reset to first page if current activeAct is not available
+  useEffect(() => {
+    if (talesAvailable === false && activeAct !== 0) {
+      setActiveAct(0);
+    }
+  }, [talesAvailable, activeAct]);
 
   useEffect(() => {
     const loadMarkdown = async () => {
