@@ -84,9 +84,15 @@ export default function LandingPage() {
               <div className="flex items-center gap-6">
                 <a
                   href="/story"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
+                  className="text-text hover:text-primary transition-colors font-medium"
                 >
-                  Story
+                  story
+                </a>
+                <a
+                  href="/zero"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  zero
                 </a>
               </div>
             </div>
