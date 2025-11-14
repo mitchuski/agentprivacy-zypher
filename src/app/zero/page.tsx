@@ -131,7 +131,7 @@ export default function ZeroPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [copied, setCopied] = useState(false);
   const [copiedProverb, setCopiedProverb] = useState(false);
-  const [talesAvailable, setTalesAvailable] = useState<boolean | null>(null);
+  const [talesAvailable, setTalesAvailable] = useState<boolean>(false); // Default to false (production mode)
 
   // Check if tales are available (local vs production)
   useEffect(() => {
@@ -148,12 +148,13 @@ export default function ZeroPage() {
 
   // Acts: 0 = first page, 1-30 = tales, 31 = last page, 32 = inscriptions
   // In production (tales not available), only show first page
+  // Default to production mode (only first page) until we confirm tales exist
   const allActs = [0, ...Array.from({ length: 30 }, (_, i) => i + 1), 31, 32];
-  const acts = talesAvailable === false ? [0] : allActs; // Only first page in production
+  const acts = talesAvailable ? allActs : [0]; // Only show all acts if tales are confirmed available
 
   // Reset to first page if current activeAct is not available
   useEffect(() => {
-    if (talesAvailable === false && activeAct !== 0) {
+    if (!talesAvailable && activeAct !== 0) {
       setActiveAct(0);
     }
   }, [talesAvailable, activeAct]);
