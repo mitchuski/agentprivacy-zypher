@@ -34,7 +34,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# zero spellbook (excluded from git)
+# zero spellbook (excluded from git, except first page)
 /public/zero/
+!/public/zero/markdown/00-zeromage-firstpage.md
 /src/app/zero/
 
