@@ -38,4 +38,5 @@ next-env.d.ts
 /public/zero/
 !/public/zero/markdown/00-zeromage-firstpage.md
 /src/app/zero/
+!/src/app/zero/page.tsx
 
