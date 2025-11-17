@@ -84,13 +84,15 @@ When a swordsman commits to protecting a spellbook:
    - Trust-building through demonstrated dedication
    - **Value committed: PUBLIC**
 
-2. **Private (Shielded Ledger):** Protection protocols stored
-   - Actual guard instructions stay secret
-   - Operational details hidden
-   - Methods remain confidential
-   - **How to protect: PRIVATE**
+2. **Private (Shielded Ledger):** Guardian proverb stored
+   - The swordsman's unique compression of how to protect this spellbook
+   - Their understanding of boundary-making required
+   - Becomes part of shared private key pool among all verified guardians
+   - Only credentialed guardians can access the pool
+   - Used for collective governance when evaluating new guardian reconstructions
+   - **Guardian wisdom + governance authority: PRIVATE (shared among verified)**
 
-**Pattern:** Swordsmen reveal VALUE (stake amounts), hide HOW (protection protocols)
+**Pattern:** Swordsmen reveal VALUE (stake amounts), hide HOW (guardian proverbs stored as shared private keys)
 
 ## The Beautiful Inversion
 
@@ -404,18 +406,29 @@ The choice of underlying system depends on:
 - Compression quality evaluation
 - Automated first-pass filtering
 
-**Human Component (Bilateral Verification):**
-- First Person validates guardian reconstructions
-- Credentialed guardians peer review
-- Context-dependent wisdom assessment
-- Final authority on "genuine understanding"
+**Human Component (Guardian Proverb Pool Governance):**
+- Existing guardians with proverb pool access evaluate reconstructions
+- Collective assessment against shared guardian wisdom
+- Decentralized governance through cryptographic access control
+- Context-dependent wisdom validation by those who've proven comprehension
+- Final authority distributed among verified guardians
+
+**The Guardian Proverb Pool:**
+- Each successful guardian's proverb stored in shielded ledger
+- Forms shared private key accessible only to verified guardians
+- New guardians must prove understanding of existing pool wisdom
+- Evaluation process itself protected by zero-knowledge (no surveillance of governance)
+- Self-regulating: proven comprehension grants both access and evaluation authority
 
 **Hybrid Process:**
 1. Guardian submits reconstruction
-2. Soulbae evaluates semantic coherence (pass/fail gate)
-3. If pass: Human verification for final approval
-4. If fail: Immediate slash, no human time wasted
-5. Result: 1 ZEC returned OR 0.44 ZEC slashed
+2. Soulbae evaluates semantic coherence (algorithmic pass/fail gate)
+3. If pass: Existing guardians with proverb pool access evaluate collectively
+4. Guardians compare reconstruction against shared wisdom in pool
+5. Consensus determines: Does this capture protection essence?
+6. If approved: Guardian gains proverb pool access + stake returned + rewards
+7. If rejected: Slash executed, guardian excluded from pool
+8. Result: 1 ZEC returned + credential + proverb pool access OR 0.44 ZEC slashed
 
 ### Timeline & Retry Logic
 
@@ -436,6 +449,8 @@ The choice of underlying system depends on:
 - Issued as Verifiable Credentials (VCs) or NFTs
 - Soulbound (non-transferable proof-of-personhood)
 - Grant access to "first ceremonies" (inaugural dual agent coordinations)
+- **Grant cryptographic access to guardian proverb pool** (shared private key for governance)
+- Enable participation in evaluation of future guardian reconstructions
 - Reputation building without surveillance
 - Can be revoked if later behavior violates trust
 
@@ -445,10 +460,13 @@ The choice of underlying system depends on:
 - Posts transparent commitments (proverb hashes)
 - Routes shielded payments (learning fees to treasury)
 - Records public stakes (guardian commitments visible)
-- Stores private protocols (protection methods hidden)
+- Stores guardian proverbs in shielded proverb pool (shared private key among verified)
+- Manages cryptographic access control to proverb pool
+- Facilitates guardian governance evaluations (without exposing deliberations)
 - Manages slash distribution (50/50 split to treasury + successful guardians)
-- Verifies reconstruction attempts (in hybrid model)
+- Verifies reconstruction attempts (in hybrid model with guardian pool)
 - Returns stakes upon successful comprehension
+- Grants proverb pool access to newly credentialed guardians
 
 **Not a Centralized Authority:**
 - Protocol-level routing, not discretionary control
@@ -513,7 +531,7 @@ This is how the 7th capital comes home: **protected by mathematics, verified thr
 
 ---
 
-**Building at:** [ZYPHER](https://zypher.xyz/)
+**Building at:** [ZYPHERPUNK](https://zypherpunk.xyz/)
 
 **Further Reading:**
 - Act VIII: The Zcash Shield (full narrative)

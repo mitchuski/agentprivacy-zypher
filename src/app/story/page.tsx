@@ -132,7 +132,7 @@ function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Pro
       title: "Act IX: Zcash Shield",
       actNumber: 9,
       emojis: "🛡️ → 🛡️⚡ → 💰🔒 → 🕶️🦓",
-      quote: "Privacy shield becomes cryptographic certainty, 7th capital flows shielded."
+      quote: "The two-faced shield is not duplicitous but sovereign—for true power lies not in choosing privacy or transparency, but in wielding both with mathematical certainty, where comprehension proves personhood."
     },
     {
       title: "Act X: Topology of Revelation",
@@ -363,7 +363,7 @@ export default function StoryPage() {
       6: "The guild admits only verified identities and authentic deeds—one impostor poisons the entire covenant.",
       7: "One mirror observing both swordsman and mage collapses dignity into surveillance; two mirrors, each watching the other, preserve dignity through mutual witness.",
       8: "When one holds the sword, the vault, and the pen, corruption conceals itself—divide these across swordsman and mage, and betrayal becomes impossible to hide.",
-      9: "just another swordsman slashes, just another mage casts, vaults unlock, shields conceal, spellbooks confirm truth. Privacy is the natural state.",
+      9: "The two-faced shield is not duplicitous but sovereign—for true power lies not in choosing privacy or transparency, but in wielding both with mathematical certainty, where comprehension proves personhood.",
       10: "The ravens fly 🐦‍⬛. The tree dreams 🌳. The All-Father wakes △.",
       11: "The blade that becomes the spell loses both edges.",
       12: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
