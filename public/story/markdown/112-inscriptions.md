@@ -73,7 +73,7 @@ Symbolic inscriptions for each act of the story.
 
 🛡️ → 🛡️⚡ → 💰🔒 → 🕶️🦓
 
-*"Privacy shield becomes cryptographic certainty, 7th capital flows shielded."*
+*"The two-faced shield is not duplicitous but sovereign—for true power lies not in choosing privacy or transparency, but in wielding both with mathematical certainty, where comprehension proves personhood."*
 
 ---
 

@@ -239,7 +239,7 @@ export default function SwordsmanPanel({ taleId, actNumber, spellbook, actName, 
                     <span className="text-sm">→</span>
                   </button>
                   <p className="text-xs text-text-muted mt-2">
-                    Opens in new window. Chat with Soulbae to craft your proverb.
+                    You may derive your proverb from your own memory and context—Soulbae (the first mage) is an optional helper. Opens in new window.
                   </p>
                 </div>
 
@@ -252,7 +252,7 @@ export default function SwordsmanPanel({ taleId, actNumber, spellbook, actName, 
                   <textarea
                     value={userProverb}
                     onChange={(e) => setUserProverb(e.target.value)}
-                    placeholder="Paste your proverb from Soulbae here..."
+                    placeholder="Paste your proverbial wisdom here..."
                     rows={4}
                     className="w-full px-4 py-3 bg-background border border-surface/50 rounded-lg text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
                   />
