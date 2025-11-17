@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import SwordsmanPanel from '@/components/SwordsmanPanel';
 
 // Tale metadata from manifest
 const taleData: { [key: number]: { title: string; spell: string; proverb: string } } = {
@@ -40,7 +41,7 @@ const taleData: { [key: number]: { title: string; spell: string; proverb: string
   30: { title: "The Eternal Sovereignty", spell: "Sovereign Agent = {Identity, Swordsman, Mage, Reflect, Connect, Capital, Intelligence}", proverb: "The complete sovereignty system is a symphony of zero-knowledge proofs. Every component modular, every interaction provable, every privacy preserved." },
 };
 
-function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolean> }) {
+function InscriptionsPage({ onCopy, onSelectTale, selectedTale }: { onCopy: (text: string) => Promise<boolean>; onSelectTale?: (taleNumber: number) => void; selectedTale?: number | null }) {
   const [copiedSpellIndex, setCopiedSpellIndex] = useState<number | null>(null);
   const [copiedProverbIndex, setCopiedProverbIndex] = useState<number | null>(null);
 
@@ -69,7 +70,39 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
 
   return (
     <div className="space-y-6 pb-24">
-      <h2 className="text-2xl font-bold text-text mb-6">Spells</h2>
+      <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
+        <h2 className="text-2xl font-bold text-text">Spells</h2>
+        {onSelectTale && (
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-text-muted">Protect Tale:</span>
+            <select
+              value={selectedTale || ''}
+              onChange={(e) => {
+                const taleNum = e.target.value ? parseInt(e.target.value) : null;
+                if (onSelectTale) {
+                  onSelectTale(taleNum || 0);
+                }
+              }}
+              className="px-3 py-1 bg-background border border-surface/50 rounded text-text text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            >
+              <option value="">Select Tale...</option>
+              {inscriptions.map(inscription => (
+                <option key={inscription.number} value={inscription.number}>
+                  {inscription.title}
+                </option>
+              ))}
+            </select>
+            {selectedTale && (
+              <button
+                onClick={() => onSelectTale && onSelectTale(0)}
+                className="text-xs text-text-muted hover:text-text px-2"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+        )}
+      </div>
       {inscriptions.map((inscription, index) => (
         <div key={inscription.number} className="border border-surface/50 rounded-lg p-4 bg-background/30">
           <h3 className="text-lg font-semibold text-text mb-2">{inscription.title}</h3>
@@ -77,7 +110,7 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
             <p className="text-2xl mb-2 whitespace-pre-line font-mono">{inscription.emojis}</p>
             <p className="text-text-muted italic text-sm">"{inscription.quote}"</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             <button
               onClick={() => handleCopySpell(inscription.emojis, index)}
               className="px-4 py-2 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 text-primary text-sm font-medium"
@@ -110,6 +143,15 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
                 "proverb"
               )}
             </button>
+            {onSelectTale && (
+              <button
+                onClick={() => onSelectTale(inscription.number)}
+                className="px-4 py-2 bg-accent/5 hover:bg-accent/10 border border-accent/20 rounded-lg transition-all duration-200 text-accent text-sm font-medium flex items-center gap-1"
+              >
+                <span>⚔️</span>
+                <span>Protect</span>
+              </button>
+            )}
           </div>
         </div>
       ))}
@@ -131,6 +173,7 @@ export default function ZeroPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [copied, setCopied] = useState(false);
   const [copiedProverb, setCopiedProverb] = useState(false);
+  const [copiedProverbTop, setCopiedProverbTop] = useState(false);
   const [talesAvailable, setTalesAvailable] = useState<boolean>(false); // Default to false (production mode)
 
   // Check if tales are available (local vs production)
@@ -292,6 +335,18 @@ export default function ZeroPage() {
     }
   };
 
+  const copyProverbText = async () => {
+    const proverb = getProverb(activeAct);
+    if (!proverb) return;
+    try {
+      await navigator.clipboard.writeText(proverb);
+      setCopiedProverbTop(true);
+      setTimeout(() => setCopiedProverbTop(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy proverb:', err);
+    }
+  };
+
   const copyInscription = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -319,8 +374,50 @@ export default function ZeroPage() {
   const hasPrevious = acts.indexOf(activeAct) > 0;
   const hasNext = acts.indexOf(activeAct) < acts.length - 1;
 
+  // Show Swordsman panel for tales (1-30)
+  const showSwordsmanPanel = activeAct >= 1 && activeAct <= 30;
+  const currentTale = activeAct >= 1 && activeAct <= 30 ? taleData[activeAct] : null;
+  
+  // For spells page (32), allow selecting a tale to protect
+  const [selectedSpellTale, setSelectedSpellTale] = useState<number | null>(null);
+  const selectedSpellTaleData = selectedSpellTale ? taleData[selectedSpellTale] : null;
+
+  // Handle protect button - switch to tale and open swordsman panel
+  const handleProtect = (taleNumber: number) => {
+    setActiveAct(taleNumber);
+    // Open swordsman panel after a short delay to allow render
+    setTimeout(() => {
+      const swordsmanButton = document.querySelector('[data-swordsman-toggle]');
+      if (swordsmanButton) {
+        (swordsmanButton as HTMLElement).click();
+      }
+    }, 100);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
+      {/* Swordsman Panel - for tales */}
+      {showSwordsmanPanel && currentTale && (
+        <SwordsmanPanel
+          taleId={`zero-tale-${activeAct}`}
+          actNumber={activeAct}
+          spellbook="zero"
+          actName={`Tale ${activeAct}: ${currentTale.title}`}
+          spell={currentTale.spell}
+        />
+      )}
+      
+      {/* Swordsman Panel - for spells page */}
+      {activeAct === 32 && selectedSpellTaleData && (
+        <SwordsmanPanel
+          taleId={`zero-tale-${selectedSpellTale}`}
+          actNumber={selectedSpellTale!}
+          spellbook="zero"
+          actName={`Tale ${selectedSpellTale}: ${selectedSpellTaleData.title}`}
+          spell={selectedSpellTaleData.spell}
+        />
+      )}
+      
       {/* Navigation Header */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -341,6 +438,30 @@ export default function ZeroPage() {
                   className="text-primary border-b-2 border-primary pb-1 font-medium"
                 >
                   zero
+                </a>
+                <a
+                  href="/story/stats"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  stats
+                </a>
+                <a
+                  href="/proverbs"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  proverbs
+                </a>
+                <a
+                  href="/the-first"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  the first
+                </a>
+                <a
+                  href="/mage"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  mage
                 </a>
               </div>
             </div>
@@ -400,6 +521,39 @@ export default function ZeroPage() {
 
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
+            {/* Top Learn and Protect Buttons */}
+            {markdownContent && (
+              <div className="absolute top-4 right-2 sm:right-4 z-10 flex items-center gap-2">
+                {showSwordsmanPanel && (
+                  <button
+                    onClick={() => handleProtect(activeAct)}
+                    className="px-2 sm:px-4 py-2 bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-lg transition-all duration-200 flex items-center gap-1 flex-shrink-0"
+                    title="Protect the spell (1 ZEC) - Public stake, private knowledge"
+                  >
+                    <span className="text-accent text-xs sm:text-sm font-medium">⚔️ protect</span>
+                  </button>
+                )}
+                <button
+                  onClick={copyToClipboard}
+                  className="px-2 sm:px-4 py-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
+                  title="Learn the spell (0.01 ZEC) - Public commitment, private fees"
+                >
+                  {copied ? (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="text-secondary text-xs sm:text-sm font-medium"
+                    >
+                      cast
+                    </motion.div>
+                  ) : (
+                    <span className="text-secondary text-xs sm:text-sm font-medium group-hover:text-secondary/80 transition-colors">
+                      learn 🧙‍♂️
+                    </span>
+                  )}
+                </button>
+              </div>
+            )}
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeAct}
@@ -411,12 +565,83 @@ export default function ZeroPage() {
                 {activeAct >= 1 && activeAct <= 30 && (
                   <div className="mb-6">
                     <h2 className="text-2xl font-bold text-text mb-2">Tale {activeAct}: {taleData[activeAct]?.title}</h2>
-                    <div className="h-1 w-20 bg-primary rounded-full"></div>
+                    <div className="h-1 w-20 bg-primary rounded-full mb-4"></div>
+                    {/* Proverb and Inscription Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-3 mb-4">
+                      {/* Proverb Inscription Box */}
+                      {getProverb(activeAct) && (
+                        <div className="flex-1">
+                          <button
+                            onClick={copyProverbText}
+                            className="w-full px-4 py-3 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 text-left group"
+                            title="Copy proverb"
+                          >
+                            <div className="text-primary font-semibold text-xs mb-2">
+                              {copiedProverbTop ? (
+                                <motion.span
+                                  initial={{ scale: 0 }}
+                                  animate={{ scale: 1 }}
+                                  className="text-primary"
+                                >
+                                  cast
+                                </motion.span>
+                              ) : (
+                                <span className="group-hover:text-primary/80 transition-colors">
+                                  proverb
+                                </span>
+                              )}
+                            </div>
+                            <div className="text-text-muted text-sm italic leading-relaxed">
+                              "{getProverb(activeAct)}"
+                            </div>
+                          </button>
+                        </div>
+                      )}
+                      {/* Inscription Button */}
+                      {getInscriptionEmojis(activeAct) && (
+                        <div className="flex-1">
+                          <button
+                            onClick={copyProverb}
+                            className="w-full px-4 py-3 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 text-left group"
+                            title="Copy inscription"
+                          >
+                            <div className="text-primary font-semibold text-xs mb-2">
+                              {copiedProverb ? (
+                                <motion.span
+                                  initial={{ scale: 0 }}
+                                  animate={{ scale: 1 }}
+                                  className="text-primary"
+                                >
+                                  cast
+                                </motion.span>
+                              ) : (
+                                <span className="group-hover:text-primary/80 transition-colors">
+                                  inscribe
+                                </span>
+                              )}
+                            </div>
+                            <div className="text-text-muted text-sm flex-1 break-words max-w-full sm:max-w-none whitespace-pre-line font-mono">
+                              {getInscriptionEmojis(activeAct)}
+                            </div>
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 )}
                 
                 {activeAct === 32 ? (
-                  <InscriptionsPage onCopy={copyInscription} />
+                  <InscriptionsPage 
+                    onCopy={copyInscription} 
+                    onSelectTale={(taleNumber) => {
+                      const num = taleNumber > 0 ? taleNumber : null;
+                      setSelectedSpellTale(num);
+                      if (num) {
+                        handleProtect(num);
+                      }
+                    }}
+                    selectedTale={selectedSpellTale}
+                  />
                 ) : (
                   <div className="markdown-content">
                     {isLoading ? (
@@ -456,40 +681,11 @@ export default function ZeroPage() {
                   </div>
                 )}
                 
-                {/* Footer for tales only (not first page, last page, or inscriptions) */}
-                {activeAct >= 1 && activeAct <= 30 && markdownContent && (
-                  <div className="mt-8 pt-6 border-t border-surface/50 mb-20 sm:mb-0 pr-28 sm:pr-36 md:pr-44 lg:pr-52">
-                    <button
-                      onClick={copyProverb}
-                      className="w-full sm:w-auto inline-flex flex-col sm:flex-row items-start gap-2 sm:gap-4 px-4 py-2 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 group text-left"
-                      title="Copy inscription"
-                    >
-                      <div className="text-primary font-semibold text-sm sm:min-w-[90px]">
-                        {copiedProverb ? (
-                          <motion.span
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            className="text-primary"
-                          >
-                            cast
-                          </motion.span>
-                        ) : (
-                          <span className="group-hover:text-primary/80 transition-colors">
-                            inscribe
-                          </span>
-                        )}
-                      </div>
-                      <div className="text-text-muted text-sm flex-1 break-words max-w-full sm:max-w-none whitespace-pre-line font-mono">
-                        {getInscriptionEmojis(activeAct) || "Inscription will appear here"}
-                      </div>
-                    </button>
-                  </div>
-                )}
               </motion.div>
             </AnimatePresence>
             
             {/* Previous, Copy and Next Buttons */}
-            <div className="absolute bottom-4 right-2 sm:right-4 flex items-center gap-1 sm:gap-2 justify-end flex-wrap-reverse" style={{ maxWidth: 'calc(100% - 0.5rem)' }}>
+            <div className="absolute bottom-6 sm:bottom-8 right-2 sm:right-4 flex items-center gap-2 sm:gap-3 justify-end flex-wrap-reverse" style={{ maxWidth: 'calc(100% - 0.5rem)' }}>
               {hasPrevious && (
                 <button
                   onClick={goToPrevious}
@@ -511,19 +707,19 @@ export default function ZeroPage() {
               {markdownContent && (
                 <button
                   onClick={copyToClipboard}
-                  className="px-2 sm:px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
-                  title="Copy story text"
+                  className="px-2 sm:px-4 py-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
+                  title="Learn the spell (0.01 ZEC) - Public commitment, private fees"
                 >
                   {copied ? (
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      className="text-primary text-xs sm:text-sm font-medium"
+                      className="text-secondary text-xs sm:text-sm font-medium"
                     >
                       cast
                     </motion.div>
                   ) : (
-                    <span className="text-primary text-xs sm:text-sm font-medium group-hover:text-primary/80 transition-colors">
+                    <span className="text-secondary text-xs sm:text-sm font-medium group-hover:text-secondary/80 transition-colors">
                       learn 🧙‍♂️
                     </span>
                   )}

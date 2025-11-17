@@ -6,17 +6,17 @@ Symbolic inscriptions for each act of the story.
 
 ## **Act I: Venice, 1494**
 
-📖💰 → 🐉⏳ → ⚔️🔮
+📖💰 → 🐉⏳ → ⚔️🧙
 
-*"Double-entry ledgers birth the Drake's vision: blade and spell for future's sovereignty."*
+*"Double-entry ledgers birth the Drake's vision: Swordsman and Mage agents for future's sovereignty."*
 
 ---
 
 ## **Act II: The Dual Ceremony**
 
-🗡️🔮 ← 👤✓ → 🔒📝 → 🤝📜 → 🕸️
+⚔️🧙 ← 👤✓ → 🔒📝 → 🤝📜 → 🕸️
 
-*"Blade and spell spring from verified personhood, build bilateral attestations, weave web of trust."*
+*"Swordsman and Mage agents spring from verified personhood, build bilateral attestations, weave web of trust."*
 
 ---
 
@@ -38,9 +38,9 @@ Symbolic inscriptions for each act of the story.
 
 ## **Act V: Light Armor**
 
-🗡️📖 + 🤝📜₃ → 🛡️ → ⚔️⚔️⚔️ → 🔒📝₊
+🗡️📖 + 🤝📜₃ → ⚡ → ⚔️⚔️⚔️ → 🔒📝₊
 
-*"With three attestations, light armor enables multi-site coordination, deeper chronicles accumulate."*
+*"With three attestations, Light Armor (⚡) enables multi-site coordination, deeper chronicles accumulate."*
 
 ---
 
@@ -52,7 +52,7 @@ Symbolic inscriptions for each act of the story.
 
 ---
 
-## **Act VII: The Anti-Mirror**
+## **Act VII: The Mirror That Never Completes**
 
 1️⃣🤖 → 🪞→👤  
 2️⃣🤖 → 🪞→✨ + 👤
@@ -63,15 +63,15 @@ Symbolic inscriptions for each act of the story.
 
 ## **Act VIII: Ancient Rule**
 
-🗡️📖 + 🤝📜₁₅ → 🛡️🛡️ → 💎🏛️
+🗡️📖 + 🤝📜₁₅ → ⚡⚡ → 💎🏛️
 
-*"Fifteen attestations earn plate armor, gates to Intel Pools open."*
+*"Fifteen attestations unlock Heavy Armor (⚡⚡), gates to Intel Pools open."*
 
 ---
 
 ## **Act IX: Zcash Shield**
 
-🛡️ → 🛡️⚡ → 💰🔒 → 🪙🕶️
+🛡️ → 🛡️⚡ → 💰🔒 → 🕶️🦓
 
 *"Privacy shield becomes cryptographic certainty, 7th capital flows shielded."*
 
@@ -85,11 +85,19 @@ Symbolic inscriptions for each act of the story.
 
 ---
 
+## **Act XI: Balanced Spiral of Sovereignty**
+
+⚔️ ➗ 📖 = 🌀
+
+*"Only what stays divided in harmony can remain whole."*
+
+---
+
 ## **First Page**
 
-😊 → 🔮 🤝 🗡️ × 🐉 → 🤖❌
+😊 → 🧙 🤝 ⚔️ × 🐉 → 🤖❌
 
-*"Human summons mage and sword bound by bilateral terms, multiplied by Drake's teaching, defeats surveillance."*
+*"Human summons Mage bilaterally bound to Swordsman, multiplied by Drake's teaching, defeats surveillance."*
 
 ---
 
@@ -97,15 +105,15 @@ Symbolic inscriptions for each act of the story.
 
 🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️
 
-*"Blade, spell, proof, bilateral attestations, web of trust, infrastructure: 7th capital compounds."*
+*"Protect and project actions with full architecture: 7th capital compounds."*
 
 ---
 
-## **The Complete Journey (spellbook-incantation)**
+## **First Person Spellbook Incantation**
 
-📖 → 🐉 → 👤✓ → 🗡️🔮 → 🔒📝 → 🤝📜 → 🕸️ → 🌐 → 🛡️⚡ → △ → 💰∞
+📖 → 🐉 → 👤✓ → 🗡️🔮 → 🔒📝 → 🤝📜 → 🕸️ → 🪞 → 🌐 → 🛡️⚡ → △ → 🌀 → ☯️
 
-*"From Venice's whisper through verified ceremony to dual sovereignty: commitments bind chronicles, attestations weave trust, infrastructure enables coordination, shields provide certainty, triangle preserves irreducibility, capital compounds infinitely."*
+*"Chronicle births dragon's gate, ceremony verifies passage, sovereignty splits to protect and project actions: commitments bind, attestations connect, watchers weave, mirrors preserve, infrastructure coordinates, shield charged with armor (🛡️⚡), triangle stands irreducible, spiral balances revelation, sovereignty emerges from equilibrium."*
 
 ---
 

@@ -71,6 +71,12 @@ export default function LandingPage() {
     }, 1500);
   };
 
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
       {/* Navigation Header */}
@@ -94,6 +100,30 @@ export default function LandingPage() {
                 >
                   zero
                 </a>
+                <a
+                  href="/story/stats"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  stats
+                </a>
+                <a
+                  href="/proverbs"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  proverbs
+                </a>
+                <a
+                  href="/the-first"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  the first
+                </a>
+                <a
+                  href="/mage"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  mage
+                </a>
               </div>
             </div>
           </div>
@@ -105,7 +135,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={mounted ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-center"
           >
@@ -137,7 +167,7 @@ export default function LandingPage() {
             
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={mounted ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               className="max-w-3xl mx-auto"
             >

@@ -4,6 +4,6 @@
 
 Coming soon...
 
-building at [ZYPHERPUNK](https://zypherpunk.xyz/)
+building at [ZYPHER](https://zypher.xyz/)
 
 ---
