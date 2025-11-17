@@ -1,71 +1,313 @@
-# AgentPrivacy.ai Landing Page
+# AgentPrivacy.ai - The First Person Spellbook
 
-A beautiful landing page for AgentPrivacy.ai, built with Next.js and matching the exact styling of the AgentDashboard component.
+A privacy-preserving interactive story platform built with Next.js, featuring AI-assisted proverb generation and Zcash integration for private donations.
 
-## Getting Started
+## 🎯 What Is This?
 
-First, install dependencies:
+This is a **spellbook** - an interactive storytelling platform where:
+
+- **Readers** explore privacy-themed tales (Acts I-XI)
+- **Soulbae** (the Mage) helps craft relationship proverbs through AI conversation
+- **Swordsman Panel** formats proverbs for Zcash shielded transactions
+- **Donations** flow privately through Zcash z→z transactions with encrypted memos
+
+Think of it as: **Crowdfunding with proof-of-understanding, where privacy is preserved by design.**
+
+## 🏗️ Architecture Overview
+
+```
+┌─────────────────────────────────────────┐
+│  Next.js Static Site (out/)            │
+│  - Landing page (/)                     │
+│  - Story pages (/story)                 │
+│  - Mage interface (/mage)                │
+│  - Proverbs gallery (/proverbs)         │
+└─────────────────────────────────────────┘
+              │
+              ├─► Soulbae API (NEAR Shade Agent)
+              │   - TEE-attested AI agent
+              │   - Proverb generation
+              │   - Privacy-preserving chat
+              │
+              └─► Zcash Blockchain
+                  - Shielded transactions
+                  - Encrypted memos
+                  - Private donations
+```
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- **Node.js** 18+ and npm
+- **Git** for cloning
+- (Optional) **Zcash wallet** for testing donations
+
+### Installation
 
 ```bash
+# Clone the repository
+git clone <your-repo-url>
+cd agentprivacy-ai-firstmage
+
+# Install dependencies
 npm install
+
+# Run development server
+npm run dev
+
+# Open http://localhost:8000
 ```
 
-Then, run the development server:
+### Build for Production
 
 ```bash
-npm run dev
+# Build static site
+npm run build
+
+# Output will be in ./out directory
+# Serve locally to test
+npm start  # Runs on port 8000
 ```
 
-Open [http://localhost:3001](http://localhost:3001) with your browser to see the landing page.
+## 📁 Project Structure
 
-## Cloudflare Pages Deployment
+```
+agentprivacy-ai-firstmage/
+├── src/
+│   ├── app/                    # Next.js app router pages
+│   │   ├── page.tsx            # Landing page
+│   │   ├── story/page.tsx      # Story reader with acts
+│   │   ├── mage/page.tsx       # Soulbae chat interface
+│   │   ├── proverbs/page.tsx   # Proverbs gallery
+│   │   └── zero/page.tsx       # Zero knowledge content
+│   ├── components/             # React components
+│   │   ├── SwordsmanPanel.tsx  # Donation panel
+│   │   ├── ChatMessage.tsx     # Chat UI
+│   │   └── ...
+│   └── lib/                    # Utilities
+│       ├── soulbae.ts          # Soulbae API client
+│       └── zcash-memo.ts       # Zcash memo formatting
+├── public/
+│   ├── assets/                 # Images and videos
+│   └── story/markdown/         # Story content (Markdown)
+├── out/                        # Static export (after build)
+├── next.config.mjs             # Next.js config
+└── package.json
+```
 
-This project is configured for Cloudflare Pages deployment.
+## 🎨 Key Features
 
-### Setup in Cloudflare Pages Dashboard:
+### 1. Interactive Story Reader (`/story`)
 
-1. Go to Cloudflare Dashboard > Pages
-2. Create a new project
-3. Connect your GitHub repository: `mitchuski/agentprivacy`
-4. Configure build settings:
-   - **Framework preset**: `None` or `Custom` (DO NOT use "Next.js" preset - that's for Next.js runtime)
-   - **Build command**: `npm run build`
-   - **Build output directory**: `out` (this is the output for static export)
-   - **Root directory**: `/` (leave blank if deploying from root)
-   - **Node version**: 18 or higher
-   
-   ⚠️ **IMPORTANT**: Do NOT select "Next.js" as the framework preset. That preset uses `@cloudflare/next-on-pages` which expects a different output structure. Since we're using `output: 'export'` for static files, we need to use "None" or "Custom" preset and manually set the build command and output directory.
+- **11 Acts** of privacy-themed narrative
+- **Markdown-based** content in `public/story/markdown/`
+- **Swordsman Panel** for each act (donation interface)
+- **Navigation** between acts with smooth transitions
 
-### Environment Variables:
-No environment variables are required for this project.
+### 2. Mage Interface (`/mage`)
 
-### Build Settings:
-- **Build command**: `npm run build`
-- **Node version**: 18+
+- **Chat with Soulbae** - AI agent for proverb generation
+- **TEE Attestation** - Verifiable privacy guarantees
+- **Privacy Budget** - Limited queries per session (φ × 10 = 16)
+- **Proverb Suggestions** - AI-generated relationship proverbs
+- **Copy to Zashi** - Format memo for Zcash wallet
 
-Cloudflare Pages will automatically detect Next.js and handle the build process.
+### 3. Swordsman Panel
 
-## Project Structure
+- **Proverb Input** - User enters their understanding
+- **Validation** - Checks proverb length (512 bytes max)
+- **Zcash Memo Format** - Generates `[rpp-v1]` format
+- **Copy to Clipboard** - Ready for Zashi wallet
 
-- `src/app/page.tsx` - Main landing page component
-- `src/app/layout.tsx` - Root layout with footer
-- `src/app/globals.css` - Global styles matching AgentDashboard
-- `tailwind.config.ts` - Tailwind configuration with same color scheme
+### 4. Zcash Integration
 
-## Styling
+**Memo Format (rpp-v1):**
+```
+[rpp-v1]
+[act-i-venice]
+[1699564800123]
+[Your proverb here]
+```
 
-This landing page uses the exact same styling as the AgentDashboard:
-- Same color scheme (primary, secondary, accent, background, surface)
-- Same card components
-- Same button styles
-- Same typography and spacing
-- Same dark theme aesthetic
+**Flow:**
+1. User reads tale → Gets proverb from Soulbae
+2. Formats memo → Copies to clipboard
+3. Pastes in Zashi → Sets amount privately
+4. Sends z→z transaction → Donation with encrypted memo
 
-## Build
+## 🔧 Customization Guide
 
-To build for production:
+### Adding Your Own Story
 
+1. **Add Markdown files** to `public/story/markdown/`:
+   ```
+   00-your-firstpage.md
+   01-act-i-your-tale.md
+   02-act-ii-your-tale.md
+   ...
+   ```
+
+2. **Update act mapping** in `src/app/story/page.tsx`:
+   ```typescript
+   const getActFilename = (act: number): string => {
+     const filenames: { [key: number]: string } = {
+       0: 'your-firstpage',
+       1: 'i-your-tale',
+       // ...
+     };
+     return filenames[act] || '';
+   };
+   ```
+
+3. **Add video assets** (optional) in `public/assets/`:
+   ```typescript
+   const getActVideo = (act: number): string | null => {
+     const videoMap: { [key: number]: string } = {
+       1: '/assets/your-video.mp4',
+       // ...
+     };
+     return videoMap[act] || null;
+   };
+   ```
+
+### Customizing Soulbae
+
+1. **Update API URL** in `src/lib/soulbae.ts`:
+   ```typescript
+   const SOULBAE_URL = process.env.NEXT_PUBLIC_SOULBAE_URL || 'https://your-domain.com/mage';
+   ```
+
+2. **Update character file** (if using NEAR Shade Agent):
+   - Edit `soulbae-character.md`
+   - Deploy to your Shade Agent instance
+
+### Changing Colors & Styling
+
+Edit `tailwind.config.ts`:
+```typescript
+colors: {
+  primary: '#6366f1',    // Your primary color
+  secondary: '#8b5cf6',  // Your secondary color
+  accent: '#06b6d4',     // Your accent color
+  // ...
+}
+```
+
+### Adding New Pages
+
+1. Create route in `src/app/`:
+   ```
+   src/app/your-page/page.tsx
+   ```
+
+2. Add navigation link in `src/app/layout.tsx` or individual pages
+
+## 📦 Deployment
+
+### Static Export (Recommended)
+
+This project uses Next.js static export (`output: 'export'`), so it can be deployed anywhere:
+
+**Cloudflare Pages:**
 ```bash
 npm run build
-npm start
+# Upload ./out directory to Cloudflare Pages
+# Build command: npm run build
+# Output directory: out
 ```
+
+**Vercel:**
+```bash
+vercel deploy --prod
+# Automatically detects Next.js and builds
+```
+
+**Netlify:**
+```bash
+netlify deploy --prod --dir=out
+```
+
+**Any Static Host:**
+- Upload the `out/` directory to any static hosting service
+- No server required!
+
+### Environment Variables
+
+Create `.env.local` for development:
+```bash
+NEXT_PUBLIC_SOULBAE_URL=https://your-soulbae-api.com
+```
+
+For production, set these in your hosting platform's environment variables.
+
+## 🔒 Privacy & Security
+
+### What's Private
+
+- **Donation amounts** - Only visible to sender/receiver
+- **Wallet addresses** - Shielded z-addresses
+- **User conversations** - Not stored by Soulbae
+- **Transaction timing** - Hidden in shielded pool
+
+### What's Public
+
+- **Story content** - Public markdown files
+- **Proverbs** - In encrypted memos (only readable by recipient)
+- **TEE Attestation** - Verifiable proof of privacy
+
+### Privacy Guarantees
+
+- **Soulbae** runs in TEE (Trusted Execution Environment)
+- **Zcash** uses shielded pool (z→z transactions)
+- **No tracking** - No analytics, no cookies, no surveillance
+
+## 📚 Documentation
+
+- **[SPELLBOOK_DEPLOYMENT_GUIDE.md](./SPELLBOOK_DEPLOYMENT_GUIDE.md)** - Complete deployment walkthrough
+- **[PROJECT_OVERVIEW.md](./PROJECT_OVERVIEW.md)** - Architecture details
+- **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)** - Original deployment guide
+- **[SOULBAE_CONFIG.md](./SOULBAE_CONFIG.md)** - Soulbae configuration
+
+## 🛠️ Development
+
+### Available Scripts
+
+```bash
+npm run dev      # Start dev server (port 8000)
+npm run build    # Build static site
+npm start        # Serve built site (port 5000)
+npm run lint     # Run ESLint
+```
+
+### Tech Stack
+
+- **Next.js 14** - React framework with App Router
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **Framer Motion** - Animations
+- **React Markdown** - Markdown rendering
+- **Zcash** - Privacy-preserving blockchain
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## 📄 License
+
+See [LICENSE](./LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **Zero Knowledge Spellbook** - Original story inspiration
+- **NEAR AI** - Shade Agent technology
+- **Zcash** - Privacy-preserving transactions
+
+---
+
+**"just another mage, sharing a spellbook"** 🧙‍♂️📖
+
+For questions or support, open an issue or check the documentation files.

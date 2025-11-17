@@ -2,7 +2,7 @@
 
 I told you this was about **progressive trust** rather than demanded trust. About capabilities that genuinely open doors, enable relationships, 🤝 accumulate capital.
 
-But more importantly, I told you this was about understanding **sovereignty's four aspects**:
+But more importantly, I told you this was about understanding key **sovereignty's aspects**:
 
 **The Blade (Swordsman)**—**privacy as boundary-making**, the power to cut between revealed 🤝 hidden, the defensive art that says "I control what you know about me."
 
