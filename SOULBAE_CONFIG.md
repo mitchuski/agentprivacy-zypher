@@ -22,7 +22,8 @@ Soulbae runs in a Trusted Execution Environment (AWS Nitro) and is trained on th
 ✅ **No data persistence** - Conversations never stored  
 ✅ **Information bounds** - Never sees amounts, wallets, or timing  
 ✅ **RAG-trained** - Understands all 30 spellbook tales  
-✅ **Proverb compression** - Helps create 512-byte inscriptions
+✅ **Proverb compression** - Helps create 512-byte inscriptions  
+✅ **RPP format** - Provides proverbs in `[RPP] proverb: '...'` or `[RPP] proverb: "..."` format (supports both quote styles)
 
 ---
 

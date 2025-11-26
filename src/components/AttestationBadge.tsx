@@ -5,51 +5,86 @@ import { Attestation } from '@/lib/soulbae';
 
 interface AttestationBadgeProps {
   attestation: Attestation | null;
-  isLoading?: boolean;
 }
 
-export default function AttestationBadge({ attestation, isLoading }: AttestationBadgeProps) {
-  if (isLoading) {
+export default function AttestationBadge({ attestation }: AttestationBadgeProps) {
+  if (!attestation || !attestation.signing_address) {
+    return null;
+  }
+
+  // Use signing_address (NEAR Cloud AI format) or fallback to legacy attestation field
+  const signingAddress = attestation.signing_address || attestation.attestation || '';
+  
+  // If no signing address, show as unavailable
+  if (!signingAddress) {
     return (
-      <div className="flex items-center gap-2 px-4 py-2 bg-surface/50 border border-surface/50 rounded-lg">
-        <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-        <span className="text-sm text-text-muted">Verifying TEE attestation...</span>
+      <div className="flex flex-col gap-2 px-4 py-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+        <div className="flex items-center gap-2">
+          <span className="text-yellow-400">⚠️</span>
+          <span className="text-sm text-yellow-400 font-medium">TEE attestation incomplete</span>
+        </div>
+        <p className="text-xs text-yellow-400/80 ml-6">
+          Attestation received but missing signing address. Check console for details.
+        </p>
       </div>
     );
   }
-
-  if (!attestation) {
-    return (
-      <div className="flex items-center gap-2 px-4 py-2 bg-red-500/10 border border-red-500/30 rounded-lg">
-        <span className="text-red-400">⚠️</span>
-        <span className="text-sm text-red-400">TEE attestation unavailable</span>
-      </div>
-    );
-  }
-
-  const shortAttestation = attestation.attestation.substring(0, 16) + '...';
+  
+  const shortAddress = signingAddress.length > 16 
+    ? `${signingAddress.substring(0, 10)}...${signingAddress.substring(signingAddress.length - 6)}`
+    : signingAddress;
+  const nodeCount = attestation.all_attestations?.length || 0;
+  const hasNvidia = !!attestation.nvidia_payload;
+  const hasIntel = !!attestation.intel_quote;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/30 rounded-lg"
+      className="flex flex-col gap-2 px-4 py-3 bg-primary/10 border border-primary/30 rounded-lg"
     >
-      <span className="text-primary">🛡️</span>
-      <div className="flex flex-col">
-        <span className="text-xs text-text-muted">TEE Attested</span>
-        <span className="text-sm font-mono text-primary">{shortAttestation}</span>
+      <div className="flex items-center gap-2">
+        <span className="text-primary">🛡️</span>
+        <div className="flex flex-col flex-1">
+          <span className="text-xs text-text-muted">NEAR Cloud AI TEE Attested</span>
+          <span className="text-sm font-mono text-primary">{shortAddress}</span>
+        </div>
+        {attestation.verification_url && (
+          <a
+            href={attestation.verification_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-auto text-xs text-primary hover:text-primary/80 underline"
+          >
+            Verify
+          </a>
+        )}
       </div>
-      {attestation.verification_url && (
-        <a
-          href={attestation.verification_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="ml-auto text-xs text-primary hover:text-primary/80 underline"
-        >
-          Verify
-        </a>
-      )}
+      
+      {/* Attestation Details */}
+      <div className="flex items-center gap-4 text-xs text-text-muted pt-1 border-t border-primary/20">
+        {nodeCount > 0 && (
+          <span className="flex items-center gap-1">
+            <span>🌐</span>
+            <span>{nodeCount} node{nodeCount !== 1 ? 's' : ''}</span>
+          </span>
+        )}
+        {hasNvidia && (
+          <span className="flex items-center gap-1">
+            <span>🎮</span>
+            <span>NVIDIA TEE</span>
+          </span>
+        )}
+        {hasIntel && (
+          <span className="flex items-center gap-1">
+            <span>🔒</span>
+            <span>Intel SGX</span>
+          </span>
+        )}
+        {!hasNvidia && !hasIntel && (
+          <span className="text-text-muted/70">TEE verification active</span>
+        )}
+      </div>
     </motion.div>
   );
 }

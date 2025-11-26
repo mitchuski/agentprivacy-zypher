@@ -78,26 +78,36 @@ const loadMarkdown = async () => {
 ```
 User clicks "Talk to Soulbae" in SwordsmanPanel
   ↓
-Opens /mage?tale_id=act-i-venice in new window
+Opens /mage (or /mage?tale_id=act-i-venice) in new window
+  ↓
+If no tale selected: Shows tale selection UI (11 story acts + 30 zero tales)
+  ↓
+User selects a tale (or one is pre-selected)
   ↓
 Mage page loads, shows TEE attestation
   ↓
 User chats with Soulbae about the tale
   ↓
-Soulbae suggests proverbs
+Soulbae provides RPP proverb: [RPP] proverb: '...'
   ↓
-User selects a proverb
+Proverb is automatically highlighted in chat
   ↓
-Clicks "Copy to Zashi"
+Learn button becomes enabled (next to New Session button)
   ↓
-Memo formatted and copied to clipboard
+User clicks "Learn" → Proverb copied to clipboard
+  ↓
+OR user manually enters proverb in "Step 1" field
+  ↓
+Clicks "Copy to Zashi" → Memo formatted and copied
 ```
 
 **Code Path:**
-- `src/app/mage/page.tsx` - Mage chat interface
+- `src/app/mage/page.tsx` - Mage chat interface with tale selection
+- `src/components/ChatMessage.tsx` - Renders messages with RPP highlighting
 - `src/lib/soulbae.ts` - API client for Soulbae
 - `chatWithSoulbae()` - Sends messages to Soulbae API
 - `formatZcashMemo()` - Formats proverb for Zcash
+- `extractProverbFromMessages()` - Extracts RPP proverb for Learn button
 
 **API Request:**
 ```typescript
@@ -240,15 +250,23 @@ handleSend() called
     ↓
 chatWithSoulbae() API call
     ↓
-POST to Soulbae API
+POST to Soulbae API (NEAR Cloud AI)
     ↓
-Soulbae (in TEE) processes
+Soulbae processes (streaming response)
     ↓
-Returns response + proverbs
+Response streams in character-by-character
     ↓
-Update UI with response
+ChatMessage component renders with RPP highlighting
     ↓
-Show proverb suggestions
+If [RPP] proverb: '...' detected → Highlighted box appears
+    ↓
+Learn button becomes enabled (after streaming completes)
+    ↓
+User clicks "Learn" → extractProverbFromMessages() extracts proverb
+    ↓
+Proverb text copied to clipboard (without RPP wrapper)
+    ↓
+Button shows "cast" animation
 ```
 
 ### Zcash Donation
@@ -288,24 +306,32 @@ Only recipient can decrypt
 - Integrates SwordsmanPanel
 
 **2. Mage Page (`src/app/mage/page.tsx`)**
+- Tale selection UI (when no tale selected)
 - Chat interface with Soulbae
 - Displays TEE attestation
-- Manages privacy budget
+- Manages privacy budget (6 queries max)
+- RPP proverb extraction and Learn button
 - Formats memos for Zcash
 
-**3. Swordsman Panel (`src/components/SwordsmanPanel.tsx`)**
+**3. ChatMessage (`src/components/ChatMessage.tsx`)**
+- Renders individual messages
+- Handles user vs assistant styling
+- RPP proverb detection and highlighting (supports both single and double quotes)
+- Markdown rendering
+
+**4. Swordsman Panel (`src/components/SwordsmanPanel.tsx`)**
 - Donation interface
 - Proverb input/validation
 - Copy to Zashi functionality
 - Opens Mage in new window
 
-**4. Zcash Memo Utils (`src/lib/zcash-memo.ts`)**
+**5. Zcash Memo Utils (`src/lib/zcash-memo.ts`)**
 - `formatZcashMemo()` - Creates rpp-v1 format
 - `parseZcashMemo()` - Parses memos
 - `validateProverb()` - Checks length
 - `getTaleIdFromAct()` - Maps acts to IDs
 
-**5. Soulbae Client (`src/lib/soulbae.ts`)**
+**6. Soulbae Client (`src/lib/soulbae.ts`)**
 - `chatWithSoulbae()` - API communication
 - `getAttestation()` - TEE verification
 - `generateSessionId()` - Privacy budget tracking

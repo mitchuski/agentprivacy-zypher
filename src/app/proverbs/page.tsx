@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import SwordsmanPanel from '@/components/SwordsmanPanel';
 import { getTaleIdFromAct } from '@/lib/zcash-memo';
+import { getStats } from '@/lib/oracle-api';
 
 // Tale metadata from zero spellbook (for spell matching)
 const taleData: { [key: number]: { title: string; spell: string; proverb: string } } = {
@@ -116,9 +117,30 @@ export default function ProverbsPage() {
   const [proverbProofs, setProverbProofs] = useState<ProverbProof[]>(mockProverbProofs);
   const [selectedAct, setSelectedAct] = useState<number | null>(null);
   const [selectedSpellbook, setSelectedSpellbook] = useState<'all' | 'story' | 'zero'>('all');
-  const [proofTypeFilter, setProofTypeFilter] = useState<'all' | 'display' | 'learn'>('all');
+  const [proofTypeFilter, setProofTypeFilter] = useState<'all' | 'learn'>('all');
   const [donationAct, setDonationAct] = useState<number | null>(null);
   const [donationSpellbook, setDonationSpellbook] = useState<'story' | 'zero'>('story');
+  const [stats, setStats] = useState<any>(null);
+  const [loadingStats, setLoadingStats] = useState(true);
+
+  // Fetch stats from Oracle (optional - API may not be available)
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const oracleStats = await getStats();
+        if (oracleStats) {
+          setStats(oracleStats);
+        }
+      } catch (error) {
+        // Silently handle errors - Oracle API may not be configured
+        // Stats are optional and not critical for the page to function
+      } finally {
+        setLoadingStats(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
 
   const filteredProofs = proverbProofs.filter(p => {
     const actMatch = !selectedAct || p.actNumber === selectedAct;
@@ -189,12 +211,6 @@ export default function ProverbsPage() {
                   proverbs
                 </Link>
                 <Link
-                  href="/the-first"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  the first
-                </Link>
-                <Link
                   href="/mage"
                   className="text-text hover:text-primary transition-colors font-medium"
                 >
@@ -214,12 +230,12 @@ export default function ProverbsPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-text mb-4">Proverb Proofs</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-text mb-4">Proverb Revelation Proofs</h1>
             <p className="text-text-muted text-lg mb-4">
-              All published inscriptions of meaning—unique compressions demonstrating deep engagement with each tale
+              All published inscriptions of shared meaning. Unique compressions demonstrating deep engagement with each tale, agentic trust task primitives.
             </p>
             <p className="text-text-muted">
-              A <strong className="text-text">public proverb proof</strong> is a published inscription that serves as a commitment to understanding—a verifiable demonstration of deep engagement with each tale. While proverb proofs can be used locally in peer-to-peer private exchanges, the public proof makes your engagement visible and verifiable on the blockchain, creating a permanent record that contributes to the collective wisdom of the community.
+              A <strong className="text-text">public proverb proof</strong> is a published inscription that serves as a commitment to understanding. A verifiable demonstration of deep engagement with each tale. While proverb proofs can be used locally in peer-to-peer private exchanges, the public proof makes your engagement visible and verifiable on the blockchain, creating a permanent record that contributes to the collective wisdom of the community.
             </p>
           </motion.div>
 
@@ -267,19 +283,18 @@ export default function ProverbsPage() {
                 <span className="text-sm text-text-muted">Type:</span>
                 <select
                   value={proofTypeFilter}
-                  onChange={(e) => setProofTypeFilter(e.target.value as 'all' | 'display' | 'learn')}
+                  onChange={(e) => setProofTypeFilter(e.target.value as 'all' | 'learn')}
                   className="px-3 py-1 bg-background border border-surface/50 rounded text-text text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="all">All Types</option>
-                  <option value="display">Display (1 ZEC)</option>
-                  <option value="learn">Published (0.01 ZEC)</option>
+                  <option value="learn">[🧙‍♂️] Proverb Proofs (0.01 ZEC)</option>
                 </select>
               </div>
             </div>
             
-            {/* Donation Act Selection */}
-            <div className="mt-4 pt-4 border-t border-surface/50">
-              <p className="text-sm font-semibold text-text mb-2">Protect a Spell:</p>
+            {/* Donation Act Selection - Locked (Future Release) */}
+            <div className="mt-4 pt-4 border-t border-surface/50 opacity-50 pointer-events-none">
+              <p className="text-sm font-semibold text-text mb-2">Protect a Spell: <span className="text-xs text-text-muted italic">(Future Release)</span></p>
               <div className="flex flex-wrap items-center gap-3">
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-text-muted">Spellbook:</span>
@@ -289,7 +304,8 @@ export default function ProverbsPage() {
                       setDonationSpellbook(e.target.value as 'story' | 'zero');
                       setDonationAct(null);
                     }}
-                    className="px-2 py-1 bg-background border border-surface/50 rounded text-text text-xs focus:outline-none focus:ring-2 focus:ring-primary"
+                    disabled
+                    className="px-2 py-1 bg-background border border-surface/50 rounded text-text text-xs focus:outline-none focus:ring-2 focus:ring-primary cursor-not-allowed"
                   >
                     <option value="story">Story</option>
                     <option value="zero">Zero</option>
@@ -300,7 +316,8 @@ export default function ProverbsPage() {
                   <select
                     value={donationAct || ''}
                     onChange={(e) => setDonationAct(e.target.value ? parseInt(e.target.value) : null)}
-                    className="px-2 py-1 bg-background border border-surface/50 rounded text-text text-xs focus:outline-none focus:ring-2 focus:ring-primary"
+                    disabled
+                    className="px-2 py-1 bg-background border border-surface/50 rounded text-text text-xs focus:outline-none focus:ring-2 focus:ring-primary cursor-not-allowed"
                   >
                     <option value="">Select Act...</option>
                     {donationSpellbook === 'story' 
@@ -327,6 +344,7 @@ export default function ProverbsPage() {
                   <button
                     onClick={() => setDonationAct(null)}
                     className="text-xs text-text-muted hover:text-text"
+                    disabled
                   >
                     Clear
                   </button>
@@ -342,15 +360,20 @@ export default function ProverbsPage() {
             transition={{ delay: 0.15 }}
             className="mb-6 p-4 bg-background/50 border border-surface/50 rounded-lg"
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-              <div className="bg-primary/10 border border-primary/30 rounded p-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs mb-4">
+              <div className="bg-primary/10 border border-primary/30 rounded p-3 opacity-50">
                 <div className="font-semibold text-primary mb-1 flex items-center gap-2">
                   <span>⚔️</span>
                   <span>Protecting the Spell (1 ZEC)</span>
+                  <span className="text-xs text-text-muted italic ml-auto">(Future Release)</span>
                 </div>
-                <div className="text-text-muted mb-2">Swordsmen stake 1 ZEC to protect the spellbook. First 100 guardians per act store their proverb privately in the spellbook, with public stake proof.</div>
+                <div className="text-text-muted mb-2">Swordsmen stake 1 ZEC to protect the spellbook. Guardians store their proverb privately in the spellbook, with public stake proof.</div>
                 <div className="text-xs text-primary/80 border-t border-primary/20 pt-2 mt-2">
                   <strong>Private:</strong> Proverb in spellbook • <strong>Public:</strong> 1 ZEC stake proof
+                </div>
+                <div className="text-xs mt-2 pt-2 border-t border-primary/20 text-text-muted">
+                  <p className="mb-1"><strong className="text-text">VRC Enhancement:</strong> Protection signals strengthen existing VRCs and demonstrate commitment to the network.</p>
+                  <p className="italic text-xs mt-1 text-primary/80">"We prove the guard is posted, but keep the guard's instructions secret."</p>
                 </div>
               </div>
               <div className="bg-secondary/10 border border-secondary/30 rounded p-3">
@@ -362,6 +385,31 @@ export default function ProverbsPage() {
                 <div className="text-xs text-secondary/80 border-t border-secondary/20 pt-2 mt-2">
                   <strong>Public:</strong> Proverb commitment • <strong>Private:</strong> Fees in treasury
                 </div>
+                <div className="text-xs mt-2 pt-2 border-t border-secondary/20 text-text-muted">
+                  <p className="mb-1"><strong className="text-text">VRC Foundation:</strong> Each signal demonstrates understanding. When you meet others who've learned, you can form bilateral VRCs.</p>
+                  <p className="text-secondary/80"><strong>Progressive Trust:</strong> Signals accumulate → VRCs form → Armor earned → Guardian candidacy</p>
+                  <p className="italic text-xs mt-1 text-secondary/80">"We announce the spell exists, but keep the earnings shielded."</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* VRC System Card - Future Release */}
+            <div className="card bg-accent/10 border-accent/30 mt-4 opacity-75">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-sm font-semibold text-text">(⚔️⊥🧙‍♂️)🙂 Progressive Relationship Trust System (VRC)</h3>
+                <span className="text-xs text-accent/80 font-medium italic">(Future Release)</span>
+              </div>
+              <div className="text-xs text-text-muted mb-3 pb-3 border-b border-accent/20">
+                <p><strong className="text-text">VRCs (Verifiable Relationship Credentials)</strong> are bilateral trust relationships established through demonstrated comprehension. Each learning signal builds your trust portfolio.</p>
+              </div>
+              <div className="mt-3 pt-3 border-t border-accent/20 text-xs text-text-muted">
+                <p><strong className="text-text">How VRCs Build Trust:</strong></p>
+                <ul className="list-disc list-inside space-y-1 mt-1 ml-2">
+                  <li>Signals prove comprehension → Foundation for relationships</li>
+                  <li>Bilateral proverbs → VRC formation with other learners</li>
+                  <li>VRC portfolio → Entry to Trust Graph Planes</li>
+                  <li>Progressive armor → Guardian candidacy through verified behavior</li>
+                </ul>
               </div>
             </div>
           </motion.div>
@@ -403,12 +451,8 @@ export default function ProverbsPage() {
                           <span className="text-xs text-text-muted">
                             {proof.actName}
                           </span>
-                          <span className={`px-2 py-1 text-xs font-semibold rounded ${
-                            proof.type === 'display'
-                              ? 'bg-primary/20 text-primary border border-primary/30'
-                              : 'bg-secondary/20 text-secondary border border-secondary/30'
-                          }`}>
-                            {proof.type === 'display' ? '1 ZEC Display' : '0.01 ZEC Published'}
+                          <span className="px-2 py-1 text-xs font-semibold rounded bg-secondary/20 text-secondary border border-secondary/30">
+                            [🧙‍♂️] Proverb Proofs (0.01 ZEC)
                           </span>
                         </div>
                         <p className="text-text italic mb-2 text-lg leading-relaxed">
@@ -436,15 +480,44 @@ export default function ProverbsPage() {
           </motion.div>
 
           {/* Stats Footer */}
-          <div className="mt-6 pt-6 border-t border-surface/50 text-center">
-            <p className="text-xs text-text-muted">
-              Showing {filteredProofs.length} of {proverbProofs.length} proverb proofs
-              {selectedSpellbook !== 'all' && ` from ${selectedSpellbook} spellbook`}
-              {selectedAct && ` in ${proverbProofs.find(p => p.actNumber === selectedAct)?.actName || `Act ${selectedAct}`}`}
-            </p>
-            <p className="text-xs text-text-muted mt-2">
-              Privacy-preserving: Only proverb content and metadata shown. No wallet addresses or amounts.
-            </p>
+          <div className="mt-6 pt-6 border-t border-surface/50">
+            {stats && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div className="text-center p-4 bg-surface/50 rounded-lg">
+                  <div className="text-2xl font-bold text-primary mb-1">
+                    {stats.total_submissions || 0}
+                  </div>
+                  <div className="text-xs text-text-muted">Total Submissions</div>
+                </div>
+                <div className="text-center p-4 bg-surface/50 rounded-lg">
+                  <div className="text-2xl font-bold text-green-400 mb-1">
+                    {stats.completed || 0}
+                  </div>
+                  <div className="text-xs text-text-muted">Inscribed</div>
+                </div>
+                <div className="text-center p-4 bg-surface/50 rounded-lg">
+                  <div className="text-2xl font-bold text-yellow-400 mb-1">
+                    {stats.avg_quality_score ? (stats.avg_quality_score * 100).toFixed(1) + '%' : 'N/A'}
+                  </div>
+                  <div className="text-xs text-text-muted">Avg Quality Score</div>
+                </div>
+              </div>
+            )}
+            <div className="text-center">
+              <p className="text-xs text-text-muted">
+                Showing {filteredProofs.length} of {proverbProofs.length} proverb proofs
+                {selectedSpellbook !== 'all' && ` from ${selectedSpellbook} spellbook`}
+                {selectedAct && ` in ${proverbProofs.find(p => p.actNumber === selectedAct)?.actName || `Act ${selectedAct}`}`}
+              </p>
+              <p className="text-xs text-text-muted mt-2">
+                Privacy-preserving: Only proverb content and metadata shown. No wallet addresses or amounts.
+              </p>
+              {loadingStats && (
+                <p className="text-xs text-text-muted mt-2">
+                  Loading statistics from Oracle...
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </section>
