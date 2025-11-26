@@ -6,20 +6,20 @@ import Link from 'next/link';
 import SwordsmanPanel from '@/components/SwordsmanPanel';
 import { getTaleIdFromAct } from '@/lib/zcash-memo';
 
-// Spell mappings for both spellbooks
+// Spell mappings for both spellbooks - must match inscriptions
 const spellMappings: { [key: string]: { [actNumber: number]: string } } = {
   story: {
-    1: '🗡️🛡️ → ⚔️ (boundaries preserve sovereignty)',
-    2: '📖🔮 → ✨ (delegation without surrender)',
-    3: '🐉💎 → 🏰 (progressive trust builds castles)',
-    4: '⚔️💧 → 🔪 (solo combat proves the swordsman)',
-    5: '🛡️⚡ → 🌐 (light armor enables coordination)',
-    6: '🔐✋✋✋ → 🚪 (three attestations open the door)',
-    7: '🪞🪞 → 👁️ (two mirrors preserve dignity)',
-    8: '📜✋×15 → 🏛️ (fifteen attestations earn Heavy)',
-    9: '🛡️💰 → 🔒 (privacy shield becomes certainty)',
-    10: '🔺🧠 → 🌳 (triangle steers through discrete thought)',
-    11: '⚔️/🔮 = φ = 👑 (blade divided by spell equals sovereignty)',
+    1: '📖💰 → 🐉⏳ → ⚔️🔮',
+    2: '🗡️🔮 ← 👤✓ → 🔒📝 → 🤝📜 → 🕸️',
+    3: '👤✓ → ⚔️📖 → 🔒📝 → 🤝📜 → 🕸️✓ → 🌐🏛️',
+    4: '🗡️ → 🍪⚔️ → 🔒 → 📖📝 → 🤝📜₁',
+    5: '🗡️📖 + 🤝📜₃ → 🛡️ → ⚔️⚔️⚔️ → 🔒📝₊',
+    6: '🤝📜 + 🤝📜 + 🤝📜 = 🚪🌐',
+    7: '1️⃣🤖 → 🪞→👤\n2️⃣🤖 → 🪞→✨ + 👤',
+    8: '🗡️📖 + 🤝📜₁₅ → 🛡️🛡️ → 💎🏛️',
+    9: '🛡️ → 🛡️⚡ → 💰🔒 → 🕶️🦓',
+    10: '🌳 ⊥ 🐦‍⬛🧠 → 🐦‍⬛💭 → △{🌳, 🐦‍⬛💭, 🐦‍⬛🧠}',
+    11: '⚔️ ➗ 📖 = 🌀',
   },
   zero: {
     1: '🏛️(🧙‍♂️³) → ZKP = {✓complete, ✓sound, ✓zero-knowledge}',
@@ -186,12 +186,6 @@ export default function StoryStatsPage() {
                   proverbs
                 </Link>
                 <Link
-                  href="/the-first"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  the first
-                </Link>
-                <Link
                   href="/mage"
                   className="text-text hover:text-primary transition-colors font-medium"
                 >
@@ -231,16 +225,16 @@ export default function StoryStatsPage() {
                 </select>
               </div>
               
-              {/* Donation Act Selection */}
+              {/* Learn a Spell Selection */}
               <div className="flex items-center gap-2">
-                <span className="text-sm text-text-muted">Protect a Spell:</span>
+                <span className="text-sm text-text-muted">Learn a Spell:</span>
                 <select
                   value={donationSpellbook}
                   onChange={(e) => {
                     setDonationSpellbook(e.target.value as 'story' | 'zero');
                     setDonationAct(null);
                   }}
-                  className="px-2 py-1 bg-background border border-surface/50 rounded text-text text-xs focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="px-2 py-1 bg-background border border-secondary/50 rounded text-text text-xs focus:outline-none focus:ring-2 focus:ring-secondary"
                 >
                   <option value="story">Story</option>
                   <option value="zero">Zero</option>
@@ -248,7 +242,7 @@ export default function StoryStatsPage() {
                 <select
                   value={donationAct || ''}
                   onChange={(e) => setDonationAct(e.target.value ? parseInt(e.target.value) : null)}
-                  className="px-2 py-1 bg-background border border-surface/50 rounded text-text text-xs focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="px-2 py-1 bg-background border border-secondary/50 rounded text-text text-xs focus:outline-none focus:ring-2 focus:ring-secondary"
                 >
                   <option value="">Select Act...</option>
                   {stats
@@ -281,26 +275,50 @@ export default function StoryStatsPage() {
           >
             <h2 className="text-2xl font-bold text-text mb-6 flex items-center gap-2">
               <span>📊</span>
-              <span>Spell Protection</span>
+              <span>Spellbook Statistics</span>
             </h2>
             <div className="mb-6 p-4 bg-accent/10 border border-accent/30 rounded-lg text-xs">
-              <h3 className="font-semibold text-text mb-2">(⚔️⊥🧙‍♂️)🙂</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div className="bg-secondary/10 border border-secondary/30 rounded p-3">
+              <h3 className="font-semibold text-text mb-2">(⚔️⊥🧙‍♂️)🙂 Progressive Relationship Trust System (VRC)</h3>
+              <p className="text-text-muted mb-3 pb-3 border-b border-accent/20">
+                <strong className="text-text">VRCs (Verifiable Relationship Credentials)</strong> are bilateral trust relationships established through demonstrated comprehension. Each learning signal builds your trust portfolio, enabling progressive trust and network coordination.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                <div className="bg-secondary/10 border-2 border-secondary/40 rounded p-3">
                   <div className="font-semibold text-secondary mb-1 flex items-center gap-2">
                     <span>🧙‍♂️</span>
-                    <span>Learning the Spell (0.01 ZEC)</span>
+                    <span>Learning the Spell (0.01 ZEC) - Active</span>
+                    <span className="text-xs bg-secondary/30 text-secondary px-1.5 py-0.5 rounded ml-auto">Focus</span>
                   </div>
                   <p className="text-text-muted"><strong className="text-text">Public:</strong> Proverb commitment</p>
                   <p className="text-text-muted"><strong className="text-text">Private:</strong> Fees in treasury</p>
+                  <p className="text-xs text-secondary mt-2 pt-2 border-t border-secondary/20">
+                    <strong>VRC Foundation:</strong> Each signal demonstrates understanding and enables VRC formation with other learners
+                  </p>
                 </div>
-                <div className="bg-primary/10 border border-primary/30 rounded p-3">
-                  <div className="font-semibold text-primary mb-1 flex items-center gap-2">
+                <div className="bg-surface/20 border border-surface/40 rounded p-3 opacity-60">
+                  <div className="font-semibold text-text-muted mb-1 flex items-center gap-2">
                     <span>⚔️</span>
-                    <span>Protecting the Spell (1 ZEC)</span>
+                    <span>Protecting the Spell (1 ZEC) - Locked</span>
+                    <span className="text-xs bg-surface/30 text-text-muted px-1.5 py-0.5 rounded ml-auto">🔒</span>
                   </div>
-                  <p className="text-text-muted"><strong className="text-text">Private:</strong> Proverb in spellbook</p>
-                  <p className="text-text-muted"><strong className="text-text">Public:</strong> 1 ZEC stake proof</p>
+                  <p className="text-text-muted"><strong className="text-text-muted">Private:</strong> Proverb in spellbook</p>
+                  <p className="text-text-muted"><strong className="text-text-muted">Public:</strong> 1 ZEC stake proof</p>
+                  <p className="text-xs text-text-muted mt-2 pt-2 border-t border-surface/20">
+                    <strong>VRC Enhancement:</strong> Protection signals strengthen existing VRCs and demonstrate commitment
+                  </p>
+                </div>
+              </div>
+              <div className="mt-3 pt-3 border-t border-accent/20">
+                <p className="text-text-muted mb-2"><strong className="text-text">How VRCs Build Progressive Trust:</strong></p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-text-muted">
+                  <div>
+                    <p>• <strong className="text-text">Signals</strong> → Prove comprehension</p>
+                    <p>• <strong className="text-text">Bilateral proverbs</strong> → VRC formation</p>
+                  </div>
+                  <div>
+                    <p>• <strong className="text-text">VRC portfolio</strong> → Trust Graph entry</p>
+                    <p>• <strong className="text-text">Progressive armor</strong> → Guardian candidacy</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -309,16 +327,19 @@ export default function StoryStatsPage() {
             <div className="mb-6">
               <h3 className="text-lg font-semibold text-primary mb-3">Story Spellbook</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-primary/10 border border-primary/30 rounded-lg p-4">
+                <div className="bg-surface/20 border border-surface/40 rounded-lg p-4 opacity-60 relative">
+                  <div className="absolute top-2 right-2">
+                    <span className="text-xs bg-surface/90 text-text-muted px-2 py-1 rounded border border-surface/50">🔒 Locked</span>
+                  </div>
                   <div className="flex items-center gap-2 mb-1">
                     <span>⚔️</span>
                     <div className="text-text-muted text-sm">Protecting the Spell</div>
                   </div>
-                  <div className="text-3xl font-bold text-primary">{storyDisplayCount} / 1100</div>
+                  <div className="text-3xl font-bold text-text-muted">{storyDisplayCount} / 1100</div>
                   <div className="text-xs text-text-muted mt-1">{storyDisplayTotal.toFixed(2)} ZEC (1 ZEC each)</div>
-                  <div className="text-xs text-primary mt-2">First 100 guardians per act (11 acts × 100 = 1100 total) • Proverb stored privately • Public stake proof</div>
-                  <div className="text-xs text-primary/80 mt-2 border-t border-primary/20 pt-2">
-                    <strong>Private:</strong> Proverb in spellbook • <strong>Public:</strong> 1 ZEC stake proof
+                  <div className="text-xs text-text-muted mt-2">Guardians per act • Proverb stored privately • Public stake proof</div>
+                  <div className="text-xs text-text-muted/60 mt-2 border-t border-surface/20 pt-2">
+                    <strong>Available later:</strong> In future versions after experimenting with learning and signaling
                   </div>
                 </div>
                 <div className="bg-secondary/10 border border-secondary/30 rounded-lg p-4">
@@ -340,16 +361,19 @@ export default function StoryStatsPage() {
             <div className="mb-6">
               <h3 className="text-lg font-semibold text-accent mb-3">Zero Spellbook</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-accent/10 border border-accent/30 rounded-lg p-4">
+                <div className="bg-surface/20 border border-surface/40 rounded-lg p-4 opacity-60 relative">
+                  <div className="absolute top-2 right-2">
+                    <span className="text-xs bg-surface/90 text-text-muted px-2 py-1 rounded border border-surface/50">🔒 Locked</span>
+                  </div>
                   <div className="flex items-center gap-2 mb-1">
                     <span>⚔️</span>
                     <div className="text-text-muted text-sm">Protecting the Spell</div>
                   </div>
-                  <div className="text-3xl font-bold text-accent">{zeroDisplayCount} / 3000</div>
+                  <div className="text-3xl font-bold text-text-muted">{zeroDisplayCount} / 3000</div>
                   <div className="text-xs text-text-muted mt-1">{zeroDisplayTotal.toFixed(2)} ZEC (1 ZEC each)</div>
-                  <div className="text-xs text-accent mt-2">First 100 guardians per tale (30 tales × 100 = 3000 total) • Proverb stored privately • Public stake proof</div>
-                  <div className="text-xs text-accent/80 mt-2 border-t border-accent/20 pt-2">
-                    <strong>Private:</strong> Proverb in spellbook • <strong>Public:</strong> 1 ZEC stake proof
+                  <div className="text-xs text-text-muted mt-2">Guardians per tale • Proverb stored privately • Public stake proof</div>
+                  <div className="text-xs text-text-muted/60 mt-2 border-t border-surface/20 pt-2">
+                    <strong>Available later:</strong> In future versions after experimenting with learning and signaling
                   </div>
                 </div>
                 <div className="bg-secondary/10 border border-secondary/30 rounded-lg p-4">

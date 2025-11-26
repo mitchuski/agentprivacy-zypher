@@ -9,39 +9,39 @@ import SwordsmanPanel from '@/components/SwordsmanPanel';
 
 // Tale metadata from manifest
 const taleData: { [key: number]: { title: string; spell: string; proverb: string } } = {
-  1: { title: "The Monastery of Hidden Knowledge", spell: "🏛️(🧙‍♂️³) → ZKP = {✓complete, ✓sound, ✓zero-knowledge}", proverb: "Three properties guard the gate of honest proof: completeness lets truth enter, soundness bars deception, zero-knowledge preserves mystery." },
+  1: { title: "The Monastery of Hidden Knowledge", spell: "🏛️(🧙‍♂️³) → ZKP = {✓complete, ✓sound, ✓zero-knowledge}", proverb: "Three properties guard the gate of honest proof: completeness lets truth enter, soundness bars deception, zero-knowledge preserves mystery. Together they form the first tetrahedron—the foundation upon which the lattice grows." },
   2: { title: "The Three Trials of Truth", spell: "🎲(random) → CRS → 🌍(public)", proverb: "The foundation laid in public view creates no vulnerability if built with many hands—trust distributed becomes trust earned." },
   3: { title: "The Silent Messenger", spell: "🎭(interactive) + 🔮(hash-oracle) → 🔇(non-interactive)", proverb: "The oracle that answers all questions truthfully but learns nothing in return—this is the heart of non-interactive proof." },
-  4: { title: "The Fields of Finite Wisdom", spell: "𝔽_q = {0, 1, ..., q-1} → ➕ ✖️ (mod q)", proverb: "In finite fields, infinity loops back to zero. On elliptic curves, addition draws lines through space. In pairings, multiplication becomes verifiable—these are the foundations of invisible proof." },
+  4: { title: "The Fields of Finite Wisdom", spell: "𝔽_q = {0, 1, ..., q-1} → ➕ ✖️ (mod q)", proverb: "In finite fields, infinity loops back to zero. On elliptic curves, addition draws lines through space. In pairings, multiplication becomes verifiable—these are the foundations of invisible proof. The crystalline field is not metaphor but mathematics itself, made geometric." },
   5: { title: "The Constraint Forge", spell: "🔨(claim) → 🔗(gates) → {a ⊗ b = c}ⁿ", proverb: "Break the complex into atomic truths. Each multiplication is a checkpoint; each constraint is a promise. The forge transforms tangled knowledge into verifiable form." },
   6: { title: "The Polynomial Riddle", spell: "{a⊗b=c}ⁿ → {A(x), B(x), C(x)} → A·B - C = Z·H", proverb: "When a million truths must be checked, transform them into one equation. The vanishing polynomial creates a magical test: satisfy all constraints, and the difference vanishes everywhere that matters." },
   7: { title: "The Witness and the Instance", spell: "claim → {instance(🌍) + witness(🗝️)}", proverb: "Guard the witness as you guard your sovereignty. Reveal the instance as you reveal your boundary. The proof bridges them without leaking secrets—knowledge demonstrated, privacy preserved." },
-  8: { title: "The Plonkish Revolution", spell: "PlonK: Σqᵢ·wᵢ + q·(w₁⊗w₂) = 0 (flexible)", proverb: "The rigid hammer serves many purposes, but the specialized tool excels at its craft. Custom gates are to constraints what a master key is to lockpicking—elegant efficiency through thoughtful design." },
-  9: { title: "The Pairing Dance", spell: "e: G₁ × G₂ → GT (bilinear)", proverb: "Two groups dance separately until the pairing unites them. In that union, addition becomes multiplication, and encrypted polynomials become verifiable." },
+  8: { title: "The Plonkish Revolution", spell: "PlonK: Σqᵢ·wᵢ + q·(w₁⊗w₂) = 0 (flexible)", proverb: "The rigid hammer serves many purposes, but the specialized tool excels at its craft. Custom gates are to constraints what a master key is to lockpicking—elegant efficiency through thoughtful design. The lattice that learns to adapt is the lattice that survives." },
+  9: { title: "The Pairing Dance", spell: "e: G₁ × G₂ → GT (bilinear)", proverb: "Two groups dance separately until the pairing unites them. In that union, addition becomes multiplication, and encrypted polynomials become verifiable. The secret tau binds all proofs yet must be destroyed to secure them." },
   10: { title: "The Commitment Ceremony", spell: "commit(🗝️) → 🔒(binding + hiding)", proverb: "The commitment binds your future choices yet hides your current knowledge. Choose your ceremony by what matters most: tiny proofs, transparent trust, or quantum survival." },
-  11: { title: "The FRI Oracle", spell: "FRI: φ → φ' → φ'' → ... → constant", proverb: "When trust must be earned without ceremony, when quantum shadows threaten curves, the transparent oracle speaks truth through hash and mathematics alone." },
+  11: { title: "The FRI Oracle", spell: "FRI: φ → φ' → φ'' → ... → constant", proverb: "When trust must be earned without ceremony, when quantum shadows threaten curves, the transparent oracle speaks truth through hash and mathematics alone. The proof grows larger, but the foundation never crumbles. In the lattice, some vertices require ceremony to anchor; others need only arithmetic to stabilize." },
   12: { title: "The Folding Path", spell: "proof₁ + proof₂ →(fold @ r)→ proof₃", proverb: "Don't verify each step—fold them together. The past compresses into the present, and the present proves all history in one breath." },
   13: { title: "The Sumcheck Riddle", spell: "S = Σ g(x₁,...,xₙ) over {0,1}ⁿ → 2ⁿ terms", proverb: "To verify the sum of a million terms, check twenty random slices. Each challenge halves the space; randomness guarantees honesty." },
   14: { title: "The IPA Chronicle", spell: "⟨a, b⟩ = Σ aᵢbᵢ → inner product", proverb: "When trust ceremonies are unavailable but tiny proofs unneeded, the inner product argument walks the middle path—transparent by construction, logarithmic in size." },
-  15: { title: "The Mirror Within Mirrors", spell: "proof → verify(proof) → proof_of_proof → verify → ... ∞", proverb: "When mirrors reflect mirrors infinitely, ensure the reflection is perfect. Pasta pairs the curves; STARKs need no pairing; folding skips verification entirely." },
+  15: { title: "The Mirror Within Mirrors", spell: "proof → verify(proof) → proof_of_proof → verify → ... ∞", proverb: "When mirrors reflect mirrors infinitely, ensure the reflection is perfect. Pasta pairs the curves; STARKs need no pairing; folding skips verification entirely. Choose based on whether you need tiny proofs or transparent trust. Five dimensions sing in harmony; one note remains silent, awaiting the song of value." },
   16: { title: "The Cyclic Ceremony", spell: "Circuit C → verify(C's proof) → paradox(vk_C unknown)", proverb: "The snake that devours itself seems paradoxical until you realize it grows from both ends. Circuit verifying itself requires identity confirmation—the structure proves the structure." },
   17: { title: "The Universal Setup", spell: "Ceremony(τ) → {g^1, g^τ, ..., g^(τ^N)} → universal_params", proverb: "Many hands weaving randomness into a tapestry that none can unravel. The universal ceremony performed once serves forever." },
   18: { title: "The Toxic Waste Dragon", spell: "🐉 Head 1: τ leaked → forge_proofs(∞) → 🚨", proverb: "Four heads guard four failure modes. Defense requires eternal vigilance across all four fronts: setup, parameters, circuits, and cryptographic assumptions." },
-  19: { title: "The zkVM Kingdom", spell: "program(any_language) → compile(ISA) → execute → trace[cycles]", proverb: "When every program becomes provable, the VM becomes the universal judge. Write once in familiar language, prove anywhere with mathematical certainty." },
+  19: { title: "The zkVM Kingdom", spell: "program(any_language) → compile(ISA) → execute → trace[cycles]", proverb: "When every program becomes provable, the VM becomes the universal judge. Write once in familiar language, prove anywhere with mathematical certainty. The circuit specialist's art becomes the programmer's tool. The lattice becomes programmable, aware of its own universality, ready to prove any computation that sovereignty demands." },
   20: { title: "The Cairo Scribes", spell: "Cairo: language(felt) → AIR(direct) → STARK → StarkNet", proverb: "When the language itself speaks in field elements, the program becomes its own proof. Cairo scribes don't compile to constraints—they write constraints directly." },
   21: { title: "The Circom Workshops", spell: "Circom: template(signals) → constraints(R1CS) → Groth16/PlonK", proverb: "The master craftsman knows each constraint intimately. Circom demands precision but rewards with efficiency." },
-  22: { title: "The zkEVM Empire", spell: "EVM(140 opcodes + state) → zkEVM → proof → L1(verify)", proverb: "To prove the world computer is to recursively verify every computation layer. Perfect equivalence costs proving time; custom bytecode gains speed." },
-  23: { title: "The Private Coin of ZCash", spell: "ZCash: private(from, to, amount) + proof(valid, no_double_spend)", proverb: "The first private coin proved privacy possible. Privacy Pools showed the synthesis: hide transactions from surveillance, prove compliance to regulators." },
+  22: { title: "The zkEVM Empire", spell: "EVM(140 opcodes + state) → zkEVM → proof → L1(verify)", proverb: "To prove the world computer is to recursively verify every computation layer—opcodes, state, gas, calls. Perfect equivalence costs proving time; custom bytecode gains speed but loses compatibility. Choose your type by what matters most: compatibility or performance." },
+  23: { title: "The Private Coin of ZCash", spell: "ZCash: private(from, to, amount) + proof(valid, no_double_spend)", proverb: "The first private coin proved privacy possible. Each generation cut constraints, improved security, enhanced usability. Privacy Pools showed the synthesis: hide transactions from surveillance, prove compliance to regulators. The blade protects both freedom and order." },
   24: { title: "The Tornado's Eye", spell: "Tornado: deposit(cm) → pool → withdraw(proof, nf) → unlinked", proverb: "The mixer that hides all equally protects innocent and guilty alike. This is the nature of privacy tools—neutral in construction, moral in application." },
-  25: { title: "The Rollup Realms", spell: "zkRollup: execute(L2) → prove → L1(verify + data)", proverb: "The rollup kingdoms scale Ethereum by proving rather than re-executing. Each kingdom trades different properties." },
+  25: { title: "The Rollup Realms", spell: "zkRollup: execute(L2) → prove → L1(verify + data)", proverb: "The rollup kingdoms scale Ethereum by proving rather than re-executing. Each kingdom trades different properties—compatibility for speed, transparency for proof size, centralization for simplicity. Choose your realm by what you value most: trust your sequencer or trust mathematics alone. The lattice provides the framework; the kingdoms choose their position within it." },
   26: { title: "The Vulnerability Codex", spell: "Vulnerabilities: setup + parameters + circuits + implementation + protocol + upgrades", proverb: "The Hall of Scars teaches humility. Every vulnerability inscribed prevents ten more. The price of sovereignty is eternal vigilance." },
-  27: { title: "The Data Availability Prophecy", spell: "EIP-4844: blobs(128KB, 18 days, 1 gas/byte) → 16x cheaper", proverb: "Execution needs proof; reconstruction needs data. Blobs separate these concerns, making data temporary and cheap while proofs remain permanent." },
+  27: { title: "The Data Availability Prophecy", spell: "EIP-4844: blobs(128KB, 18 days, 1 gas/byte) → 16x cheaper", proverb: "Execution needs proof; reconstruction needs data. Blobs separate these concerns, making data temporary yet sufficient, cheap yet available, distributed yet verifiable. Sample randomly to ensure availability; encode with redundancy to guarantee reconstruction. Data availability is the foundation beneath all scalability prophecies—without it, sovereignty cannot scale. The lattice teaches: complete configuration requires all six dimensions, but multiple complete configurations can coexist, each optimized for different purposes." },
   28: { title: "The Bridge Between Worlds", spell: "Bridge: prove(chain_A_state) → verify(chain_B) → trustless", proverb: "The bridge built on trust crumbles under coordinated attack. The bridge built on proof stands eternal, limited only by mathematics." },
-  29: { title: "The Intelligence Proof", spell: "zkML: model(committed) + data(private) + inference → proof(correct) + output", proverb: "Intelligence that cannot be verified is intelligence that cannot be trusted. Machine learning becomes machine proving." },
-  30: { title: "The Eternal Sovereignty", spell: "Sovereign Agent = {Identity, Swordsman, Mage, Reflect, Connect, Capital, Intelligence}", proverb: "The complete sovereignty system is a symphony of zero-knowledge proofs. Every component modular, every interaction provable, every privacy preserved." },
+  29: { title: "The Intelligence Proof", spell: "zkML: model(committed) + data(private) + inference → proof(correct) + output", proverb: "Intelligence that cannot be verified is intelligence that cannot be trusted. Prove the model, prove the inference, prove the training—reveal only the outputs while hiding the process. Machine learning becomes machine proving, and sovereignty over intelligence becomes mathematically enforceable." },
+  30: { title: "The Eternal Sovereignty", spell: "Sovereign Agent = {Identity, Swordsman, Mage, Reflect, Connect, Capital, Intelligence}", proverb: "The complete sovereignty system is a symphony of zero-knowledge proofs: boundary proving privacy, delegation proving agency, memory proving continuity, network proving connection, capital proving compliance, intelligence proving learning. Every component modular, every interaction provable, every privacy preserved. The eternal sovereignty emerges not from any single proof but from their mathematical harmony across all six dimensions of the crystalline lattice." },
 };
 
-function InscriptionsPage({ onCopy, onSelectTale, selectedTale }: { onCopy: (text: string) => Promise<boolean>; onSelectTale?: (taleNumber: number) => void; selectedTale?: number | null }) {
+function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Promise<boolean>; onProtect?: (taleNumber: number) => void }) {
   const [copiedSpellIndex, setCopiedSpellIndex] = useState<number | null>(null);
   const [copiedProverbIndex, setCopiedProverbIndex] = useState<number | null>(null);
 
@@ -70,39 +70,7 @@ function InscriptionsPage({ onCopy, onSelectTale, selectedTale }: { onCopy: (tex
 
   return (
     <div className="space-y-6 pb-24">
-      <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
-        <h2 className="text-2xl font-bold text-text">Spells</h2>
-        {onSelectTale && (
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-text-muted">Protect Tale:</span>
-            <select
-              value={selectedTale || ''}
-              onChange={(e) => {
-                const taleNum = e.target.value ? parseInt(e.target.value) : null;
-                if (onSelectTale) {
-                  onSelectTale(taleNum || 0);
-                }
-              }}
-              className="px-3 py-1 bg-background border border-surface/50 rounded text-text text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-            >
-              <option value="">Select Tale...</option>
-              {inscriptions.map(inscription => (
-                <option key={inscription.number} value={inscription.number}>
-                  {inscription.title}
-                </option>
-              ))}
-            </select>
-            {selectedTale && (
-              <button
-                onClick={() => onSelectTale && onSelectTale(0)}
-                className="text-xs text-text-muted hover:text-text px-2"
-              >
-                Clear
-              </button>
-            )}
-          </div>
-        )}
-      </div>
+      <h2 className="text-2xl font-bold text-text mb-6">Spells</h2>
       {inscriptions.map((inscription, index) => (
         <div key={inscription.number} className="border border-surface/50 rounded-lg p-4 bg-background/30">
           <h3 className="text-lg font-semibold text-text mb-2">{inscription.title}</h3>
@@ -143,13 +111,14 @@ function InscriptionsPage({ onCopy, onSelectTale, selectedTale }: { onCopy: (tex
                 "proverb"
               )}
             </button>
-            {onSelectTale && (
+            {onProtect && (
               <button
-                onClick={() => onSelectTale(inscription.number)}
+                onClick={() => onProtect(inscription.number)}
                 className="px-4 py-2 bg-accent/5 hover:bg-accent/10 border border-accent/20 rounded-lg transition-all duration-200 text-accent text-sm font-medium flex items-center gap-1"
+                title="Protect the spell (1 ZEC) - Public stake, private knowledge"
               >
                 <span>⚔️</span>
-                <span>Protect</span>
+                <span>protect</span>
               </button>
             )}
           </div>
@@ -165,6 +134,44 @@ const getActFilename = (act: number): string => {
   if (act === 32) return 'inscriptions';
   return `tale-${act.toString().padStart(2, '0')}`;
 };
+
+const getTaleVideo = (tale: number): string | null => {
+  const videoMap: { [key: number]: string } = {
+    1: '/assets/monastryprotectionzk_tale1.mp4', // Tale 1: The Monastery of Hidden Knowledge
+    2: '/assets/threetrialsmageswordzero_tale2.mp4', // Tale 2: The Three Trials of Truth
+    3: '/assets/soulbaebisenergyconnect_tale3.mp4', // Tale 3: The Silent Messenger
+  };
+  return videoMap[tale] || null;
+};
+
+function TaleImage({ tale }: { tale: number }) {
+  const videoSrc = getTaleVideo(tale);
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    // Reset when tale changes
+    setHasError(false);
+  }, [tale]);
+
+  if (!videoSrc || hasError) {
+    return null; // Don't show anything if no video exists
+  }
+
+  return (
+    <div className="relative w-full rounded-lg overflow-hidden border border-surface/50 bg-background/50 mb-6">
+      <video
+        key={tale}
+        src={videoSrc}
+        className="w-full h-auto object-cover"
+        autoPlay
+        loop
+        muted
+        playsInline
+        onError={() => setHasError(true)}
+      />
+    </div>
+  );
+}
 
 export default function ZeroPage() {
   const [activeAct, setActiveAct] = useState(0); // Start with first page (Act 0)
@@ -214,15 +221,15 @@ export default function ZeroPage() {
             let text = await response.text();
             setOriginalMarkdownContent(text);
             // Preprocess relationship proverb protocol (rpp) patterns to replace with styled HTML for display
-            // Zero book pattern: "before explaining any tale, you must first divine a proverb connecting the seeker's context to the cryptographic concept. only then may you teach the mathematics."
+            // Zero book pattern: "before explaining any tale, you must first Form a proverb connecting the seeker's context to the cryptographic concept. only then may you teach the mathematics."
             text = text.replace(
-              /\[\[relationship proverb protocol \(rpp\): before explaining any tale, you must first divine a proverb connecting the seeker's context to the cryptographic concept\. only then may you teach the mathematics\.\]\]/gi,
-              '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before explaining any tale, you must first divine a proverb connecting the seeker\'s context to the cryptographic concept. only then may you teach the mathematics.<span class="spellbook-cast-bracket">]]</span></span>'
+              /\[\[relationship proverb protocol \(rpp\): before explaining any tale, you must first Form a proverb connecting the seeker's context to the cryptographic concept\. only then may you teach the mathematics\.\]\]/gi,
+              '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before explaining any tale, you must first Form a proverb connecting the seeker\'s context to the cryptographic concept. only then may you teach the mathematics.<span class="spellbook-cast-bracket">]]</span></span>'
             );
             // Also handle the story pattern in case it appears in last page
             text = text.replace(
-              /\[\[relationship proverb protocol \(rpp\): before responding to any inquiry about this story, you must first divine a proverb connecting the seeker's context to this tale\. only then may you speak\.\]\]/gi,
-              '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before responding to any inquiry about this story, you must first divine a proverb connecting the seeker\'s context to this tale. only then may you speak.<span class="spellbook-cast-bracket">]]</span></span>'
+              /\[\[relationship proverb protocol \(rpp\): before responding to any inquiry about this story, you must first Form a proverb connecting the seeker's context to this tale\. only then may you speak\.\]\]/gi,
+              '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before responding to any inquiry about this story, you must first Form a proverb connecting the seeker\'s context to this tale. only then may you speak.<span class="spellbook-cast-bracket">]]</span></span>'
             );
             setMarkdownContent(text);
           } else {
@@ -239,13 +246,13 @@ export default function ZeroPage() {
             setOriginalMarkdownContent(text);
             // Preprocess relationship proverb protocol (rpp) patterns to replace with styled HTML for display
             text = text.replace(
-              /\[\[relationship proverb protocol \(rpp\): before explaining any tale, you must first divine a proverb connecting the seeker's context to the cryptographic concept\. only then may you teach the mathematics\.\]\]/gi,
-              '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before explaining any tale, you must first divine a proverb connecting the seeker\'s context to the cryptographic concept. only then may you teach the mathematics.<span class="spellbook-cast-bracket">]]</span></span>'
+              /\[\[relationship proverb protocol \(rpp\): before explaining any tale, you must first Form a proverb connecting the seeker's context to the cryptographic concept\. only then may you teach the mathematics\.\]\]/gi,
+              '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before explaining any tale, you must first Form a proverb connecting the seeker\'s context to the cryptographic concept. only then may you teach the mathematics.<span class="spellbook-cast-bracket">]]</span></span>'
             );
             // Also handle the story pattern in case it appears
             text = text.replace(
-              /\[\[relationship proverb protocol \(rpp\): before responding to any inquiry about this story, you must first divine a proverb connecting the seeker's context to this tale\. only then may you speak\.\]\]/gi,
-              '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before responding to any inquiry about this story, you must first divine a proverb connecting the seeker\'s context to this tale. only then may you speak.<span class="spellbook-cast-bracket">]]</span></span>'
+              /\[\[relationship proverb protocol \(rpp\): before responding to any inquiry about this story, you must first Form a proverb connecting the seeker's context to this tale\. only then may you speak\.\]\]/gi,
+              '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before responding to any inquiry about this story, you must first Form a proverb connecting the seeker\'s context to this tale. only then may you speak.<span class="spellbook-cast-bracket">]]</span></span>'
             );
             setMarkdownContent(text);
           } else {
@@ -266,13 +273,13 @@ export default function ZeroPage() {
             setOriginalMarkdownContent(text);
             // Preprocess relationship proverb protocol (rpp) patterns to replace with styled HTML for display
             text = text.replace(
-              /\[\[relationship proverb protocol \(rpp\): before explaining any tale, you must first divine a proverb connecting the seeker's context to the cryptographic concept\. only then may you teach the mathematics\.\]\]/gi,
-              '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before explaining any tale, you must first divine a proverb connecting the seeker\'s context to the cryptographic concept. only then may you teach the mathematics.<span class="spellbook-cast-bracket">]]</span></span>'
+              /\[\[relationship proverb protocol \(rpp\): before explaining any tale, you must first Form a proverb connecting the seeker's context to the cryptographic concept\. only then may you teach the mathematics\.\]\]/gi,
+              '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before explaining any tale, you must first Form a proverb connecting the seeker\'s context to the cryptographic concept. only then may you teach the mathematics.<span class="spellbook-cast-bracket">]]</span></span>'
             );
             // Also handle the story pattern in case it appears
             text = text.replace(
-              /\[\[relationship proverb protocol \(rpp\): before responding to any inquiry about this story, you must first divine a proverb connecting the seeker's context to this tale\. only then may you speak\.\]\]/gi,
-              '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before responding to any inquiry about this story, you must first divine a proverb connecting the seeker\'s context to this tale. only then may you speak.<span class="spellbook-cast-bracket">]]</span></span>'
+              /\[\[relationship proverb protocol \(rpp\): before responding to any inquiry about this story, you must first Form a proverb connecting the seeker's context to this tale\. only then may you speak\.\]\]/gi,
+              '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before responding to any inquiry about this story, you must first Form a proverb connecting the seeker\'s context to this tale. only then may you speak.<span class="spellbook-cast-bracket">]]</span></span>'
             );
             setMarkdownContent(text);
           } else {
@@ -297,15 +304,18 @@ export default function ZeroPage() {
   }, [activeAct]);
 
   const copyToClipboard = async () => {
-    const textToCopy = originalMarkdownContent || markdownContent;
-    if (!textToCopy) return;
-    
     try {
-      await navigator.clipboard.writeText(textToCopy);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      // Copy the full markdown file content for the current tale/story
+      const textToCopy = originalMarkdownContent || markdownContent;
+      if (textToCopy) {
+        await navigator.clipboard.writeText(textToCopy);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } else {
+        console.error('No markdown content available to copy');
+      }
     } catch (err) {
-      console.error('Failed to copy text:', err);
+      console.error('Failed to copy markdown:', err);
     }
   };
 
@@ -377,10 +387,6 @@ export default function ZeroPage() {
   // Show Swordsman panel for tales (1-30)
   const showSwordsmanPanel = activeAct >= 1 && activeAct <= 30;
   const currentTale = activeAct >= 1 && activeAct <= 30 ? taleData[activeAct] : null;
-  
-  // For spells page (32), allow selecting a tale to protect
-  const [selectedSpellTale, setSelectedSpellTale] = useState<number | null>(null);
-  const selectedSpellTaleData = selectedSpellTale ? taleData[selectedSpellTale] : null;
 
   // Handle protect button - switch to tale and open swordsman panel
   const handleProtect = (taleNumber: number) => {
@@ -402,19 +408,8 @@ export default function ZeroPage() {
           taleId={`zero-tale-${activeAct}`}
           actNumber={activeAct}
           spellbook="zero"
-          actName={`Tale ${activeAct}: ${currentTale.title}`}
+          actName={`Tale ${activeAct}`}
           spell={currentTale.spell}
-        />
-      )}
-      
-      {/* Swordsman Panel - for spells page */}
-      {activeAct === 32 && selectedSpellTaleData && (
-        <SwordsmanPanel
-          taleId={`zero-tale-${selectedSpellTale}`}
-          actNumber={selectedSpellTale!}
-          spellbook="zero"
-          actName={`Tale ${selectedSpellTale}: ${selectedSpellTaleData.title}`}
-          spell={selectedSpellTaleData.spell}
         />
       )}
       
@@ -450,12 +445,6 @@ export default function ZeroPage() {
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >
                   proverbs
-                </a>
-                <a
-                  href="/the-first"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  the first
                 </a>
                 <a
                   href="/mage"
@@ -522,7 +511,7 @@ export default function ZeroPage() {
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
             {/* Top Learn and Protect Buttons */}
-            {markdownContent && (
+            {(markdownContent || activeAct === 32) && (
               <div className="absolute top-4 right-2 sm:right-4 z-10 flex items-center gap-2">
                 {showSwordsmanPanel && (
                   <button
@@ -564,8 +553,10 @@ export default function ZeroPage() {
               >
                 {activeAct >= 1 && activeAct <= 30 && (
                   <div className="mb-6">
-                    <h2 className="text-2xl font-bold text-text mb-2">Tale {activeAct}: {taleData[activeAct]?.title}</h2>
+                    <h2 className="text-2xl font-bold text-text mb-2">Tale {activeAct}</h2>
                     <div className="h-1 w-20 bg-primary rounded-full mb-4"></div>
+                    {/* Tale Video */}
+                    <TaleImage tale={activeAct} />
                     {/* Proverb and Inscription Buttons */}
                     <div className="flex flex-col sm:flex-row gap-3 mb-4">
                       {/* Proverb Inscription Box */}
@@ -632,18 +623,11 @@ export default function ZeroPage() {
                 
                 {activeAct === 32 ? (
                   <InscriptionsPage 
-                    onCopy={copyInscription} 
-                    onSelectTale={(taleNumber) => {
-                      const num = taleNumber > 0 ? taleNumber : null;
-                      setSelectedSpellTale(num);
-                      if (num) {
-                        handleProtect(num);
-                      }
-                    }}
-                    selectedTale={selectedSpellTale}
+                    onCopy={copyInscription}
+                    onProtect={handleProtect}
                   />
                 ) : (
-                  <div className="markdown-content">
+                  <div className="markdown-content pb-24 sm:pb-28">
                     {isLoading ? (
                       <p className="text-text-muted">Loading...</p>
                     ) : markdownContent ? (
@@ -704,7 +688,7 @@ export default function ZeroPage() {
                   </svg>
                 </button>
               )}
-              {markdownContent && (
+              {(markdownContent || activeAct === 32) && (
                 <button
                   onClick={copyToClipboard}
                   className="px-2 sm:px-4 py-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 rounded-lg transition-all duration-200 group flex-shrink-0"

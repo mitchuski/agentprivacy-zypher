@@ -18,8 +18,14 @@ export default function LandingPage() {
     { text: 'person 😊', emoji: '😊' },
   ];
 
+  // Initialize with 0 to prevent hydration mismatch, will update on client
   const [currentIndex, setCurrentIndex] = useState(0);
   const [ctaCurrentIndex, setCtaCurrentIndex] = useState(0);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [githubLink, setGithubLink] = useState('');
@@ -78,7 +84,7 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
+    <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background" suppressHydrationWarning>
       {/* Navigation Header */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -113,12 +119,6 @@ export default function LandingPage() {
                   proverbs
                 </a>
                 <a
-                  href="/the-first"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  the first
-                </a>
-                <a
                   href="/mage"
                   className="text-text hover:text-primary transition-colors font-medium"
                 >
@@ -135,9 +135,10 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={mounted ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-center"
+            suppressHydrationWarning
           >
             <h1 className="text-5xl md:text-6xl font-bold text-text mb-6">
               agentprivacy
@@ -167,26 +168,33 @@ export default function LandingPage() {
             
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              animate={mounted ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               className="max-w-3xl mx-auto"
+              suppressHydrationWarning
             >
               <p className="text-2xl md:text-3xl font-medium text-text mb-6">
                 i'm just another
               </p>
-              <div className="relative h-12 md:h-16 flex items-center justify-center">
-                <AnimatePresence mode="wait">
-                  <motion.p
-                    key={currentIndex}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-2xl md:text-3xl text-text-muted absolute"
-                  >
-                    {carouselItems[currentIndex].text}
-                  </motion.p>
-                </AnimatePresence>
+              <div className="relative h-12 md:h-16 flex items-center justify-center" suppressHydrationWarning>
+                {isClient ? (
+                  <AnimatePresence mode="wait">
+                    <motion.p
+                      key={currentIndex}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.5 }}
+                      className="text-2xl md:text-3xl text-text-muted absolute"
+                    >
+                      {carouselItems[currentIndex].text}
+                    </motion.p>
+                  </AnimatePresence>
+                ) : (
+                  <p className="text-2xl md:text-3xl text-text-muted absolute">
+                    {carouselItems[0].text}
+                  </p>
+                )}
               </div>
               <p className="text-primary font-medium pt-4 text-xl md:text-2xl">
                 and so are you. 🤝
@@ -455,19 +463,25 @@ export default function LandingPage() {
               <p className="text-text-muted mb-4 text-lg">
                 Create your:
               </p>
-              <div className="relative h-12 md:h-16 flex items-center justify-center">
-                <AnimatePresence mode="wait">
-                  <motion.p
-                    key={ctaCurrentIndex}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-2xl md:text-3xl text-text absolute"
-                  >
-                    {ctaCarouselItems[ctaCurrentIndex].text}
-                  </motion.p>
-                </AnimatePresence>
+              <div className="relative h-12 md:h-16 flex items-center justify-center" suppressHydrationWarning>
+                {isClient ? (
+                  <AnimatePresence mode="wait">
+                    <motion.p
+                      key={ctaCurrentIndex}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.5 }}
+                      className="text-2xl md:text-3xl text-text absolute"
+                    >
+                      {ctaCarouselItems[ctaCurrentIndex].text}
+                    </motion.p>
+                  </AnimatePresence>
+                ) : (
+                  <p className="text-2xl md:text-3xl text-text absolute">
+                    {ctaCarouselItems[0].text}
+                  </p>
+                )}
               </div>
             </div>
             <div className="flex justify-center">

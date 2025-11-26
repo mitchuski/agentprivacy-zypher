@@ -13,9 +13,9 @@ export const metadata: Metadata = {
   keywords: ["privacy", "AI agents", "zero-knowledge", "blockchain", "ERC-8004", "privacy pools", "x402"],
   authors: [{ name: "agentprivacy.ai" }],
   icons: {
-    icon: '/icon.png',
-    shortcut: '/icon.png',
-    apple: '/icon.png',
+    icon: '/assets/agentprivacyai.logo.png',
+    shortcut: '/assets/agentprivacyai.logo.png',
+    apple: '/assets/agentprivacyai.logo.png',
   },
   openGraph: {
     title: "agentprivacy.ai - just another mage swordsman",

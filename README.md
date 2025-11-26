@@ -107,9 +107,12 @@ agentprivacy-ai-firstmage/
 
 ### 2. Mage Interface (`/mage`)
 
+- **Tale Selection** - Choose from 11 story acts or 30 zero knowledge tales
 - **Chat with Soulbae** - AI agent for proverb generation
 - **TEE Attestation** - Verifiable privacy guarantees
-- **Privacy Budget** - Limited queries per session (φ × 10 = 16)
+- **Privacy Budget** - Limited queries per session (6 max)
+- **RPP Proverb Highlighting** - Automatically highlights derived proverbs
+- **Learn Button** - One-click copy of highlighted proverbs
 - **Proverb Suggestions** - AI-generated relationship proverbs
 - **Copy to Zashi** - Format memo for Zcash wallet
 
@@ -236,10 +239,14 @@ netlify deploy --prod --dir=out
 
 Create `.env.local` for development:
 ```bash
-NEXT_PUBLIC_SOULBAE_URL=https://your-soulbae-api.com
+NEXT_PUBLIC_NEAR_API_URL=https://cloud-api.near.ai/v1
+NEXT_PUBLIC_NEAR_API_KEY=your-near-api-key-here
+NEXT_PUBLIC_NEAR_MODEL=openai/gpt-oss-120b
 ```
 
 For production, set these in your hosting platform's environment variables.
+
+**Note**: The Mage Agent frontend now uses Blue Nexus API for TEE-attested chat and attestation services.
 
 ## 🔒 Privacy & Security
 
