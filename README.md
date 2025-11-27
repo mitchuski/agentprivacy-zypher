@@ -352,7 +352,7 @@ MIT License - See LICENSE file for details
 
 **Built on patterns from**:
 - **ZyberQuest**: Production Zcash light client patterns
-- **NEAR Shade Agents**: TEE architecture concepts
+- **NEAR Cloud AI**: AI verification integration
 - **NEAR Cloud AI**: AI verification integration
 - **BGIN**: Blockchain governance principles
 
