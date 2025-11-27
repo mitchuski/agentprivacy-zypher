@@ -36,7 +36,7 @@ npm install -g @near-ai/shade-agent
 
 Download from repo:
 ```bash
-git clone https://github.com/0xagentprivacy/zkspellbook-final
+git clone https://github.com/mitchuski/agentprivacy-zypher
 cd zkspellbook-final
 
 # Verify structure:
@@ -627,8 +627,9 @@ Before announcing to the world:
 ### Community
 
 - **Discord:** discord.gg/0xagentprivacy
-- **GitHub:** github.com/0xagentprivacy/zkspellbook-final
-- **Email:** dev@0xagentprivacy.org
+- **GitHub:** https://github.com/mitchuski/agentprivacy-zypher
+- **Email:** mage@agentprivacy.ai
+- **Security:** security@proverbprotocol.com
 
 ### Debugging Help
 

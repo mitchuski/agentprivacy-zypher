@@ -652,7 +652,8 @@ Before deploying Soulbae:
 **Support:**
 - NEAR AI Discord: discord.gg/near-ai
 - 0xagentprivacy: discord.gg/0xagentprivacy
-- Email: dev@0xagentprivacy.org
+- Email: mage@agentprivacy.ai
+- Security: security@proverbprotocol.com
 
 ---
 

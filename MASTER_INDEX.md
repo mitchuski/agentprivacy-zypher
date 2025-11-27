@@ -497,8 +497,9 @@ cd soulbae && npm install
 
 ### Community
 - Discord: discord.gg/0xagentprivacy
-- GitHub: github.com/0xagentprivacy/zkspellbook-final
-- Email: dev@0xagentprivacy.org
+- GitHub: https://github.com/mitchuski/agentprivacy-zypher
+- Email: mage@agentprivacy.ai
+- Security: security@proverbprotocol.com
 
 ### Technical Support
 - NEAR AI: docs.near.ai

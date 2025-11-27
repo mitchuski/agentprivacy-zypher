@@ -848,10 +848,10 @@ MIT License - See [LICENSE](../LICENSE) file for details.
 
 ## Contact
 
-**Project Lead**: [Your Name]  
-**Email**: [Your Email]  
-**GitHub**: [Your GitHub]  
-**Discord**: [Your Discord Handle]
+**Project Lead**: AgentPrivacy.ai Team  
+**Email**: mage@agentprivacy.ai  
+**GitHub**: github.com/mitchuski/agentprivacy-zypher  
+**Discord**: discord.gg/0xagentprivacy
 
 ---
 
