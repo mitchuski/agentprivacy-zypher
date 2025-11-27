@@ -1,5 +1,5 @@
 # Deployment Guide
-## ZK Spellbook with NEAR Shade Agent (Soulbae)
+## ZK Spellbook with NEAR Cloud AI (Soulbae)
 
 **Time to deploy: 30 minutes**  
 **Difficulty: Intermediate**
@@ -10,7 +10,7 @@
 
 ### Required Accounts
 
-- [x] **NEAR Account** - For Shade Agent deployment
+- [x] **NEAR Cloud AI API Key** - For AI verification
 - [x] **Zcash Wallet** - With z-address for receiving donations
 - [x] **Vercel/Netlify** - For hosting tale pages
 - [x] **Domain** - agentprivacy.ai or similar (optional but recommended)
@@ -25,7 +25,7 @@ npm --version   # >= 9.0.0
 # NEAR CLI
 npm install -g near-cli
 
-# Shade Agent CLI
+# NEAR Cloud AI API
 npm install -g @near-ai/shade-agent
 
 # Zcash CLI (optional, for VRC callbacks)
@@ -40,14 +40,14 @@ git clone https://github.com/mitchuski/agentprivacy-zypher
 cd zkspellbook-final
 
 # Verify structure:
-# ├── soulbae/              (Shade Agent config)
+# ├── soulbae/              (NEAR Cloud AI config)
 # ├── story/                (Tale pages)
 # └── vrc-callbacks/        (Monitoring scripts)
 ```
 
 ---
 
-## 🚀 Step 1: Deploy Soulbae (NEAR Shade Agent)
+## 🚀 Step 1: Configure NEAR Cloud AI
 
 **Time: 15 minutes**
 
@@ -126,7 +126,7 @@ hosting:
 npm install
 npm run build
 
-# Deploy Shade Agent
+# Configure NEAR Cloud AI API
 shade-agent deploy \
   --config shade-agent-config.yml \
   --account soulbae.YOUR_ACCOUNT.near \
@@ -439,7 +439,7 @@ open https://agentprivacy.ai/story/act1-blades-awakening.html
 
 **Problem:** TEE attestation fails
 ```bash
-# Check NEAR Shade Agent logs
+# Check NEAR Cloud AI API logs
 shade-agent logs soulbae.YOUR_ACCOUNT.near
 
 # Verify AWS Nitro is enabled
@@ -532,7 +532,7 @@ fi
 ### Logs to Monitor
 
 ```bash
-# Soulbae logs (NEAR Shade Agent)
+# Soulbae logs (NEAR Cloud AI)
 shade-agent logs soulbae.YOUR_ACCOUNT.near --tail 100
 
 # VRC callback logs
@@ -650,7 +650,7 @@ Before announcing to the world:
 
 You now have:
 
-1. ✅ **Soulbae** - NEAR Shade Agent in TEE at agentprivacy.ai/mage
+1. ✅ **Soulbae** - NEAR Cloud AI at agentprivacy.ai/mage
 2. ✅ **Tale Pages** - 30 spellbook tales at agentprivacy.ai/story/*
 3. ✅ **VRC Callbacks** - Automated bilateral proverb responses
 
