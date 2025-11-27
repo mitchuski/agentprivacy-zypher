@@ -1,0 +1,36 @@
+{
+  "name": "agentprivacy-ai-landing",
+  "version": "0.1.0",
+  "description": "AgentPrivacy.ai Landing Page",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "next dev -p 5000",
+    "build": "next build && echo Build completed successfully",
+    "postbuild": "node -e \"const fs = require('fs'); const path = require('path'); console.log('Checking for out directory...'); console.log('Current working directory:', process.cwd()); console.log('Directory listing:', fs.readdirSync('.').join(', ')); if (!fs.existsSync('out')) { console.error('ERROR: out directory not found after build'); process.exit(1); } else { console.log('✓ out directory created successfully'); console.log('out directory contents:', fs.readdirSync('out').slice(0, 10).join(', ')); }\"",
+    "start": "serve out -p 8000 -c serve.json",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "framer-motion": "^11.3.21",
+    "next": "^16.0.3",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
+    "rehype-raw": "^7.0.0",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5",
+    "postcss": "^8.4.40",
+    "serve": "^14.2.5",
+    "tailwindcss": "^3.4.7",
+    "typescript": "^5"
+  }
+}
