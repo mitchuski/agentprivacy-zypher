@@ -372,7 +372,7 @@ NEXT_PUBLIC_SOULBAE_URL=https://existing-soulbae.com
 See [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md) for full Soulbae deployment instructions.
 
 **Quick version:**
-1. Set up NEAR Shade Agent
+1. Set up NEAR Cloud AI
 2. Deploy to AWS Nitro TEE
 3. Configure RAG with your story content
 4. Update `SOULBAE_URL` to point to your instance
