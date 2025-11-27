@@ -16,9 +16,8 @@
 3. **[SOULBAE_CONFIG.md](SOULBAE_CONFIG.md)** - NEAR Shade Agent setup
 4. **[VRC_PROTOCOL.md](VRC_PROTOCOL.md)** - Callback system implementation
 
-### For Demo Day
-5. **[DEMO_SCRIPT.md](DEMO_SCRIPT.md)** - 5-minute presentation + Q&A
-6. **[soulbae-character.md](soulbae-character.md)** - Agent persona & training
+### Additional Resources
+5. **[soulbae-character.md](soulbae-character.md)** - Agent persona & training
 
 ---
 
@@ -70,7 +69,6 @@ zkspellbook-final/
 ├── 📄 DEPLOYMENT_GUIDE.md          ← Step-by-step setup
 ├── 📄 SOULBAE_CONFIG.md            ← NEAR agent config
 ├── 📄 VRC_PROTOCOL.md              ← Callback implementation
-├── 📄 DEMO_SCRIPT.md               ← Presentation guide
 │
 ├── soulbae/                        # NEAR Shade Agent
 │   ├── shade-agent-config.yml     # Deployment config
@@ -257,19 +255,6 @@ Soulbae only processes:
 
 ---
 
-### DEMO_SCRIPT.md
-**Purpose:** Hackathon presentation preparation  
-**Demo time:** 5 minutes  
-**Key sections:**
-- 5-minute presentation flow (timed)
-- Live demo walkthrough
-- Q&A preparation (20+ questions answered)
-- Technical/business/philosophical responses
-- Winning arguments summary
-- Pre-demo checklist
-
-**Study this** before demo day.
-
 ---
 
 ### soulbae-character.md
@@ -291,7 +276,7 @@ Soulbae only processes:
 ## 🎬 Demo Day Checklist
 
 ### 1 Day Before
-- [ ] Read DEMO_SCRIPT.md completely
+- [ ] Review project architecture and key features
 - [ ] Test full user flow end-to-end
 - [ ] Record backup demo video
 - [ ] Verify Soulbae responding correctly
@@ -462,7 +447,7 @@ zcash-cli z_getbalance "zs1YOUR_ADDRESS"
 2. Study DEPLOYMENT_GUIDE.md for setup steps
 3. Examine Soulbae config in SOULBAE_CONFIG.md
 4. Understand VRC protocol in VRC_PROTOCOL.md
-5. Prepare demo using DEMO_SCRIPT.md
+5. Prepare demo presentation
 
 ### For Deployment
 ```bash
@@ -481,8 +466,8 @@ cd soulbae && npm install
 - **Privacy budgets**: Adjust shade-agent-config.yml
 
 ### For Demo Prep
-- **Read DEMO_SCRIPT.md completely**
-- **Practice 3 times minimum**
+- **Review project architecture and key features**
+- **Practice demo 3 times minimum**
 - **Test live demo multiple times**
 - **Prepare Q&A responses**
 
@@ -550,7 +535,6 @@ cd soulbae && npm install
 | **DEPLOYMENT_GUIDE.md** | Step-by-step setup | 30 min | Deploy 2nd |
 | **SOULBAE_CONFIG.md** | Agent configuration | 15 min | Reference |
 | **VRC_PROTOCOL.md** | Callback implementation | 10 min | Reference |
-| **DEMO_SCRIPT.md** | Presentation guide | 15 min | Before demo |
 | **soulbae-character.md** | RAG training file | N/A | For Soulbae |
 
 **Total reading time: 40 minutes**  
