@@ -1,7 +1,7 @@
 # ZK Spellbook - Master Documentation
 ## Complete Reference for Coding Agent
 
-**Project:** Privacy-Preserving Crowdfunding with NEAR Shade Agent + Zcash  
+**Project:** Privacy-Preserving Crowdfunding with NEAR Cloud AI + Zcash  
 **Version:** zkspellbook-final (Recommended)  
 **Status:** Production-Ready  
 **Bounty Target:** $25,000 Privacy-Preserving AI & Computation
@@ -13,7 +13,7 @@
 ### For Deployment
 1. **[PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md)** - Start here for architecture understanding
 2. **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** - Step-by-step deployment (30 min)
-3. **[SOULBAE_CONFIG.md](SOULBAE_CONFIG.md)** - NEAR Shade Agent setup
+3. **[SOULBAE_CONFIG.md](SOULBAE_CONFIG.md)** - NEAR Cloud AI setup
 4. **[VRC_PROTOCOL.md](VRC_PROTOCOL.md)** - Callback system implementation
 
 ### Additional Resources
@@ -26,7 +26,7 @@
 A **privacy-preserving crowdfunding system** where donations require proof-of-understanding:
 
 1. Reader visits tale at `agentprivacy.ai/story/[tale-id]`
-2. **Soulbae** (NEAR Shade Agent in TEE) helps craft proverb
+2. **Soulbae** (NEAR Cloud AI) helps craft proverb
 3. User copies memo to **Zashi wallet** (their Swordsman)
 4. Transaction sent as **shielded z→z** with proverb in memo
 5. **VRC callback** - You respond with your proverb
@@ -42,7 +42,7 @@ A **privacy-preserving crowdfunding system** where donations require proof-of-un
 Reader Journey:
 1. agentprivacy.ai/story/act1 → Tale content
 2. Click "Talk to Soulbae" → Opens mage chat
-3. agentprivacy.ai/mage → Soulbae (NEAR Shade Agent)
+3. agentprivacy.ai/mage → Soulbae (NEAR Cloud AI)
 4. Derive proverb → Copy back to tale page
 5. Click "Copy to Zashi" → Memo formatted
 6. Paste in Zashi wallet → Set amount, send z→z
@@ -52,7 +52,7 @@ Reader Journey:
 ```
 
 **Components:**
-- **Soulbae**: NEAR Shade Agent (Claude Sonnet 4.5 in AWS Nitro TEE)
+- **Soulbae**: NEAR Cloud AI (openai/gpt-oss-120b)
 - **Tale Pages**: Static HTML hosted on Vercel/Netlify
 - **VRC System**: Bash/Python scripts monitoring Zcash blockchain
 - **Zcash**: Shielded pool for private transactions
@@ -70,7 +70,7 @@ zkspellbook-final/
 ├── 📄 SOULBAE_CONFIG.md            ← NEAR agent config
 ├── 📄 VRC_PROTOCOL.md              ← Callback implementation
 │
-├── soulbae/                        # NEAR Shade Agent
+├── soulbae/                        # NEAR Cloud AI integration
 │   ├── shade-agent-config.yml     # Deployment config
 │   ├── soulbae-character.md       # RAG training file
 │   ├── spellbook-rag.json         # Training data (30 tales)
@@ -103,7 +103,7 @@ zkspellbook-final/
 ## 🚀 30-Minute Deployment
 
 ### Prerequisites
-- NEAR account for Shade Agent
+- NEAR Cloud AI API key
 - Zcash wallet with z-address
 - Vercel/Netlify account
 - Node.js >= 18.0.0
@@ -114,7 +114,7 @@ zkspellbook-final/
 # 1. Deploy Soulbae (15 min)
 cd soulbae
 npm install
-shade-agent deploy --config shade-agent-config.yml
+# Configure NEAR Cloud AI API key
 # → Soulbae live at agentprivacy.ai/mage
 
 # 2. Deploy Tale Pages (5 min)
@@ -169,7 +169,7 @@ Soulbae only processes:
 
 ### NEAR AI Integration ✅
 
-- [x] Uses NEAR Shade Agent (not just API)
+- [x] Uses NEAR Cloud AI API
 - [x] TEE deployment (AWS Nitro)
 - [x] Hardware attestation (verifiable)
 - [x] RAG training (30 tales)
@@ -215,7 +215,7 @@ Soulbae only processes:
 **Deploy time:** 30 minutes  
 **Key sections:**
 - Prerequisites checklist
-- Soulbae deployment (NEAR Shade Agent)
+- Soulbae integration (NEAR Cloud AI)
 - Tale page deployment (Vercel/Netlify)
 - VRC callback setup (automation)
 - Testing procedures
@@ -226,10 +226,10 @@ Soulbae only processes:
 ---
 
 ### SOULBAE_CONFIG.md
-**Purpose:** NEAR Shade Agent configuration details  
+**Purpose:** NEAR Cloud AI configuration details  
 **Setup time:** 15 minutes  
 **Key sections:**
-- shade-agent-config.yml breakdown
+- NEAR Cloud AI API configuration
 - RAG training data structure (spellbook-rag.json)
 - Behavior patterns and constraints
 - Privacy implementation (TEE)
@@ -259,7 +259,7 @@ Soulbae only processes:
 
 ### soulbae-character.md
 **Purpose:** RAG training for Soulbae agent  
-**Training:** Included in Shade Agent deployment  
+**Training:** Included in NEAR Cloud AI integration  
 **Key sections:**
 - Agent identity and persona
 - Lore and narrative framework
@@ -330,15 +330,13 @@ Soulbae only processes:
 
 **Problem:** TEE attestation fails
 ```bash
-shade-agent logs soulbae.YOUR_ACCOUNT.near
+# Check NEAR Cloud AI API logs
 # Check for AWS Nitro errors
 ```
 
 **Problem:** RAG not working
 ```bash
-shade-agent rag upload \
-  --agent soulbae.YOUR_ACCOUNT.near \
-  --data ./spellbook-rag.json
+# NEAR Cloud AI uses API calls, not RAG uploads
 ```
 
 ### Tale Page Issues
@@ -419,7 +417,7 @@ zcash-cli z_getbalance "zs1YOUR_ADDRESS"
 - **Paradigm shift, not feature addition**
 
 ### 3. Real Code (Not Promises)
-- NEAR Shade Agent deployed
+- NEAR Cloud AI integrated
 - Tale pages live and functional
 - VRC callbacks automated
 - **Production-ready today, not "coming soon"**
@@ -463,7 +461,7 @@ cd soulbae && npm install
 - **Soulbae behavior**: Edit soulbae-character.md
 - **Tale content**: Modify HTML in story/
 - **VRC responses**: Update generate-response-proverb.py
-- **Privacy budgets**: Adjust shade-agent-config.yml
+- **API configuration**: Adjust NEAR Cloud AI settings
 
 ### For Demo Prep
 - **Review project architecture and key features**

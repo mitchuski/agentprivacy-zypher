@@ -1,5 +1,5 @@
 # ZK Spellbook Donation System
-## NEAR Shade Agent (Soulbae) + Zcash Integration
+## NEAR Cloud AI (Soulbae) + Zcash Integration
 
 **Version:** zkspellbook-final (Recommended)  
 **Bounty:** Privacy-Preserving AI & Computation ($25,000)  
@@ -12,7 +12,7 @@
 Privacy-preserving crowdfunding through proof-of-understanding:
 
 1. **Reader** visits spellbook tale at `agentprivacy.ai/story/[tale-id]`
-2. **Soulbae** (NEAR Shade Agent in TEE) helps craft relationship proverb
+2. **Soulbae** (NEAR Cloud AI) helps craft relationship proverb
 3. **User** copies formatted memo to Zashi wallet
 4. **Transaction** sent as shielded z→z with proverb encrypted in memo
 5. **VRC Callback** - You respond with your proverb, establishing bilateral trust
@@ -36,7 +36,7 @@ Privacy-preserving crowdfunding through proof-of-understanding:
 ┌─────────────────────────────────────────┐
 │ agentprivacy.ai/mage (Soulbae)         │
 │                                         │
-│ 🔮 NEAR Shade Agent (AWS Nitro TEE)    │
+│ 🔮 NEAR Cloud AI                        │
 │ 📚 RAG: Trained on 30 spellbook tales  │
 │ 🤖 Natural proverb generation           │
 │ 🔒 Hardware-attested privacy            │
@@ -104,7 +104,7 @@ Soulbae only processes:
 
 ### TEE Properties
 
-- **Hardware attestation**: AWS Nitro enclave (NEAR Shade Agent)
+- **AI verification**: NEAR Cloud AI API
 - **Verifiable isolation**: Cryptographic proof Soulbae cannot access external data
 - **No persistence**: Conversation history never stored
 - **RAG security**: Training data (spellbook) is read-only, public
@@ -122,7 +122,7 @@ Soulbae only processes:
 
 ### ✅ NEAR AI Integration
 
-- Real NEAR Shade Agent (not just API)
+- NEAR Cloud AI API integration
 - TEE deployment (AWS Nitro)
 - Hardware attestation (verifiable)
 - Agent contract on NEAR blockchain
@@ -153,12 +153,12 @@ Soulbae only processes:
 
 ## 📦 System Components
 
-### 1. Soulbae (NEAR Shade Agent)
+### 1. Soulbae (NEAR Cloud AI)
 
 **Location:** `agentprivacy.ai/mage`
 
 **Technology:**
-- NEAR AI Shade Agent
+- NEAR Cloud AI
 - Claude Sonnet 4.5 in TEE
 - RAG trained on Zero Knowledge Spellbook
 - Character file: soulbae-character.md
@@ -171,7 +171,7 @@ Soulbae only processes:
 
 **Files:**
 - `soulbae-character.md` - RAG training character file
-- `shade-agent-config.yml` - NEAR deployment config
+- NEAR Cloud AI API configuration
 - `spellbook-rag.json` - Training data (30 tales)
 
 ### 2. Tale Pages (Static HTML)
@@ -224,7 +224,7 @@ Soulbae only processes:
 
 - Zcash wallet with z-address
 - Vercel/Netlify account (for tale pages)
-- NEAR account (for Shade Agent deployment)
+- NEAR Cloud AI API key
 - Domain or subdomain (agentprivacy.ai or similar)
 
 ### 3-Step Setup
@@ -233,7 +233,7 @@ Soulbae only processes:
 ```bash
 # See DEPLOYMENT_GUIDE.md
 cd soulbae
-shade-agent deploy --config shade-agent-config.yml
+# Configure NEAR Cloud AI API key in environment variables
 # Result: Soulbae live at agentprivacy.ai/mage
 ```
 
@@ -261,7 +261,7 @@ cd vrc-callbacks
 
 
 1. **Show tale page** - "This is 'The Blade's Awakening' from the Zero Knowledge Spellbook"
-2. **Click to Soulbae** - "Soulbae is a NEAR Shade Agent running in AWS Nitro TEE"
+2. **Click to Soulbae** - "Soulbae uses NEAR Cloud AI for proverb generation"
 3. **Chat with Soulbae** - Natural conversation about tale principle
 4. **Get proverb suggestions** - Soulbae helps compress understanding
 5. **Copy back to tale** - Formatted memo ready for Zashi
@@ -305,7 +305,7 @@ cd vrc-callbacks
 
 ## 🏆 Bounty Criteria Checklist
 
-- [x] **NEAR AI integration** - Shade Agent with Claude Sonnet 4.5
+- [x] **NEAR Cloud AI integration** - openai/gpt-oss-120b
 - [x] **TEE-based inference** - AWS Nitro enclave, hardware attested
 - [x] **Verifiable privacy** - Cryptographic attestation available
 - [x] **Agentic behavior** - Natural language, context-aware, trained via RAG
@@ -364,7 +364,7 @@ This project includes 5 core documents:
 
 1. **PROJECT_OVERVIEW.md** (this file) - Architecture & concept
 2. **DEPLOYMENT_GUIDE.md** - Step-by-step setup instructions
-3. **SOULBAE_CONFIG.md** - NEAR Shade Agent configuration
+3. **SOULBAE_CONFIG.md** - NEAR Cloud AI configuration
 4. **VRC_PROTOCOL.md** - Callback implementation details
 
 **Total reading time: 30 minutes**  
