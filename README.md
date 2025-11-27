@@ -276,7 +276,7 @@ At 100 proverbs/month: ~$97/month total
 - End-to-end testing
 - Frontend-backend integration
 
-**Last Updated**: January 2025
+**Last Updated**: Nov 26 2025
 
 ---
 
