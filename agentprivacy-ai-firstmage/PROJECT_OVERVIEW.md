@@ -373,7 +373,6 @@ This project includes 5 core documents:
 2. **DEPLOYMENT_GUIDE.md** - Step-by-step setup instructions
 3. **SOULBAE_CONFIG.md** - NEAR Shade Agent configuration
 4. **VRC_PROTOCOL.md** - Callback implementation details
-5. **DEMO_SCRIPT.md** - Presentation & Q&A preparation
 
 **Total reading time: 30 minutes**  
 **Total deployment time: 30 minutes**  

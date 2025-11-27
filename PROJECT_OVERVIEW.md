@@ -259,13 +259,6 @@ cd vrc-callbacks
 
 ---
 
-## 🎬 Demo Script (3 Minutes)
-
-### Opening (30 seconds)
-
-"What if crowdfunding required proof-of-understanding? What if every donation strengthened privacy instead of eroding it? We built that using NEAR Shade Agents and Zcash."
-
-### Flow (2 minutes)
 
 1. **Show tale page** - "This is 'The Blade's Awakening' from the Zero Knowledge Spellbook"
 2. **Click to Soulbae** - "Soulbae is a NEAR Shade Agent running in AWS Nitro TEE"
@@ -373,7 +366,6 @@ This project includes 5 core documents:
 2. **DEPLOYMENT_GUIDE.md** - Step-by-step setup instructions
 3. **SOULBAE_CONFIG.md** - NEAR Shade Agent configuration
 4. **VRC_PROTOCOL.md** - Callback implementation details
-5. **DEMO_SCRIPT.md** - Presentation & Q&A preparation
 
 **Total reading time: 30 minutes**  
 **Total deployment time: 30 minutes**  
@@ -400,7 +392,7 @@ Where:
 
 1. **Read:** DEPLOYMENT_GUIDE.md for setup instructions
 2. **Deploy:** Follow the 3-step process (30 min)
-3. **Test:** Run through demo script (3 min)
+3. **Test:** Run through demo flow
 4. **Submit:** Win $25k bounty 🚀
 
 ---

@@ -622,7 +622,6 @@ Before announcing to the world:
 - **PROJECT_OVERVIEW.md** - Architecture
 - **SOULBAE_CONFIG.md** - Agent details
 - **VRC_PROTOCOL.md** - Callback specs
-- **DEMO_SCRIPT.md** - Presentation guide
 
 ### Community
 

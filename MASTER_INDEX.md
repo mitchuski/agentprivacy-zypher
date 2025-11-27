@@ -16,9 +16,8 @@
 3. **[SOULBAE_CONFIG.md](SOULBAE_CONFIG.md)** - NEAR Shade Agent setup
 4. **[VRC_PROTOCOL.md](VRC_PROTOCOL.md)** - Callback system implementation
 
-### For Demo Day
-5. **[DEMO_SCRIPT.md](DEMO_SCRIPT.md)** - 5-minute presentation + Q&A
-6. **[soulbae-character.md](soulbae-character.md)** - Agent persona & training
+### Additional Resources
+5. **[soulbae-character.md](soulbae-character.md)** - Agent persona & training
 
 ---
 
@@ -63,41 +62,38 @@ Reader Journey:
 ## 📦 File Structure
 
 ```
-zkspellbook-final/
+agentprivacy-zypher/
 │
 ├── 📄 MASTER_INDEX.md              ← You are here
-├── 📄 PROJECT_OVERVIEW.md          ← Architecture & concept
+├── 📄 README.md                    ← Project overview
+├── 📄 01-SETUP.md                  ← Setup instructions
+├── 📄 02-ARCHITECTURE.md           ← System architecture
+├── 📄 03-BUILD_GUIDE.md            ← Build instructions
+├── 📄 04-API_REFERENCE.md          ← API documentation
+├── 📄 05-ROADMAP.md                ← Project roadmap
+├── 📄 DEVELOPER_GUIDE.md            ← Developer documentation
+├── 📄 PROJECT_OVERVIEW.md           ← Architecture & concept
 ├── 📄 DEPLOYMENT_GUIDE.md          ← Step-by-step setup
 ├── 📄 SOULBAE_CONFIG.md            ← NEAR agent config
 ├── 📄 VRC_PROTOCOL.md              ← Callback implementation
-├── 📄 DEMO_SCRIPT.md               ← Presentation guide
+├── 📄 soulbae-character.md         ← Agent persona & training
 │
-├── soulbae/                        # NEAR Shade Agent
-│   ├── shade-agent-config.yml     # Deployment config
-│   ├── soulbae-character.md       # RAG training file
-│   ├── spellbook-rag.json         # Training data (30 tales)
-│   ├── package.json
-│   ├── endpoints/
-│   │   ├── chat.ts
-│   │   ├── derive-proverb.ts
-│   │   └── attestation.ts
-│   └── utils/
-│       ├── privacy-budget.ts
-│       └── inscription-validator.ts
+├── agentprivacy-ai-firstmage/      # Frontend (Next.js)
+│   ├── src/                        # React components
+│   ├── public/                     # Static assets
+│   │   └── story/markdown/        # Tale markdown files
+│   └── package.json
 │
-├── story/                          # Tale Pages
-│   ├── act1-blades-awakening.html
-│   ├── act2-mages-projection.html
-│   ├── act3-dragon-awakening.html
-│   └── ... (30 tales total)
+├── oracle-swordsman/               # Backend (Node.js/TypeScript)
+│   ├── src/                        # Oracle service code
+│   │   ├── index.ts                # Main oracle loop
+│   │   ├── zcash-client.ts         # Zcash integration
+│   │   ├── nearcloudai-verifier.ts # AI verification
+│   │   └── transaction-builder.ts # Transaction creation
+│   └── package.json
 │
-└── vrc-callbacks/                  # Monitoring System
-    ├── config.json
-    ├── watch-donations.sh
-    ├── process-donation.sh
-    ├── send-vrc-callback.sh
-    ├── generate-response-proverb.py
-    └── log-vrc.sh
+└── spellbook/                      # Spellbook data
+    └── spellbook-acts.json         # Act definitions
 ```
 
 ---
@@ -113,23 +109,27 @@ zkspellbook-final/
 ### Quick Steps
 
 ```bash
-# 1. Deploy Soulbae (15 min)
-cd soulbae
+# 1. Setup Environment (5 min)
+# See 01-SETUP.md for prerequisites
+# - NEAR Cloud AI API key
+# - Zcash wallet with z-address
+# - PostgreSQL database
+# - IPFS/Pinata API key
+
+# 2. Start Backend Oracle (10 min)
+cd oracle-swordsman
 npm install
-shade-agent deploy --config shade-agent-config.yml
-# → Soulbae live at agentprivacy.ai/mage
+npm run dev
+# → Oracle monitoring Zcash transactions
 
-# 2. Deploy Tale Pages (5 min)
-cd ../story
-# Edit: Replace zs1spellbook... with YOUR address
-vercel deploy --prod
-# → Tales live at agentprivacy.ai/story/*
+# 3. Start Frontend (5 min)
+cd ../agentprivacy-ai-firstmage
+npm install
+npm run dev
+# → Frontend running on http://localhost:5000
 
-# 3. Set Up VRC Callbacks (10 min)
-cd ../vrc-callbacks
-./setup.sh [your-z-address]
-./watch-donations.sh &
-# → Auto-respond to donations
+# 4. Deploy to Production (10 min)
+# See DEPLOYMENT_GUIDE.md for full instructions
 ```
 
 **See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for detailed instructions.**
@@ -257,19 +257,6 @@ Soulbae only processes:
 
 ---
 
-### DEMO_SCRIPT.md
-**Purpose:** Hackathon presentation preparation  
-**Demo time:** 5 minutes  
-**Key sections:**
-- 5-minute presentation flow (timed)
-- Live demo walkthrough
-- Q&A preparation (20+ questions answered)
-- Technical/business/philosophical responses
-- Winning arguments summary
-- Pre-demo checklist
-
-**Study this** before demo day.
-
 ---
 
 ### soulbae-character.md
@@ -291,7 +278,7 @@ Soulbae only processes:
 ## 🎬 Demo Day Checklist
 
 ### 1 Day Before
-- [ ] Read DEMO_SCRIPT.md completely
+- [ ] Review project architecture and key features
 - [ ] Test full user flow end-to-end
 - [ ] Record backup demo video
 - [ ] Verify Soulbae responding correctly
@@ -462,7 +449,7 @@ zcash-cli z_getbalance "zs1YOUR_ADDRESS"
 2. Study DEPLOYMENT_GUIDE.md for setup steps
 3. Examine Soulbae config in SOULBAE_CONFIG.md
 4. Understand VRC protocol in VRC_PROTOCOL.md
-5. Prepare demo using DEMO_SCRIPT.md
+5. Prepare demo presentation
 
 ### For Deployment
 ```bash
@@ -481,8 +468,8 @@ cd soulbae && npm install
 - **Privacy budgets**: Adjust shade-agent-config.yml
 
 ### For Demo Prep
-- **Read DEMO_SCRIPT.md completely**
-- **Practice 3 times minimum**
+- **Review project architecture and key features**
+- **Practice demo 3 times minimum**
 - **Test live demo multiple times**
 - **Prepare Q&A responses**
 
@@ -550,7 +537,6 @@ cd soulbae && npm install
 | **DEPLOYMENT_GUIDE.md** | Step-by-step setup | 30 min | Deploy 2nd |
 | **SOULBAE_CONFIG.md** | Agent configuration | 15 min | Reference |
 | **VRC_PROTOCOL.md** | Callback implementation | 10 min | Reference |
-| **DEMO_SCRIPT.md** | Presentation guide | 15 min | Before demo |
 | **soulbae-character.md** | RAG training file | N/A | For Soulbae |
 
 **Total reading time: 40 minutes**  
