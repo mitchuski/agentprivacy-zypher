@@ -256,7 +256,7 @@ At 100 proverbs/month: ~$97/month total
 
 **Current**: v4.0.0-canonical - Complete architecture with integrations
 **Stage**: ~85% Complete - Core integrations working, testing in progress
-**Spellbook**: Version 4.0.0-canonical (IPFS CID: `QmRvH6HcMibbejacSjZduBG8cxQgqDW19s5EgmWmdEDmay`)
+**Spellbook**: Version 4.0.0-canonical (IPFS CID: `bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`)
 **License**: MIT (open source)
 **Hackathon**: Integrates ZyberQuest, Nillion, NEAR Cloud AI ecosystem
 

@@ -259,7 +259,7 @@ BLOCKCHAIN (PUBLIC inscription)
 - Immutable spellbook storage
 - Content-addressed
 - No key access
-- ✅ Implemented (CID: QmRvH6HcMibbejacSjZduBG8cxQgqDW19s5EgmWmdEDmay)
+- ✅ Implemented (CID: bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4)
 
 **Coherence Check**: ✅
 - Architecture is consistent across documentation
@@ -312,7 +312,7 @@ BLOCKCHAIN (PUBLIC inscription)
 3. **IPFS/Pinata**
    - Spellbook uploaded (v4.0.0-canonical)
    - IPFS client implemented
-   - CID: `QmRvH6HcMibbejacSjZduBG8cxQgqDW19s5EgmWmdEDmay`
+   - CID: `bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`
 
 4. **NEAR Cloud AI**
    - API integration complete
