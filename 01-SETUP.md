@@ -244,7 +244,7 @@ NEAR_MODEL=gpt oss 120b
 # ============================================
 PINATA_JWT=your_pinata_jwt_here
 PINATA_GATEWAY=https://your-gateway.mypinata.cloud
-SPELLBOOK_CID=QmRvH6HcMibbejacSjZduBG8cxQgqDW19s5EgmWmdEDmay  # Current: v4.0.0-canonical
+SPELLBOOK_CID=bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4  # Current: v4.0.0-canonical
 
 # ============================================
 # Zcash Configuration
@@ -498,7 +498,7 @@ curl -X POST https://faucet.zecpages.com/api/claim \
 
 The spellbook is already created and uploaded to IPFS:
 - **Version**: 4.0.0-canonical
-- **IPFS CID**: `QmRvH6HcMibbejacSjZduBG8cxQgqDW19s5EgmWmdEDmay`
+- **IPFS CID**: `bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`
 - **Description**: Complete Spellbook - Canonical Edition combining First Person Spellbook and Zero Knowledge Spellbook with Relationship Proverb Protocol inscriptions
 - **Location**: `spellbook/spellbook-acts.json`
 
@@ -511,7 +511,7 @@ To update the spellbook, edit `spellbook/spellbook-acts.json` and re-upload to P
 
 ### Upload to IPFS
 
-**Current Status**: Spellbook is already uploaded with CID `QmRvH6HcMibbejacSjZduBG8cxQgqDW19s5EgmWmdEDmay`
+**Current Status**: Spellbook is already uploaded with CID `bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`
 
 **To Update Spellbook**:
 
@@ -559,10 +559,10 @@ curl -X POST https://api.pinata.cloud/pinning/pinFileToIPFS \
 
 ```bash
 # Test retrieval (current spellbook)
-curl https://red-acute-chinchilla-216.mypinata.cloud/ipfs/QmRvH6HcMibbejacSjZduBG8cxQgqDW19s5EgmWmdEDmay
+curl https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4
 
 # Or use your gateway:
-curl https://YOUR_GATEWAY.mypinata.cloud/ipfs/QmRvH6HcMibbejacSjZduBG8cxQgqDW19s5EgmWmdEDmay
+curl https://YOUR_GATEWAY.mypinata.cloud/ipfs/bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4
 
 # Should return your JSON file with version 4.0.0-canonical
 ```

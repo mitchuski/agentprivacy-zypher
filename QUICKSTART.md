@@ -177,7 +177,7 @@ address        # Transparent address (for public inscriptions to spellbook)
 
 The spellbook is already created and uploaded:
 - **Version**: 4.0.0-canonical
-- **IPFS CID**: `QmRvH6HcMibbejacSjZduBG8cxQgqDW19s5EgmWmdEDmay`
+- **IPFS CID**: `bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`
 - **Location**: `spellbook/spellbook-acts.json`
 
 **To Update Spellbook** (if needed):

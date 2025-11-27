@@ -6,9 +6,9 @@ The Oracle Swordsman uses the canonical spellbook stored on IPFS to verify prove
 
 ## Spellbook Location
 
-**IPFS URL**: `https://red-acute-chinchilla-216.mypinata.cloud/ipfs/QmRvH6HcMibbejacSjZduBG8cxQgqDW19s5EgmWmdEDmay`
+**IPFS URL**: `https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`
 
-**CID**: `QmRvH6HcMibbejacSjZduBG8cxQgqDW19s5EgmWmdEDmay`
+**CID**: `bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`
 
 **Version**: `4.0.0-canonical`
 
@@ -125,8 +125,8 @@ near: {
 }
 
 ipfs: {
-  spellbookUrl: 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/QmRvH6HcMibbejacSjZduBG8cxQgqDW19s5EgmWmdEDmay',
-  spellbookCid: 'QmRvH6HcMibbejacSjZduBG8cxQgqDW19s5EgmWmdEDmay',
+  spellbookUrl: 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4',
+  spellbookCid: 'bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4',
 }
 ```
 
@@ -145,8 +145,8 @@ NEAR_SWORDSMAN_API_KEY=sk-876c0f435b14449bac47f13583f5fd68
 NEAR_MODEL=openai/gpt-oss-120b
 
 # Spellbook (optional - defaults provided)
-SPELLBOOK_URL=https://red-acute-chinchilla-216.mypinata.cloud/ipfs/QmRvH6HcMibbejacSjZduBG8cxQgqDW19s5EgmWmdEDmay
-SPELLBOOK_CID=QmRvH6HcMibbejacSjZduBG8cxQgqDW19s5EgmWmdEDmay
+SPELLBOOK_URL=https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4
+SPELLBOOK_CID=bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4
 ```
 
 ## Testing
@@ -197,7 +197,7 @@ The Oracle Swordsman enforces this by:
 
 ## References
 
-- [Spellbook IPFS](https://red-acute-chinchilla-216.mypinata.cloud/ipfs/QmRvH6HcMibbejacSjZduBG8cxQgqDW19s5EgmWmdEDmay)
+- [Spellbook IPFS](https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4)
 - [NEAR Cloud AI Documentation](https://docs.near.ai/cloud/verification/)
 - [NEAR Cloud AI Models](https://cloud.near.ai/models/openai/gpt-oss-120b)
 
