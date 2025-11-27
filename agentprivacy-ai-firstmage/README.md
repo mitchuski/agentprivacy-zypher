@@ -181,9 +181,9 @@ agentprivacy-ai-firstmage/
    const SOULBAE_URL = process.env.NEXT_PUBLIC_SOULBAE_URL || 'https://your-domain.com/mage';
    ```
 
-2. **Update character file** (if using NEAR Shade Agent):
+2. **Update character file** (if using NEAR Cloud AI):
    - Edit `soulbae-character.md`
-   - Deploy to your Shade Agent instance
+   - Configure NEAR Cloud AI API
 
 ### Changing Colors & Styling
 
