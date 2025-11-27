@@ -1,0 +1,163 @@
+version: '3.8'
+
+services:
+  # ============================================
+  # ZEBRA NODE - Zcash Blockchain Interface
+  # ============================================
+  zebra:
+    image: zfnd/zebra:latest
+    container_name: sanctuary-zebra
+    ports:
+      - "8232:8232"  # RPC port
+      - "8233:8233"  # P2P port
+    volumes:
+      - zebra-data:/data
+      - ./zebra/config/zebra.toml:/etc/zebra/zebra.toml:ro
+    environment:
+      - ZEBRA_NETWORK=mainnet  # or testnet
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8232"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # ============================================
+  # ORACLE SERVICE - The Mage's Eye (TEE)
+  # ============================================
+  # In production, this runs in NEAR TEE environment
+  oracle:
+    build:
+      context: ./oracle
+      dockerfile: Dockerfile
+    container_name: sanctuary-oracle
+    depends_on:
+      zebra:
+        condition: service_healthy
+    environment:
+      - ZEBRA_HOST=zebra
+      - ZEBRA_PORT=8232
+      - DONATION_VIEWING_KEY=${DONATION_VIEWING_KEY}
+      - DONATION_Z_ADDRESS=${DONATION_Z_ADDRESS}
+      - IPFS_GATEWAY=${IPFS_GATEWAY}
+      - SPELLBOOK_CID=${SPELLBOOK_CID}
+      - SIGNER_ENDPOINT=http://signer:3001/verify
+      - POLL_INTERVAL=${POLL_INTERVAL:-10000}
+      - MIN_CONFIRMATIONS=${MIN_CONFIRMATIONS:-1}
+      - MATCH_THRESHOLD=${MATCH_THRESHOLD:-0.75}
+    restart: unless-stopped
+    # NOTE: In production, oracle would run in TEE enclave
+    # This Docker setup is for development/testing only
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+
+  # ============================================
+  # SIGNER SERVICE - The Swordsman's Hand
+  # ============================================
+  signer:
+    build:
+      context: ./signer
+      dockerfile: Dockerfile
+    container_name: sanctuary-signer
+    depends_on:
+      zebra:
+        condition: service_healthy
+    ports:
+      - "3001:3001"
+    environment:
+      - ZEBRA_HOST=zebra
+      - ZEBRA_PORT=8232
+      - DONATION_SPENDING_KEY=${DONATION_SPENDING_KEY}
+      - DONATION_Z_ADDRESS=${DONATION_Z_ADDRESS}
+      - SANCTUARY_T_ADDRESS=${SANCTUARY_T_ADDRESS}
+      - PROTOCOL_FEE_Z_ADDRESS=${PROTOCOL_FEE_Z_ADDRESS}
+      - SIGNER_PORT=3001
+      - MIN_DONATION=${MIN_DONATION:-0.001}
+    restart: unless-stopped
+    # CRITICAL: Signer holds spending key - maximum security
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+
+  # ============================================
+  # WEBSITE - First Person Spellbook
+  # ============================================
+  website:
+    build:
+      context: ./website
+      dockerfile: Dockerfile
+    container_name: sanctuary-website
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_SPELLBOOK_CID=${SPELLBOOK_CID}
+      - NEXT_PUBLIC_IPFS_GATEWAY=${IPFS_GATEWAY}
+    restart: unless-stopped
+
+  # ============================================
+  # IPFS NODE (Optional - for self-hosting proverbs)
+  # ============================================
+  ipfs:
+    image: ipfs/kubo:latest
+    container_name: sanctuary-ipfs
+    ports:
+      - "4001:4001"  # P2P
+      - "5001:5001"  # API
+      - "8080:8080"  # Gateway
+    volumes:
+      - ipfs-data:/data/ipfs
+    restart: unless-stopped
+    profiles:
+      - self-hosted
+
+  # ============================================
+  # METRICS (Optional - Prometheus)
+  # ============================================
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: sanctuary-metrics
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    restart: unless-stopped
+    profiles:
+      - monitoring
+
+  # ============================================
+  # GRAFANA (Optional - Dashboards)
+  # ============================================
+  grafana:
+    image: grafana/grafana:latest
+    container_name: sanctuary-grafana
+    ports:
+      - "3030:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-sanctuary}
+    restart: unless-stopped
+    profiles:
+      - monitoring
+
+volumes:
+  zebra-data:
+    driver: local
+  ipfs-data:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+
+networks:
+  default:
+    name: sanctuary-network
+    driver: bridge

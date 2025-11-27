@@ -143,7 +143,7 @@ See `.env.example` for all required variables.
 - ✅ NEAR Cloud AI integration (configured)
 - ✅ Memo parser (multi-format support)
 - ✅ Transaction monitor (event-based)
-- ✅ Transaction builder (44/56 split)
+- ✅ Transaction builder (61.8/38.2 golden ratio split)
 - ✅ Comprehensive utilities
 - ⏳ Nillion TEE integration (optional, pending API key)
 - ⏳ Main Oracle loop (ready for testing)

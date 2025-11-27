@@ -140,7 +140,7 @@ async function verifyProverb(
   const response = await axios.post<VerificationResponse>(
     'https://cloud.near.ai/v1/verify',
     {
-      model: 'claude-3-5-sonnet-20241022',
+      model: 'openai/gpt-oss-120b',
       proverb: proverb,
       spellbook_acts: spellbookActs,
       context: 'privacy_protocol',

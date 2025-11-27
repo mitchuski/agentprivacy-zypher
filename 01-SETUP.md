@@ -131,7 +131,7 @@ pip install nillion-client --break-system-packages
 
 **Pricing**:
 - Free tier: 100 requests/month
-- Paid: ~$0.03/request (Claude 3.5 Sonnet)
+- Paid: ~$0.03/request (openai/gpt-oss-120b)
 
 ### 3. Pinata (IPFS)
 

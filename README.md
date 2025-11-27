@@ -140,7 +140,7 @@ agentprivacy-zypher/
 
 ### AI-Powered Verification
 
-- **Claude 3.5 Sonnet**: Sophisticated natural language understanding
+- **openai/gpt-oss-120b**: Sophisticated natural language understanding via NEAR Cloud AI
 - **Quality Scoring**: Contextual wisdom assessment
 - **Spellbook Matching**: Validates understanding of privacy concepts
 

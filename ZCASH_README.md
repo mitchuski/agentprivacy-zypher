@@ -13,7 +13,7 @@ This package provides comprehensive Zcash blockchain integration for the Proverb
 - ✅ Light client interaction (zecwallet-cli)
 - ✅ Transaction monitoring and parsing
 - ✅ Memo format handling (RPP-v1, legacy)
-- ✅ Inscription creation with 44/56 split
+- ✅ Inscription creation with 61.8/38.2 split (golden ratio)
 - ✅ Retry logic and error handling
 - ✅ Comprehensive utilities
 
@@ -147,7 +147,7 @@ monitor.stop();
 
 ### 4. TransactionBuilder (`transaction-builder.ts`)
 
-Create inscription transactions with 44/56 public/private split.
+Create inscription transactions with 61.8/38.2 public/private split (golden ratio).
 
 **Features:**
 - Automatic amount splitting
@@ -409,7 +409,7 @@ BLOCKCHAIN (inscribed!)
 
 ## Economic Model
 
-The 44/56 split ensures optimal balance between transparency and privacy:
+The 61.8/38.2 split (golden ratio) ensures optimal balance between transparency and privacy:
 
 **User pays:** 0.01 ZEC
 
@@ -426,7 +426,8 @@ The 44/56 split ensures optimal balance between transparency and privacy:
 
 **Mathematical Justification:**
 - Based on golden ratio (φ ≈ 1.618)
-- 44:56 ≈ 1:1.27 ≈ φ^-1:φ^-0.5
+- 61.8% = 1/φ ≈ 0.618 (inverse of golden ratio)
+- 38.2% = 1 - 1/φ ≈ 0.382 (complement)
 - Balances public verifiability with private value
 
 ---
