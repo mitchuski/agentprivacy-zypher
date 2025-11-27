@@ -169,15 +169,16 @@
     │  • Cryptographic Attestation                        │
     └─────────────────────────────────────────────────────┘
 
-    Browser Extension Layer
-    ───────────────────────
+    Mobile Wallet Layer (Zashi)
+    ───────────────────────────
     ┌─────────────────────────────────────────────────────┐
-    │  Swordsman Composer                                 │
+    │  Swordsman (User's Zashi Wallet)                    │
     │  ─────────────────────────────────────────          │
-    │  • Zashi Wallet Integration                         │
+    │  • Zashi Mobile Wallet (Personal Wallet)             │
     │  • Transaction Composition                          │
     │  • AES-256-CBC Memo Encryption                      │
     │  • Privacy Budget Tracking                          │
+    │  • User controls final transaction                  │
     └─────────────────────────────────────────────────────┘
 
     Blockchain Layer
