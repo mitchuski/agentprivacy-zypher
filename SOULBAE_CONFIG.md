@@ -1,8 +1,8 @@
 # Soulbae Configuration
-## NEAR Shade Agent Setup & RAG Training
+## NEAR Cloud AI Setup & Configuration
 
 **Agent Name:** Soulbae  
-**Type:** NEAR Shade Agent (Claude Sonnet 4.5 in AWS Nitro TEE)  
+**Type:** NEAR Cloud AI (openai/gpt-oss-120b)  
 **Purpose:** Proverb derivation assistant for ZK Spellbook donations
 
 ---
@@ -12,7 +12,7 @@
 **Soulbae is the Mage** - one half of the dual-agent architecture:
 
 - **🗡️ Swordsman** = User's wallet (Zashi) - controls final transaction
-- **📖 Mage** = Soulbae (NEAR Shade Agent) - helps craft proverbs
+- **📖 Mage** = Soulbae (NEAR Cloud AI) - helps craft proverbs
 
 Soulbae runs in a Trusted Execution Environment (AWS Nitro) and is trained on the Zero Knowledge Spellbook via RAG. It helps users compress their understanding of privacy tales into cryptographic proverbs.
 
@@ -51,7 +51,7 @@ soulbae/
 ### shade-agent-config.yml
 
 ```yaml
-# NEAR Shade Agent Configuration for Soulbae
+# NEAR Cloud AI Configuration for Soulbae
 
 agent:
   name: "soulbae"
@@ -645,7 +645,7 @@ Before deploying Soulbae:
 ## 📚 Resources
 
 **Documentation:**
-- NEAR Shade Agents: https://docs.near.ai/shade-agents
+- NEAR Cloud AI: https://cloud.near.ai
 - AWS Nitro Enclaves: https://aws.amazon.com/ec2/nitro/
 - Character file: soulbae-character.md
 
