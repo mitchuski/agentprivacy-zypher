@@ -36,7 +36,7 @@
 └──────────────────────────────────────────────────────────────────────────────┘
 
     ┌────────────────────────────────┐         ┌────────────────────────────────┐
-    │     MAGE (NEAR AI + TEE)       │         │   SWORDSMAN (Browser Ext)      │
+    │     MAGE (NEAR AI + TEE)       │         │   SWORDSMAN (Mobile wallet)      │
     │  ──────────────────────────    │         │  ──────────────────────────    │
     │                                │         │                                │
     │  🔮 Trusted Execution Env      │◄────────┤  🛡️ Local User Agent          │
@@ -161,7 +161,7 @@
     AI Layer (TEE)
     ──────────────
     ┌─────────────────────────────────────────────────────┐
-    │  NEAR AI + Claude Sonnet 4.5                        │
+    │  NEAR AI + openai/gpt-oss-120b                        │
     │  ─────────────────────────────────────────          │
     │  • Trusted Execution Environment                    │
     │  • Natural Language Processing                      │
@@ -290,7 +290,7 @@
     │   Vercel/Netlify     │     │   NEAR AI Cloud      │
     │  ──────────────────  │     │  ──────────────────  │
     │  • Next.js App       │     │  • TEE Environment   │
-    │  • API Routes        │────►│  • Claude Sonnet 4.5 │
+    │  • API Routes        │────►│  • openai/gpt-oss-120b │
     │  • Static Content    │     │  • Attestation API   │
     └──────────────────────┘     └──────────────────────┘
                 │

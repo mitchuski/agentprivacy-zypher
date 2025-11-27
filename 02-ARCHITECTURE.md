@@ -17,7 +17,7 @@ The Proverb Revelation Protocol uses a three-layer architecture to achieve hardw
                              │
 ┌──────────────────────────────────────────────────────────────┐
 │  Layer 2: AI Verification (NEAR Cloud AI)                        │
-│  - Claude 3.5 Sonnet                                         │
+│  - gpt 120b                                        │
 │  - Quality scoring                                           │
 │  - NO access to keys                                         │
 └────────────────────────────┬─────────────────────────────────┘
