@@ -776,8 +776,9 @@ Level 4: Multi-party VRCs (reader A references reader B's proverb)
 
 **Community:**
 - Discord: discord.gg/0xagentprivacy
-- GitHub: github.com/0xagentprivacy/zkspellbook-final
-- Email: vrc@0xagentprivacy.org
+- GitHub: https://github.com/mitchuski/agentprivacy-zypher
+- Email: mage@agentprivacy.ai
+- Security: security@proverbprotocol.com
 
 ---
 

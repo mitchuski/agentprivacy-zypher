@@ -330,6 +330,12 @@ Process documents sequentially (01 → 02 → 03 → 04 → 05). Each document p
 - **NEAR Cloud AI**: https://cloud.near.ai
 - **IPFS/Pinata**: https://www.pinata.cloud
 
+### Contact
+
+- **Email**: mage@agentprivacy.ai
+- **Security Issues**: security@proverbprotocol.com
+- **GitHub**: https://github.com/mitchuski/agentprivacy-zypher
+
 ### Contributing
 
 Contributions welcome! Please read contributing guidelines and submit PRs.
