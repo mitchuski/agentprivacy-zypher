@@ -24,7 +24,7 @@ Think of it as: **Crowdfunding with proof-of-understanding, where privacy is pre
 │  - Proverbs gallery (/proverbs)         │
 └─────────────────────────────────────────┘
               │
-              ├─► Soulbae API (NEAR Shade Agent)
+              ├─► Soulbae API (NEAR Cloud AI)
               │   - TEE-attested AI agent
               │   - Proverb generation
               │   - Privacy-preserving chat
@@ -310,7 +310,7 @@ See [LICENSE](./LICENSE) file for details.
 ## 🙏 Acknowledgments
 
 - **Zero Knowledge Spellbook** - Original story inspiration
-- **NEAR AI** - Shade Agent technology
+- **NEAR Cloud AI** - AI verification technology
 - **Zcash** - Privacy-preserving transactions
 
 ---
