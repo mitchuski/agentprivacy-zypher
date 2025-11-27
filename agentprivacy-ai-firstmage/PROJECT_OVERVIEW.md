@@ -263,7 +263,7 @@ cd vrc-callbacks
 
 ### Opening (30 seconds)
 
-"What if crowdfunding required proof-of-understanding? What if every donation strengthened privacy instead of eroding it? We built that using NEAR Shade Agents and Zcash."
+"What if crowdfunding required proof-of-understanding? What if every donation strengthened privacy instead of eroding it? We built that using NEAR Cloud AI and Zcash."
 
 ### Flow (2 minutes)
 
