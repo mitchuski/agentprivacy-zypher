@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oracle Swordsman - Admin Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+        }
+
+        h1 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .stat-value.approved { color: #4ade80; }
+        .stat-value.rejected { color: #f87171; }
+        .stat-value.pending { color: #fbbf24; }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            color: #fff;
+        }
+
+        .tab.active {
+            color: #fff;
+            border-bottom-color: #4ade80;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .submissions-table {
+            width: 100%;
+            background: #1a1a1a;
+            border-radius: 8px;
+            border: 1px solid #333;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #252525;
+            padding: 12px;
+            text-align: left;
+            color: #fff;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #333;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #252525;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #252525;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-pending { background: #3b341f; color: #fbbf24; }
+        .status-approved { background: #1a3a2e; color: #4ade80; }
+        .status-rejected { background: #3a1f1f; color: #f87171; }
+        .status-failed { background: #2a1f2a; color: #c084fc; }
+
+        .quality-score {
+            font-weight: 600;
+        }
+
+        .quality-score.high { color: #4ade80; }
+        .quality-score.medium { color: #fbbf24; }
+        .quality-score.low { color: #f87171; }
+
+        .proverb-text {
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #4ade80;
+            color: #0a0a0a;
+        }
+
+        .btn-primary:hover {
+            background: #22c55e;
+        }
+
+        .btn-secondary {
+            background: #3b341f;
+            color: #fbbf24;
+        }
+
+        .btn-secondary:hover {
+            background: #4a3f26;
+        }
+
+        .btn-danger {
+            background: #3a1f1f;
+            color: #f87171;
+        }
+
+        .btn-danger:hover {
+            background: #4a2a2a;
+        }
+
+        .form-section {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            color: #888;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            background: #252525;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+        }
+
+        .error {
+            background: #3a1f1f;
+            color: #f87171;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .success {
+            background: #1a3a2e;
+            color: #4ade80;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .detail-view {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            margin-bottom: 20px;
+        }
+
+        .detail-row {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #252525;
+        }
+
+        .detail-label {
+            color: #888;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .detail-value {
+            color: #fff;
+            word-break: break-word;
+        }
+
+        .reasoning {
+            background: #252525;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚔️ Oracle Swordsman Admin</h1>
+            <div class="subtitle">Review submissions, verifications, and matches</div>
+        </header>
+
+        <div id="error-message" class="error" style="display: none;"></div>
+        <div id="success-message" class="success" style="display: none;"></div>
+
+        <div class="stats-grid" id="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Submissions</div>
+                <div class="stat-value" id="stat-total">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Pending</div>
+                <div class="stat-value pending" id="stat-pending">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Approved</div>
+                <div class="stat-value approved" id="stat-approved">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Rejected</div>
+                <div class="stat-value rejected" id="stat-rejected">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Avg Quality Score</div>
+                <div class="stat-value" id="stat-avg-score">-</div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('submissions')">Submissions</button>
+            <button class="tab" onclick="showTab('test')">Test Submission</button>
+            <button class="tab" onclick="showTab('stats')">Statistics</button>
+        </div>
+
+        <div id="tab-submissions" class="tab-content active">
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Filter by Status</label>
+                    <select id="status-filter" onchange="loadSubmissions()">
+                        <option value="">All</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                        <option value="failed">Failed</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="submissions-table">
+                <div id="submissions-loading" class="loading">Loading submissions...</div>
+                <table id="submissions-table" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tracking Code</th>
+                            <th>Proverb</th>
+                            <th>Status</th>
+                            <th>Quality Score</th>
+                            <th>Matched Act</th>
+                            <th>Amount</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="submissions-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="tab-test" class="tab-content">
+            <div class="form-section">
+                <h2 style="margin-bottom: 20px; color: #fff;">Create Test Submission</h2>
+                <div class="form-group">
+                    <label>Proverb Text</label>
+                    <textarea id="test-proverb" placeholder="Enter a test proverb..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Act ID (optional)</label>
+                    <input type="text" id="test-act-id" placeholder="e.g., 5 or act-05-vision">
+                </div>
+                <div class="form-group">
+                    <label>Amount (ZEC)</label>
+                    <input type="number" id="test-amount" value="0.01" step="0.001">
+                </div>
+                <button class="btn btn-primary" onclick="createTestSubmission()">Create Test Submission</button>
+            </div>
+        </div>
+
+        <div id="tab-stats" class="tab-content">
+            <div class="form-section">
+                <h2 style="margin-bottom: 20px; color: #fff;">Detailed Statistics</h2>
+                <div id="detailed-stats-loading" class="loading">Loading statistics...</div>
+                <div id="detailed-stats-content" style="display: none;"></div>
+            </div>
+        </div>
+
+        <div id="detail-modal" class="detail-view" style="display: none;">
+            <h2 style="margin-bottom: 20px; color: #fff;">Submission Details</h2>
+            <div id="detail-content"></div>
+            <button class="btn btn-secondary" onclick="closeDetail()" style="margin-top: 20px;">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+
+        function showMessage(message, type) {
+            const errorEl = document.getElementById('error-message');
+            const successEl = document.getElementById('success-message');
+            
+            if (type === 'error') {
+                errorEl.textContent = message;
+                errorEl.style.display = 'block';
+                successEl.style.display = 'none';
+            } else {
+                successEl.textContent = message;
+                successEl.style.display = 'block';
+                errorEl.style.display = 'none';
+            }
+            
+            setTimeout(() => {
+                errorEl.style.display = 'none';
+                successEl.style.display = 'none';
+            }, 5000);
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            
+            if (tabName === 'submissions') {
+                loadSubmissions();
+            } else if (tabName === 'stats') {
+                loadDetailedStats();
+            }
+        }
+
+        async function loadStats() {
+            try {
+                const res = await fetch(`${API_BASE}/api/stats`);
+                const stats = await res.json();
+                
+                document.getElementById('stat-total').textContent = stats.total_submissions || 0;
+                document.getElementById('stat-pending').textContent = stats.pending || 0;
+                document.getElementById('stat-approved').textContent = stats.completed || 0;
+                document.getElementById('stat-rejected').textContent = stats.failed || 0;
+                document.getElementById('stat-avg-score').textContent = 
+                    stats.avg_quality_score ? stats.avg_quality_score.toFixed(2) : '-';
+            } catch (error) {
+                console.error('Failed to load stats:', error);
+            }
+        }
+
+        async function loadSubmissions() {
+            const loadingEl = document.getElementById('submissions-loading');
+            const tableEl = document.getElementById('submissions-table');
+            const tbodyEl = document.getElementById('submissions-tbody');
+            const statusFilter = document.getElementById('status-filter').value;
+
+            loadingEl.style.display = 'block';
+            tableEl.style.display = 'none';
+
+            try {
+                const url = `${API_BASE}/api/admin/submissions${statusFilter ? `?status=${statusFilter}` : ''}`;
+                const res = await fetch(url);
+                const data = await res.json();
+
+                tbodyEl.innerHTML = '';
+
+                if (data.submissions && data.submissions.length > 0) {
+                    data.submissions.forEach(sub => {
+                        const row = document.createElement('tr');
+                        const qualityScore = sub.quality_score !== null ? sub.quality_score.toFixed(2) : '-';
+                        const qualityClass = sub.quality_score >= 0.75 ? 'high' : 
+                                           sub.quality_score >= 0.5 ? 'medium' : 'low';
+                        
+                        row.innerHTML = `
+                            <td>${sub.id}</td>
+                            <td><code>${sub.tracking_code}</code></td>
+                            <td class="proverb-text" title="${sub.proverb_text}">${sub.proverb_text}</td>
+                            <td><span class="status-badge status-${sub.status}">${sub.status}</span></td>
+                            <td class="quality-score ${qualityClass}">${qualityScore}</td>
+                            <td>${sub.matched_act || '-'}</td>
+                            <td>${sub.amount_zec} ZEC</td>
+                            <td>${new Date(sub.created_at).toLocaleString()}</td>
+                            <td class="actions">
+                                <button class="btn btn-secondary" onclick="viewDetail(${sub.id})">View</button>
+                                ${sub.status === 'pending' ? 
+                                    `<button class="btn btn-primary" onclick="verifySubmission(${sub.id})">Verify</button>` : 
+                                    ''}
+                            </td>
+                        `;
+                        tbodyEl.appendChild(row);
+                    });
+                } else {
+                    tbodyEl.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 40px; color: #888;">No submissions found</td></tr>';
+                }
+
+                loadingEl.style.display = 'none';
+                tableEl.style.display = 'table';
+            } catch (error) {
+                loadingEl.innerHTML = `<div class="error">Failed to load submissions: ${error.message}</div>`;
+                console.error('Failed to load submissions:', error);
+            }
+        }
+
+        async function viewDetail(id) {
+            try {
+                const res = await fetch(`${API_BASE}/api/admin/submissions/${id}`);
+                const data = await res.json();
+
+                const detailContent = document.getElementById('detail-content');
+                detailContent.innerHTML = `
+                    <div class="detail-row">
+                        <div class="detail-label">ID</div>
+                        <div class="detail-value">${data.submission.id}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Tracking Code</div>
+                        <div class="detail-value"><code>${data.submission.tracking_code}</code></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Status</div>
+                        <div class="detail-value"><span class="status-badge status-${data.submission.status}">${data.submission.status}</span></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Proverb</div>
+                        <div class="detail-value">${data.submission.proverb_text}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Amount</div>
+                        <div class="detail-value">${data.submission.amount_zec} ZEC</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Transaction ID</div>
+                        <div class="detail-value"><code>${data.submission.txid}</code></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Sender</div>
+                        <div class="detail-value"><code>${data.submission.sender_address}</code></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Created</div>
+                        <div class="detail-value">${new Date(data.submission.created_at).toLocaleString()}</div>
+                    </div>
+                    ${data.verification ? `
+                        <div class="detail-row">
+                            <div class="detail-label">Quality Score</div>
+                            <div class="detail-value">${data.verification.quality_score.toFixed(2)}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Matched Act</div>
+                            <div class="detail-value">${data.verification.matched_act}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Reasoning</div>
+                            <div class="detail-value">
+                                <div class="reasoning">${data.verification.reasoning}</div>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Verified At</div>
+                            <div class="detail-value">${new Date(data.verification.verified_at).toLocaleString()}</div>
+                        </div>
+                    ` : '<div class="detail-row"><div class="detail-label">Verification</div><div class="detail-value">Not verified yet</div></div>'}
+                `;
+
+                document.getElementById('detail-modal').style.display = 'block';
+            } catch (error) {
+                showMessage(`Failed to load details: ${error.message}`, 'error');
+            }
+        }
+
+        function closeDetail() {
+            document.getElementById('detail-modal').style.display = 'none';
+        }
+
+        async function verifySubmission(id) {
+            if (!confirm('Manually trigger verification for this submission?')) return;
+
+            try {
+                const res = await fetch(`${API_BASE}/api/admin/submissions/${id}/verify`, {
+                    method: 'POST',
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    showMessage(`Verification complete! Quality score: ${data.verification.quality_score.toFixed(2)}`, 'success');
+                    loadSubmissions();
+                    loadStats();
+                } else {
+                    showMessage('Verification failed', 'error');
+                }
+            } catch (error) {
+                showMessage(`Verification error: ${error.message}`, 'error');
+            }
+        }
+
+        async function createTestSubmission() {
+            const proverb = document.getElementById('test-proverb').value.trim();
+            const actId = document.getElementById('test-act-id').value.trim();
+            const amount = parseFloat(document.getElementById('test-amount').value);
+
+            if (!proverb) {
+                showMessage('Please enter a proverb', 'error');
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/api/admin/submissions/test`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ proverb, actId, amount }),
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    showMessage(`Test submission created! Tracking code: ${data.submission.tracking_code}`, 'success');
+                    document.getElementById('test-proverb').value = '';
+                    document.getElementById('test-act-id').value = '';
+                    loadSubmissions();
+                    loadStats();
+                } else {
+                    showMessage('Failed to create test submission', 'error');
+                }
+            } catch (error) {
+                showMessage(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function loadDetailedStats() {
+            const loadingEl = document.getElementById('detailed-stats-loading');
+            const contentEl = document.getElementById('detailed-stats-content');
+
+            loadingEl.style.display = 'block';
+            contentEl.style.display = 'none';
+
+            try {
+                const res = await fetch(`${API_BASE}/api/admin/stats/detailed`);
+                const data = await res.json();
+
+                let html = '<div class="detail-view">';
+                html += '<h3 style="margin-bottom: 15px; color: #fff;">Overall Statistics</h3>';
+                html += '<div class="detail-row"><div class="detail-label">Total</div><div class="detail-value">' + data.overall.total_submissions + '</div></div>';
+                html += '<div class="detail-row"><div class="detail-label">Pending</div><div class="detail-value">' + data.overall.pending + '</div></div>';
+                html += '<div class="detail-row"><div class="detail-label">Approved</div><div class="detail-value">' + data.overall.approved + '</div></div>';
+                html += '<div class="detail-row"><div class="detail-label">Rejected</div><div class="detail-value">' + data.overall.rejected + '</div></div>';
+                html += '<div class="detail-row"><div class="detail-label">Avg Quality Score</div><div class="detail-value">' + 
+                    (data.overall.avg_quality_score ? data.overall.avg_quality_score.toFixed(2) : '-') + '</div></div>';
+                html += '<div class="detail-row"><div class="detail-label">Total ZEC Received</div><div class="detail-value">' + 
+                    (data.overall.total_zec_received || 0) + ' ZEC</div></div>';
+                html += '</div>';
+
+                if (data.by_act && data.by_act.length > 0) {
+                    html += '<div class="detail-view" style="margin-top: 20px;">';
+                    html += '<h3 style="margin-bottom: 15px; color: #fff;">By Act</h3>';
+                    data.by_act.forEach(act => {
+                        html += `<div class="detail-row">
+                            <div class="detail-label">${act.matched_act || 'Unknown'}</div>
+                            <div class="detail-value">${act.count} submissions, avg score: ${act.avg_score ? act.avg_score.toFixed(2) : '-'}</div>
+                        </div>`;
+                    });
+                    html += '</div>';
+                }
+
+                contentEl.innerHTML = html;
+                loadingEl.style.display = 'none';
+                contentEl.style.display = 'block';
+            } catch (error) {
+                loadingEl.innerHTML = `<div class="error">Failed to load statistics: ${error.message}</div>`;
+            }
+        }
+
+        // Load initial data
+        loadStats();
+        loadSubmissions();
+        
+        // Refresh stats every 30 seconds
+        setInterval(() => {
+            loadStats();
+            if (document.getElementById('tab-submissions').classList.contains('active')) {
+                loadSubmissions();
+            }
+        }, 30000);
+    </script>
+</body>
+</html>

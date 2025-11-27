@@ -107,7 +107,7 @@ No single node has complete key
 
 ### 4. NEAR Cloud AI
 
-**Technology**: Claude 3.5 Sonnet API
+**Technology**: openai/gpt-oss-120b via NEAR Cloud AI API
 **Purpose**: Intelligent proverb verification
 **Integration**: REST API
 
@@ -226,7 +226,7 @@ response = await near.verify({
 5. AI VERIFICATION
    Oracle → NEAR Cloud AI API
    - Sends proverb + spellbook context
-   - Claude 3.5 analyzes understanding
+   - openai/gpt-oss-120b analyzes understanding
    - Returns quality score + reasoning
    ↓
    

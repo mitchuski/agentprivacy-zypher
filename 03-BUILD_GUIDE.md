@@ -1200,7 +1200,7 @@ export default function Home() {
 
 # Integration Test
 - [ ] End-to-end: submission → inscription
-- [ ] 44/56 split correct
+- [ ] 61.8/38.2 golden ratio split correct
 - [ ] Tracking codes match
 - [ ] All data persisted
 ```

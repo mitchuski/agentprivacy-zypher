@@ -98,7 +98,7 @@ This balances:
 
 **Layer 2: AI (NEAR Cloud AI)** 🟡 ENHANCEMENT
 - Purpose: Intelligent proverb verification
-- Technology: Claude 3.5 Sonnet via API
+- Technology: openai/gpt-oss-120b via NEAR Cloud AI API
 - Benefit: Beyond simple pattern matching
 - Security: No access to keys (called from within TEE)
 
@@ -489,7 +489,7 @@ describe('End-to-end submission', () => {
 - [ ] Verify Oracle detects transaction
 - [ ] Verify AI verification completes
 - [ ] Verify inscriptions broadcast
-- [ ] Verify 44/56 split is exact
+- [ ] Verify 61.8/38.2 golden ratio split is exact
 - [ ] Verify status updates correctly
 - [ ] Verify quality score displays
 - [ ] Verify blockchain links work
@@ -758,7 +758,7 @@ We welcome contributions! See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelin
 - Nillion TEE integration
 - IPFS/Pinata knowledge storage
 - NEAR Cloud AI verification
-- 44/56 economic model
+- 61.8/38.2 golden ratio economic model
 
 ### Next: v4.1 (Q1 2025)
 - Production hardening

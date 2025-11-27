@@ -176,7 +176,7 @@ This roadmap tracks your progress through building the Proverb Revelation Protoc
 ### Transaction Signing
 - [ ] Public inscription transaction created
 - [ ] Private shielded transaction created
-- [ ] 44/56 split calculated correctly
+- [ ] 61.8/38.2 golden ratio split calculated correctly
 - [ ] Network fee included
 - [ ] Both transactions signed
 - [ ] Both transactions broadcast
@@ -284,7 +284,7 @@ This roadmap tracks your progress through building the Proverb Revelation Protoc
 - [ ] End-to-end test on testnet
 - [ ] Multiple proverbs processed
 - [ ] All inscriptions confirmed
-- [ ] 44/56 split verified
+- [ ] 61.8/38.2 golden ratio split verified
 - [ ] Quality scores accurate
 - [ ] No errors in logs
 - [ ] Performance acceptable
@@ -425,7 +425,7 @@ This roadmap tracks your progress through building the Proverb Revelation Protoc
    - Logs result
    
 7. **Transaction Preparation** ⬜
-   - Calculates 44/56 split
+   - Calculates 61.8/38.2 golden ratio split
    - Creates inscription memo
    - Prepares both transactions
    
@@ -562,7 +562,7 @@ This roadmap tracks your progress through building the Proverb Revelation Protoc
 - [ ] All 10 submitted successfully
 - [ ] All 10 verified by AI
 - [ ] All 10 inscribed on blockchain
-- [ ] Perfect 44/56 split maintained
+- [ ] Perfect 61.8/38.2 golden ratio split maintained
 - [ ] Average quality score >0.7
 - [ ] Zero critical errors
 - [ ] <3 minute processing time

@@ -57,7 +57,7 @@
 - Supports both `TRACK:CODE|proverb` and `[rpp-v1]` formats
 - Automatic tracking code generation
 - Memo size validation (512 byte limit)
-- Economic model calculations (44/56 split)
+- Economic model calculations (61.8/38.2 golden ratio split)
 
 #### 5. Main Oracle Loop (`src/index.ts`)
 - ✅ Transaction monitoring
