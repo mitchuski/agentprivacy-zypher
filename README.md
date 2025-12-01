@@ -324,8 +324,6 @@ This implementation aligns with the 0xagentprivacy living documentation:
 
 - **Website**: [agentprivacy.ai](https://agentprivacy.ai)
 - **GitHub**: [@mitchuski/agentprivacy-zypher](https://github.com/mitchuski/agentprivacy-zypher)
-- **Living Docs**: [sync.soulbis.com](https://sync.soulbis.com)
-- **Intel**: [intel.agentkyra.ai](https://intel.agentkyra.ai)
 
 ### Spellbook
 
