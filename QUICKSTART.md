@@ -1,357 +1,205 @@
 # Quick Start Guide
 
-**Get up and running in 30 minutes**
+Get the **Proof of Proverb Revelation Protocol** running locally in under 30 minutes.
 
----
-
-## 🎯 Signal-to-Sanctuary Donation Flow
-
-**New**: Complete implementation ready for testing with zebrad node!
-
-- **Test Guide**: `PRODUCTION_TEST_GUIDE.md` - Complete testing instructions
-- **Status**: `PRODUCTION_READINESS.md` - What's complete and what's left
-- **Integration**: `SIGNAL_TO_SANCTUARY_INTEGRATION.md` - File locations and next steps
-
-**Quick Test** (with zebrad node):
-```bash
-./setup-keys.sh    # Generate keys and configure
-./test-flow.sh     # Run comprehensive test
-```
-
-**Key Features**:
-- ✅ Golden Split (61.8% t-address / 38.2% z-address)
-- ✅ Viewing key separation (Oracle can see, cannot spend)
-- ✅ Spending key separation (Signer can spend, only on verification)
-- ✅ Semantic proverb matching
-- ✅ IPFS spellbook integration
-- ✅ OP_RETURN inscription builder
+**Document Alignment**: [Glossary v2.1], [Whitepaper v4.3], [Tokenomics v2.0]
 
 ---
 
 ## Prerequisites
 
-Before starting, ensure you have:
-- Ubuntu 20.04+ (or WSL2)
-- Internet connection
-- 8GB+ RAM
-- 50GB+ storage
-- Basic terminal knowledge
+- **Node.js 20+** — JavaScript runtime
+- **PostgreSQL** — Database for tracking
+- **Zcash Infrastructure** — Either:
+  - Zebra full node (port 8233) + Zallet wallet (port 28232), OR
+  - zecwallet-cli light client
+- **API Keys**:
+  - NEAR Cloud AI (for proverb verification)
+  - Pinata (for IPFS spellbook storage)
 
 ---
 
-## 1. Clone Repository (1 min)
+## 1. Clone & Install (2 min)
 
 ```bash
-# Clone the repo
-git clone https://github.com/yourusername/proverb-protocol
-cd proverb-protocol
-
-# Or if starting fresh:
-mkdir -p ~/proverb-protocol
-cd ~/proverb-protocol
-git init
+git clone https://github.com/mitchuski/agentprivacy-zypher
+cd agentprivacy-zypher
+npm install
 ```
 
 ---
 
-## 2. Install Dependencies (10 min)
+## 2. Configure Environment (3 min)
 
 ```bash
-# Run the automated installation script
-./scripts/install-all.sh
-
-# Or manually:
-# Install system packages
-sudo apt update && sudo apt install -y \
-    build-essential git curl wget \
-    postgresql postgresql-contrib
-
-# Install Rust
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-source $HOME/.cargo/env
-
-# Install Node.js 20
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-source ~/.nvm/nvm.sh
-nvm install 20
-nvm use 20
-
-# Install zecwallet-cli
-cargo install --locked --git https://github.com/zingolabs/zecwallet-light-cli
-```
-
----
-
-## 3. Setup API Keys (5 min)
-
-### Nillion
-1. Join Discord: https://discord.gg/nillion
-2. Go to #developers channel
-3. Request API key: "API key for Proverb Protocol hackathon project"
-4. Save key when received
-
-### NEAR Cloud AI
-1. Visit: https://cloud.near.ai/
-2. Create account
-3. Generate API key
-4. Copy key
-
-### Pinata
-1. Visit: https://www.pinata.cloud/
-2. Create account
-3. Generate JWT token
-4. Copy token
-
----
-
-## 4. Configure Environment (2 min)
-
-```bash
-# Copy environment template
 cp .env.example .env
+```
 
-# Edit with your keys
-nano .env
+Edit `.env` with your keys:
 
-# Add your API keys:
-# NILLION_API_KEY=nillion_...
-# NEAR_API_KEY=your_key_here
-# PINATA_JWT=Bearer ...
+```env
+# Database
+DATABASE_URL=postgresql://user:pass@localhost:5432/agentprivacy
+
+# Zcash
+ZEBRA_RPC_URL=http://localhost:8233
+ZALLET_RPC_URL=http://localhost:28232
+
+# AI Verification (Oracle Swordsman)
+NEAR_SWORDSMAN_API_KEY=your_near_cloud_ai_key
+
+# IPFS
+PINATA_JWT=your_pinata_jwt_token
+SPELLBOOK_CID=bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4
+
+# Economic Parameters [Tokenomics v2.0]
+SIGNAL_COST=0.01         # ZEC per signal
+PUBLIC_SPLIT=0.618       # 61.8% to transparent pool
+PRIVATE_SPLIT=0.382      # 38.2% to shielded pool
 ```
 
 ---
 
-## 5. Setup Database (3 min)
+## 3. Setup Database (2 min)
 
 ```bash
-# Start PostgreSQL
-sudo systemctl start postgresql
+# Create database
+createdb agentprivacy
 
-# Create user and database
-sudo -u postgres createuser -P proverb_user
-# Enter password when prompted
-
-sudo -u postgres createdb -O proverb_user proverb_protocol
-
-# Apply schema
-psql -U proverb_user -d proverb_protocol -h localhost < scripts/schema.sql
+# Run migrations (if using schema file)
+psql -d agentprivacy -f oracle-swordsman/schema.sql
 ```
 
 ---
 
-## 6. Setup Zcash Wallet (5 min + 4-6 hours sync)
+## 4. Start Services (5 min)
 
-**Linux/macOS:**
+### Terminal 1: Frontend (Mage Interface)
 ```bash
-# Start light client (this will sync in background)
-zecwallet-cli --server https://zec.rocks:443 \
-              --data-dir ~/proverb-protocol/zcash-wallet &
-
-# Wait a few minutes, then connect
-zecwallet-cli --server https://zec.rocks:443 \
-              --data-dir ~/proverb-protocol/zcash-wallet
+npm run dev
+# Runs on http://localhost:5000
 ```
 
-**Windows:**
-```powershell
-# Start light client (note: some versions don't support --data-dir)
-zecwallet-cli --server https://zec.rocks:443
-
-# In the CLI (for both platforms):
-# Create wallet
-new
-
-# Get addresses
-new z          # Shielded address (for receiving user submissions)
-address        # Transparent address (for public inscriptions to spellbook)
-
-# Save these addresses to your .env file!
-
-# Request testnet ZEC
-# Visit: https://faucet.zecpages.com/
-```
-
----
-
-## 7. Spellbook Status (Already Complete!)
-
-The spellbook is already created and uploaded:
-- **Version**: 4.0.0-canonical
-- **IPFS CID**: `bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`
-- **Location**: `spellbook/spellbook-acts.json`
-
-**To Update Spellbook** (if needed):
-
-**Windows:**
-```powershell
-.\upload-spellbook.ps1 -JwtToken "YOUR_PINATA_JWT"
-```
-
-**Linux/macOS:**
+### Terminal 2: Backend (Oracle Swordsman)
 ```bash
-curl -X POST https://api.pinata.cloud/pinning/pinFileToIPFS \
-  -H "Authorization: Bearer YOUR_PINATA_JWT" \
-  -F file=@spellbook/spellbook-acts.json
-```
-
-Then update `.env` with the new CID.
-
----
-
-## 8. Test Installation (2 min)
-
-```bash
-# Test Oracle Swordsman
 cd oracle-swordsman
 npm install
-npm run test
-
-# Expected output:
-# ✓ Configuration loaded
-# ✓ Database connected
-# ✓ Zcash client working
-# ✓ IPFS accessible
-```
-
----
-
-## 9. Start Development (now)
-
-```bash
-# Terminal 1: Oracle Swordsman
-cd oracle-swordsman
 npm run dev
-
-# Terminal 2: Mage Agent
-cd mage-agent
-npm install
-npm run dev
-
-# Terminal 3: Watch logs
-tail -f logs/proverb-protocol.log
+# Runs on http://localhost:3001
 ```
+
+### Verify
+- Frontend: http://localhost:5000
+- Backend health: http://localhost:3001/health
 
 ---
 
-## 10. Test End-to-End (5 min)
+## 5. Test the Signal Flow
 
-1. Open browser: http://localhost:3000
-2. Write a test proverb
-3. Submit and get payment info
-4. Send testnet ZEC with memo
-5. Watch Oracle process it
-6. See inscription confirmed!
+The **Signal Flow** demonstrates the core protocol [Whitepaper v4.3, §RPP]:
+
+1. **Visit** http://localhost:5000/story
+2. **Read** a tale from the spellbook
+3. **Click** "Learn" button to copy content into your context
+4. **Navigate** to /mage to chat with Soulbae (optional assistance)
+5. **Craft** a proverb expressing the tale's principle
+6. **Copy** the formatted memo
+7. **Send** via Zashi wallet (z→z shielded transaction, 0.01 ZEC)
 
 ---
 
-## Quick Verification Checklist
+## Architecture Overview
 
-After setup, verify everything:
-
-```bash
-# Check versions
-rustc --version  # Should show 1.70+
-node --version   # Should show v20.x
-psql --version   # Should show 12+
-
-# Check services
-sudo systemctl status postgresql  # Should be running
-
-# Check environment
-source .env
-echo $NILLION_API_KEY    # Should show your key
-echo $NEAR_API_KEY  # Should show your key
-echo $PINATA_JWT         # Should show your token
-
-# Check database
-psql -U proverb_user -d proverb_protocol -h localhost -c "SELECT 1;"
-# Should return: 1
-
-# Check Zcash
-zecwallet-cli --data-dir ~/proverb-protocol/zcash-wallet --command "balance"
-# Should show balance (after sync)
 ```
+Frontend (Next.js)          Backend (Oracle Swordsman)
+:5000 — Mage Interface      :3001 — Verification & Inscription
+   │                           │
+   └──> First Person           │
+        submits proverb        │
+                               │
+                    Zebra RPC (:8233) ← Blockchain data
+                               │
+                    Zallet RPC (:28232) ← Wallet operations
+                               │
+                    NEAR Cloud AI ← Proverb verification
+                               │
+                    IPFS/Pinata ← Spellbook retrieval
+```
+
+**Dual-Agent Separation** [Whitepaper v4.3, §3]:
+- **Swordsman (Oracle)**: Holds viewing key, verifies proverbs
+- **Mage (Frontend)**: Helps First Persons craft proverbs, never sees transactions
+
+---
+
+## Key Routes
+
+### Frontend (Mage Interface)
+| Route | Purpose |
+|-------|---------|
+| `/` | Landing page |
+| `/story` | Read tales from the spellbook |
+| `/mage` | Chat with Soulbae AI |
+| `/proverbs` | View inscribed proofs (VRCs) |
+
+### Backend (Oracle Swordsman)
+| Endpoint | Purpose |
+|----------|---------|
+| `GET /health` | Service health check |
+| `POST /verify` | Verify a proverb |
+| `GET /inscriptions` | List on-chain inscriptions |
+
+---
+
+## Terminology Quick Reference
+
+Per [Glossary v2.1]:
+
+| Term | Definition |
+|------|------------|
+| **First Person** | Human whose sovereignty is protected (not "user") |
+| **Signal** | 0.01 ZEC proof of comprehension (not "donation") |
+| **Ceremony** | 1 ZEC one-time agent pair genesis |
+| **VRC** | Verifiable Relationship Credential |
+| **RPP** | Relationship Proverb Protocol |
 
 ---
 
 ## Troubleshooting
 
-### PostgreSQL won't start
+### "Cannot connect to database"
 ```bash
+# Check PostgreSQL is running
+pg_isready
+# Start if needed
 sudo systemctl start postgresql
-sudo systemctl enable postgresql
 ```
 
-### Can't connect to database
+### "Zebra RPC not responding"
 ```bash
-# Check if user exists
-sudo -u postgres psql -c "\du"
-
-# Recreate if needed
-sudo -u postgres createuser -P proverb_user
+# Check ports
+netstat -ano | findstr :8233
+netstat -ano | findstr :28232
 ```
 
-### Zcash sync too slow
-```bash
-# Try different server
-zecwallet-cli --server https://mainnet.lightwalletd.com:9067
-
-# Or just wait - first sync takes 4-6 hours
-# Subsequent syncs are fast (<1 minute)
-```
-
-### API keys not working
-- Double-check you copied them correctly
-- Ensure no extra spaces
-- Try regenerating keys
-- Check rate limits
+### "NEAR API error"
+- Verify your API key is correct
+- Check rate limits on your account
 
 ---
 
 ## Next Steps
 
-✅ **Setup Complete!**
-
-Now:
-1. Read `docs/02-ARCHITECTURE.md` to understand the system
-2. Follow `docs/03-BUILD_GUIDE.md` to implement features
-3. Use `docs/05-ROADMAP.md` to track progress
-
----
-
-## Quick Commands
-
-```bash
-# Start Oracle
-cd oracle-swordsman && npm run dev
-
-# Start Frontend
-cd mage-agent && npm run dev
-
-# Check logs
-tail -f logs/proverb-protocol.log
-
-# Check database
-psql -U proverb_user -d proverb_protocol -h localhost
-
-# Check Zcash
-zecwallet-cli --data-dir ~/proverb-protocol/zcash-wallet --command "balance"
-
-# Test spellbook
-curl https://gateway.pinata.cloud/ipfs/$SPELLBOOK_CID
-```
+- **Deep dive**: Read `HOW_IT_WORKS.md` for architecture details
+- **Backend details**: See `oracle-swordsman/README.md`
+- **Full overview**: Check `PROJECT_STATE_AND_REVIEW.md`
+- **Living docs**: Visit [sync.soulbis.com](https://sync.soulbis.com)
 
 ---
 
 ## Getting Help
 
-- **Documentation**: See `docs/` folder
-- **Issues**: Open GitHub issue
-- **Community**: 
-  - Nillion: https://discord.gg/nillion
-  - Zcash: https://forum.zcashcommunity.com/
-  - NEAR Cloud AI: https://cloud.near.ai
-
----
-
-**Ready to build!** 🗡️🪄🤖
+- **Issues**: [GitHub Issues](https://github.com/mitchuski/agentprivacy-zypher/issues)
+- **Zcash**: [Zcash Forum](https://forum.zcashcommunity.com/)
+- **NEAR**: [NEAR Discord](https://near.chat/)
+- **Project**: mage@agentprivacy.ai

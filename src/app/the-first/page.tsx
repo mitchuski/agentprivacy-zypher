@@ -34,12 +34,6 @@ export default function TheFirstPage() {
                   zero
                 </Link>
                 <Link
-                  href="/story/stats"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  stats
-                </Link>
-                <Link
                   href="/proverbs"
                   className="text-text hover:text-primary transition-colors font-medium"
                 >

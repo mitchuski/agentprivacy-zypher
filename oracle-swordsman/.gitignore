@@ -30,3 +30,19 @@ zcash-wallet/
 *.test.js
 *.test.ts
 
+# Production keys and sensitive data
+PRODUCTION_ZCASH_KEYS.json
+zcash-addresses-controlled.json
+secretsigner-workload-config-with-keys.json
+*keys*.json
+*addresses*.json
+
+# Temporary output files
+*-results.json
+*-info.json
+temp/
+*.tmp
+
+# Build artifacts
+.next/
+out/

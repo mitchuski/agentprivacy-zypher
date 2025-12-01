@@ -1,0 +1,15 @@
+﻿# Zallet Configuration
+
+# Zebrad RPC connection (your zebrad node)
+[indexer]
+validator_address = "127.0.0.1:8233"
+
+# Zallet's own JSON-RPC server (for generating addresses)
+[rpc]
+# Enable RPC server on localhost
+bind = ["127.0.0.1:28232"]
+
+# RPC authentication (required)
+[[rpc.auth]]
+user = "zallet"
+password = "zallet123"

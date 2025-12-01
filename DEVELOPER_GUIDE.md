@@ -774,23 +774,13 @@ We welcome contributions! See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelin
 
 ---
 
-## Success Stories
+## Ecosystem Integration
 
-### ZyberQuest Integration
-
-This project builds on proven patterns from **ZyberQuest**, the 2024 hackathon winner that demonstrated:
-- Light client viability for production
-- Effective memo-based protocols
-- Robust error handling
-- Real-world Zcash usage patterns
-
-### Ecosystem Integration
-
-**Complete Hackathon Sweep**:
-- ✅ ZyberQuest (Zcash patterns)
-- ✅ Nillion (TEE security)
-- ✅ NEAR Cloud AI (AI intelligence)
-- ✅ Pinata (IPFS storage)
+**Technology Stack**:
+- ✅ Zcash (Zebra + Zallet) - Shielded transactions
+- ✅ Nillion (TEE security) - Key isolation
+- ✅ NEAR Cloud AI (AI verification) - Proverb matching
+- ✅ Pinata (IPFS storage) - Spellbook hosting
 
 This demonstrates how privacy technologies compose into complete solutions.
 
@@ -833,7 +823,6 @@ MIT License - See [LICENSE](../LICENSE) file for details.
 ## Acknowledgments
 
 **Built on patterns from**:
-- **ZyberQuest** - Production Zcash light client patterns
 - **NEAR Cloud AI** - AI verification integration  
 - **NEAR Cloud AI** - AI verification integration
 - **BGIN** - Blockchain governance principles

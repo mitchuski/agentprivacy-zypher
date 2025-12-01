@@ -1,8 +1,10 @@
 # Production Readiness Checklist
 
-**Signal-to-Sanctuary Donation Flow**
+**Signal-to-Sanctuary Flow**
 
-Version 1.0 | December 2024
+Version 1.1 | December 2025
+
+**Document Alignment**: [Glossary v2.1], [Tokenomics v2.0], [Whitepaper v4.3]
 
 ---
 
@@ -12,24 +14,24 @@ Based on your implementation files, here's where you are:
 
 ### ✅ Completed Components
 
-- [x] **DonationFlow.tsx** - Complete UI component with 5-step flow
-- [x] **golden-split.ts** - Golden ratio calculator (61.8/38.2)
-- [x] **inscription-builder.ts** - OP_RETURN inscription creation
-- [x] **semantic-matcher.ts** - AI-powered proverb matching
-- [x] **ipfs-proverb-fetcher.ts** - IPFS spellbook integration
-- [x] **rpc-client.ts** - Zebra RPC client
-- [x] **test-flow.sh** - Comprehensive test script
-- [x] **setup-keys.sh** - Key generation script
-- [x] **docker-compose.yml** - Service orchestration
-- [x] **Documentation** - Signal-to-Sanctuary flow documented
+- [x] **SignalFlow.tsx** — Complete UI component with 5-step flow
+- [x] **golden-split.ts** — Golden ratio calculator (61.8/38.2) [Tokenomics v2.0]
+- [x] **inscription-builder.ts** — OP_RETURN inscription creation
+- [x] **semantic-matcher.ts** — AI-powered proverb matching
+- [x] **ipfs-proverb-fetcher.ts** — IPFS spellbook integration
+- [x] **rpc-client.ts** — Zebra RPC client
+- [x] **test-flow.sh** — Comprehensive test script
+- [x] **setup-keys.sh** — Key generation script
+- [x] **docker-compose.yml** — Service orchestration
+- [x] **Documentation** — Signal-to-Sanctuary flow documented
 
 ### 🔄 In Progress / Needs Testing
 
-- [ ] **Oracle Service** - Needs implementation/integration
-- [ ] **Signer Service** - Needs implementation/integration
-- [ ] **Zebrad RPC Integration** - Test with your running node
-- [ ] **End-to-End Flow** - Full transaction test
-- [ ] **Error Handling** - Edge cases and failures
+- [ ] **Oracle Service** — Needs implementation/integration
+- [ ] **Signer Service** — Needs implementation/integration
+- [ ] **Zebrad RPC Integration** — Test with your running node
+- [ ] **End-to-End Flow** — Full transaction test
+- [ ] **Error Handling** — Edge cases and failures
 
 ---
 
@@ -56,11 +58,11 @@ Based on your implementation files, here's where you are:
 - [ ] **Test 2**: IPFS spellbook access
   ```bash
   curl -s "https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4" | jq '.version'
+  # Should return: "4.0.1-canonical"
   ```
 
 - [ ] **Test 3**: Viewing key import
   ```bash
-  # Import viewing key to zebrad
   curl -X POST http://localhost:8232 \
     --user "$ZEBRA_USER:$ZEBRA_PASS" \
     -H "Content-Type: application/json" \
@@ -68,13 +70,13 @@ Based on your implementation files, here's where you are:
       "jsonrpc": "1.0",
       "id": "test",
       "method": "z_importviewingkey",
-      "params": ["'$DONATION_VIEWING_KEY'", "no"]
+      "params": ["'$SIGNAL_VIEWING_KEY'", "no"]
     }'
   ```
 
 - [ ] **Test 4**: Semantic matcher
   ```bash
-  cd oracle
+  cd oracle-swordsman
   npx ts-node -e "
   const { ProverbMatcher } = require('./src/semantic-matcher');
   const matcher = new ProverbMatcher();
@@ -82,21 +84,25 @@ Based on your implementation files, here's where you are:
   "
   ```
 
-- [ ] **Test 5**: Golden split calculation
+- [ ] **Test 5**: Golden split calculation [Tokenomics v2.0, §2]
   ```bash
-  cd signer
+  cd oracle-swordsman
   npx ts-node golden-split.ts
+  # Should output:
+  # Amount: 0.01 ZEC
+  # Sanctuary (61.8%): 0.00618 ZEC
+  # Fee (38.2%): 0.00382 ZEC
   ```
 
 - [ ] **Test 6**: Inscription builder
   ```bash
-  cd signer
+  cd oracle-swordsman
   npx ts-node inscription-builder.ts
   ```
 
 ### Phase 3: Service Integration
 
-- [ ] **Oracle Service**
+- [ ] **Oracle Service (Swordsman)**
   - [ ] Starts successfully
   - [ ] Connects to zebrad
   - [ ] Imports viewing key
@@ -109,7 +115,7 @@ Based on your implementation files, here's where you are:
   - [ ] Starts successfully
   - [ ] Connects to zebrad
   - [ ] Receives verification signals
-  - [ ] Calculates golden split
+  - [ ] Calculates golden split (61.8/38.2)
   - [ ] Builds inscription
   - [ ] Creates transparent transaction (t-address)
   - [ ] Creates shielded transaction (z-address)
@@ -117,9 +123,9 @@ Based on your implementation files, here's where you are:
 
 ### Phase 4: End-to-End Test
 
-- [ ] **Step 1**: Send test transaction
-  - [ ] Format memo: `ACT:5|Your test proverb`
-  - [ ] Send 0.01 ZEC to donation z-address
+- [ ] **Step 1**: Send test signal
+  - [ ] Format memo: `[rpp-v1][act-5][timestamp][Your test proverb]`
+  - [ ] Send 0.01 ZEC to signal z-address
   - [ ] Transaction confirms
 
 - [ ] **Step 2**: Oracle detects transaction
@@ -131,7 +137,7 @@ Based on your implementation files, here's where you are:
 
 - [ ] **Step 3**: Signer executes split
   - [ ] Signer receives verification signal
-  - [ ] Golden split calculated correctly
+  - [ ] Golden split calculated correctly (61.8/38.2)
   - [ ] Transparent transaction created (61.8%)
   - [ ] Shielded transaction created (38.2%)
   - [ ] Both transactions broadcast
@@ -153,10 +159,12 @@ Based on your implementation files, here's where you are:
 ./setup-keys.sh
 
 # Configure .env
-# Edit .env with your zebrad RPC credentials
+cp .env.example .env
 
-# Critical: Set Oracle Swordsman API key for verification
-NEAR_SWORDSMAN_API_KEY=sk-876c0f435b14449bac47f13583f5fd68
+# Edit .env with your credentials:
+# - ZEBRA_USER / ZEBRA_PASS
+# - NEAR_SWORDSMAN_API_KEY
+# - Signal/viewing addresses
 ```
 
 ### 2. Run Test Flow
@@ -173,16 +181,19 @@ NEAR_SWORDSMAN_API_KEY=sk-876c0f435b14449bac47f13583f5fd68
 docker-compose up -d
 
 # Or manually
-cd oracle && npm run dev &
-cd signer && npm run dev &
+cd oracle-swordsman && npm run dev &
+cd src && npm run dev &
 ```
 
-### 4. Send Test Transaction
+### 4. Send Test Signal
 
 ```bash
-# Using zcash-cli or Zashi wallet
-# Send 0.01 ZEC to $DONATION_Z_ADDRESS
-# Memo: ACT:5|Your test proverb
+# Using Zashi wallet:
+# 1. Open Zashi
+# 2. Paste signal z-address
+# 3. Amount: 0.01 ZEC
+# 4. Memo: [rpp-v1][act-5][timestamp][Your proverb]
+# 5. Send (z→z shielded)
 ```
 
 ### 5. Monitor Results
@@ -204,16 +215,16 @@ curl -X POST http://localhost:8232 \
 
 ### Immediate (For Testing)
 
-1. **Update test-flow.sh** - Ensure it uses zebrad RPC (not zcash-cli)
-2. **Implement Oracle Service** - Use `rpc-client.ts` and `semantic-matcher.ts`
-3. **Implement Signer Service** - Use `rpc-client.ts`, `golden-split.ts`, `inscription-builder.ts`
-4. **Test with zebrad** - Verify RPC calls work with your node
+1. **Update test-flow.sh** — Ensure it uses zebrad RPC
+2. **Wire Oracle Service** — Use `rpc-client.ts` and `semantic-matcher.ts`
+3. **Wire Signer Service** — Use `golden-split.ts`, `inscription-builder.ts`
+4. **Test with zebrad** — Verify RPC calls work with your node
 
 ### Before Production
 
 1. **Security Review**
    - [ ] Keys stored securely (encrypted)
-   - [ ] Oracle in TEE (production)
+   - [ ] Oracle in TEE (production, optional)
    - [ ] Signer isolated
    - [ ] Access controls
 
@@ -238,42 +249,41 @@ curl -X POST http://localhost:8232 \
 
 ## 🔧 Integration Points
 
-### Oracle Service Structure
+### Oracle Service Structure (Swordsman)
 
 ```typescript
-// oracle/src/index.ts
-import { ZebraRpcClient } from '../rpc-client';
-import { IPFSProverbStore } from '../ipfs-proverb-fetcher';
-import { ProverbMatcher } from '../semantic-matcher';
-import { NearCloudAIVerifier } from '../nearcloudai-verifier'; // Use existing verifier
+// oracle-swordsman/src/index.ts
+import { ZebraRpcClient } from './rpc-client';
+import { IPFSProverbStore } from './ipfs-proverb-fetcher';
+import { NearCloudAIVerifier } from './nearcloudai-verifier';
 
 // 1. Initialize RPC client
 const rpc = new ZebraRpcClient({ host, port, username, password });
 
-// 2. Import viewing key
+// 2. Import viewing key (Swordsman sees, cannot spend)
 await rpc.importViewingKey(viewingKey);
 
-// 3. Initialize IPFS store
+// 3. Initialize IPFS store (spellbook v4.0.1-canonical)
 const ipfsStore = new IPFSProverbStore(ipfsGateway, spellbookCid);
 await ipfsStore.loadSpellbook();
 
-// 4. Initialize semantic matcher (uses NEAR Cloud AI with Swordsman key)
-const verifier = new NearCloudAIVerifier(); // Uses NEAR_SWORDSMAN_API_KEY from config
+// 4. Initialize verifier (uses NEAR_SWORDSMAN_API_KEY)
+const verifier = new NearCloudAIVerifier();
 
-// 5. Monitor transactions
+// 5. Monitor for signals
 setInterval(async () => {
-  const transactions = await rpc.listReceivedTransactions(donationAddress);
+  const transactions = await rpc.listReceivedTransactions(signalAddress);
   for (const tx of transactions) {
     // Parse memo
     const memo = parseMemo(tx.memo);
     
-    // Fetch canonical proverb from IPFS
+    // Fetch canonical proverb
     const canonical = await ipfsStore.getCanonicalProverb(memo.actId);
     
-    // Verify using NEAR Cloud AI (Swordsman key)
+    // Verify with NEAR Cloud AI
     const result = await verifier.verify(memo.proverb, spellbook);
     
-    // Signal signer if verified (score >= threshold)
+    // Signal signer if verified
     if (result.approved && result.quality_score >= threshold) {
       await signalSigner(tx.txid, memo, result.quality_score);
     }
@@ -281,27 +291,28 @@ setInterval(async () => {
 }, pollInterval);
 ```
 
-**Note**: The Oracle uses `NEAR_SWORDSMAN_API_KEY` (sk-876c0f435b14449bac47f13583f5fd68) for verification. This is separate from the frontend mage agent key.
-
 ### Signer Service Structure
 
 ```typescript
-// signer/src/index.ts
-import { ZebraRpcClient } from '../rpc-client';
-import { GoldenSplit } from '../golden-split';
-import { InscriptionBuilder } from '../inscription-builder';
+// oracle-swordsman/src/signing-service.ts
+import { ZebraRpcClient } from './rpc-client';
+import { GoldenSplit } from './golden-split';
+import { InscriptionBuilder } from './inscription-builder';
 
 // 1. Initialize RPC client
 const rpc = new ZebraRpcClient({ host, port, username, password });
 
-// 2. Import spending key
+// 2. Import spending key (Signer acts, cannot see full context)
 await rpc.importSpendingKey(spendingKey);
 
-// 3. Listen for verification signals
+// 3. Golden split calculator [Tokenomics v2.0]
+const goldenSplit = new GoldenSplit();
+
+// 4. Listen for verification signals
 app.post('/verify', async (req, res) => {
   const { txid, memo, score } = req.body;
   
-  // Calculate golden split
+  // Calculate golden split (61.8% / 38.2%)
   const split = goldenSplit.calculate(amount);
   
   // Build inscription
@@ -313,10 +324,10 @@ app.post('/verify', async (req, res) => {
     timestamp: Date.now()
   });
   
-  // Create transparent transaction (t-address)
+  // Create transparent transaction (public inscription)
   await rpc.sendToAddress(sanctuaryTAddress, split.sanctuary, inscription);
   
-  // Create shielded transaction (z-address)
+  // Create shielded transaction (protocol fee)
   await rpc.sendToShieldedAddress(protocolFeeZAddress, split.fee);
   
   res.json({ success: true });
@@ -325,13 +336,36 @@ app.post('/verify', async (req, res) => {
 
 ---
 
-## 📝 Next Steps
+## 📈 Terminology Reference
 
-1. **Review** `PRODUCTION_TEST_GUIDE.md` for detailed testing instructions
-2. **Run** `./test-flow.sh` to verify all components
-3. **Implement** Oracle and Signer services using the provided TypeScript files
-4. **Test** end-to-end with a small testnet transaction
-5. **Verify** golden split appears correctly on-chain
+Per [Glossary v2.1]:
+
+| Term | Old Usage | Canonical Term |
+|------|-----------|----------------|
+| User | user | **First Person** |
+| Donation | donation | **Signal** (0.01 ZEC) |
+| Donation address | donation_address | **Signal address** |
+| Donation flow | DonationFlow | **SignalFlow** |
+
+---
+
+## 🔐 Security Notes
+
+### Key Separation [Whitepaper v4.3, §3]
+
+The dual-agent architecture requires:
+
+- **Viewing Key (Oracle/Swordsman)**: Can see transactions, cannot spend
+- **Spending Key (Signer)**: Can spend, only upon verified signal
+
+This separation is **cryptographic, not policy-based**. Neither agent alone can corrupt the flow.
+
+### Current Limitation
+
+Zallet doesn't support clean viewing/spending key separation. Options:
+
+1. **Current**: Use same key with logical separation
+2. **Future**: Activate Nillion TEE for hardware-enforced isolation
 
 ---
 
@@ -345,5 +379,20 @@ app.post('/verify', async (req, res) => {
 - Test with zebrad RPC
 - Verify end-to-end flow
 
-**All the hard cryptographic work is done** - you just need to connect the services! 🚀
+**All the hard cryptographic work is done** — you just need to connect the services! 🚀
 
+---
+
+## 📚 Related Documentation
+
+- **[HOW_IT_WORKS.md](./HOW_IT_WORKS.md)** — Technical flow details
+- **[02-ARCHITECTURE.md](./02-ARCHITECTURE.md)** — System architecture
+- **[PRODUCTION_TEST_GUIDE.md](./PRODUCTION_TEST_GUIDE.md)** — Testing procedures
+- **[test-flow.sh](./test-flow.sh)** — Automated test script
+- **[setup-keys.sh](./setup-keys.sh)** — Key generation script
+
+---
+
+*"The proverb is the spell. The inscription is the commitment. The bilateral exchange is the relationship."*
+
+**⚔️ ⊥ 🧙‍♂️ | 😊**

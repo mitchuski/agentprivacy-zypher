@@ -1,18 +1,17 @@
 /**
  * Zcash Client Module
- * Handles all interactions with Zebra (zebrad) full node for the Proverb Revelation Protocol
- * Updated to use Zebra - Zcash Foundation's Rust implementation (future-proof)
+ *
+ * ARCHITECTURE:
+ * - Zebra (port 8233): Full node - blockchain data, sync status
+ * - Zallet (port 28232): Wallet - signing, keys, balances, addresses, z_sendmany
+ *
+ * Zebra does NOT have wallet functionality. All wallet operations go through Zallet.
  */
 
-import { exec } from 'child_process';
-import { promisify } from 'util';
 import * as fs from 'fs/promises';
-import * as path from 'path';
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { config } from './config';
 import logger from './logger';
-
-const execAsync = promisify(exec);
 
 // Types
 export interface ZcashAddress {
@@ -38,474 +37,407 @@ export interface TransactionResult {
   error?: string;
 }
 
-export interface ZcashConfig {
-  network: 'mainnet' | 'testnet';
-  rpcPort: number;
-  rpcHost: string;
-  rpcUrl?: string; // Optional: full RPC URL (for HTTP JSON-RPC)
-  cookieFilePath?: string; // Path to Zebra cookie file (for authentication)
-  timeout?: number;
-}
+/**
+ * Base RPC client for JSON-RPC communication
+ */
+class RpcClient {
+  private client: AxiosInstance;
+  private name: string;
+  private authHeader: string | null = null;
 
-export class ZcashClient {
-  private config: ZcashConfig;
-  private lastSyncHeight: number = 0;
-  private syncInterval?: NodeJS.Timeout;
+  constructor(
+    name: string,
+    rpcUrl: string,
+    timeout: number = 30000,
+    auth?: { user: string; password: string }
+  ) {
+    this.name = name;
+    this.client = axios.create({
+      baseURL: rpcUrl,
+      timeout,
+      headers: { 'Content-Type': 'application/json' },
+    });
 
-  constructor(customConfig?: Partial<ZcashConfig>) {
-    // Use provided config or fall back to environment config
-    const defaultConfig: ZcashConfig = {
-      network: (config.zcash.network || 'mainnet') as 'mainnet' | 'testnet',
-      rpcPort: config.zcash.rpcPort || (config.zcash.network === 'testnet' ? 18232 : 8232),
-      rpcHost: config.zcash.rpcHost || '127.0.0.1',
-      rpcUrl: config.zcash.rpcUrl,
-      cookieFilePath: config.zcash.cookieFilePath,
-      timeout: 30000
-    };
-    
-    this.config = customConfig ? { ...defaultConfig, ...customConfig } : defaultConfig;
+    if (auth && auth.user && auth.password) {
+      this.authHeader = 'Basic ' + Buffer.from(auth.user + ':' + auth.password).toString('base64');
+    }
   }
 
-  /**
-   * Read authentication from Zebra cookie file
-   * Cookie file format: username:password (single line)
-   */
-  private async readCookieFile(): Promise<{ username: string; password: string }> {
-    let cookiePath: string;
-    
-    if (this.config.cookieFilePath) {
-      cookiePath = this.config.cookieFilePath;
-    } else {
-      // Default cookie file location (Windows: AppData\Local\zebra\.cookie)
-      if (process.platform === 'win32') {
-        const localAppData = process.env.LOCALAPPDATA || path.join(process.env.USERPROFILE || '', 'AppData', 'Local');
-        cookiePath = path.join(localAppData, 'zebra', '.cookie');
-      } else {
-        // Linux/macOS: ~/.zebra/.cookie or from config cookie_dir
-        const homeDir = process.env.HOME || process.env.USERPROFILE || '';
-        cookiePath = path.join(homeDir, '.zebra', '.cookie');
-      }
-    }
-    
+  async setAuthFromCookie(cookiePath: string): Promise<void> {
     try {
       const cookieContent = await fs.readFile(cookiePath, 'utf-8');
-      const [username, password] = cookieContent.trim().split(':');
-      
-      if (!username || !password) {
-        throw new Error('Invalid cookie file format. Expected: username:password');
+      const parts = cookieContent.trim().split(':');
+      const username = parts[0];
+      const password = parts[1];
+      if (username && password) {
+        this.authHeader = 'Basic ' + Buffer.from(username + ':' + password).toString('base64');
+        logger.debug(this.name + ': Loaded cookie auth', { username });
       }
-      
-      logger.debug('Read cookie file', { path: cookiePath, username });
-      return { username, password };
     } catch (error: any) {
       if (error.code === 'ENOENT') {
-        throw new Error(`Cookie file not found at ${cookiePath}. Make sure Zebra is running and has created the cookie file.`);
+        logger.warn(this.name + ': Cookie file not found', { path: cookiePath });
+      } else {
+        logger.error(this.name + ': Failed to read cookie', { error: error.message });
       }
-      throw new Error(`Failed to read cookie file: ${error.message}`);
     }
   }
 
-  /**
-   * Execute a Zebra JSON-RPC command via HTTP
-   * Uses cookie file authentication (Zebra default)
-   */
-  private async execCommand(rpcMethod: string, ...params: any[]): Promise<string> {
-    const rpcUrl = this.config.rpcUrl || `http://${this.config.rpcHost}:${this.config.rpcPort}`;
-    
+  async call<T = any>(method: string, ...params: any[]): Promise<T> {
     const requestBody = {
       jsonrpc: '2.0',
       id: Date.now(),
-      method: rpcMethod,
-      params: params
+      method,
+      params,
     };
 
-    // Read authentication from cookie file
-    const { username, password } = await this.readCookieFile();
-    const auth = Buffer.from(`${username}:${password}`).toString('base64');
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+    if (this.authHeader) {
+      headers['Authorization'] = this.authHeader;
+    }
 
     try {
-      logger.debug('Executing Zebra RPC command', { method: rpcMethod, params, url: rpcUrl });
-      
-      const response = await axios.post(rpcUrl, requestBody, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Basic ${auth}`
-        },
-        timeout: this.config.timeout || 30000,
-        validateStatus: () => true // Don't throw on HTTP errors
-      });
+      logger.debug(this.name + ' RPC call', { method, params });
 
-      if (response.status !== 200) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      const response = await this.client.post('', requestBody, { headers });
+
+      if (response.data.error) {
+        throw new Error(response.data.error.message || JSON.stringify(response.data.error));
       }
 
-      const result = response.data;
-      
-      if (result.error) {
-        throw new Error(`RPC error: ${result.error.message || JSON.stringify(result.error)}`);
-      }
-
-      return JSON.stringify(result.result);
+      return response.data.result as T;
     } catch (error: any) {
       if (error.response) {
-        logger.error('Zebra RPC failed', { 
-          error: error.response.data || error.message, 
-          method: rpcMethod,
-          status: error.response.status
+        logger.error(this.name + ' RPC failed', {
+          method,
+          status: error.response.status,
+          error: error.response.data,
         });
-        throw new Error(`Failed to execute Zebra RPC command: ${error.response.data?.error?.message || error.message}`);
       } else {
-        logger.error('Zebra RPC failed', { error: error.message, method: rpcMethod });
-        throw new Error(`Failed to execute Zebra RPC command: ${error.message}`);
+        logger.error(this.name + ' RPC failed', { method, error: error.message });
       }
+      throw error;
     }
   }
+}
 
-  /**
-   * Execute a Zebra JSON-RPC command and parse JSON response
-   */
-  private async execCommandJSON<T = any>(rpcMethod: string, ...params: any[]): Promise<T> {
-    const output = await this.execCommand(rpcMethod, ...params);
-    try {
-      return JSON.parse(output) as T;
-    } catch (error) {
-      throw new Error(`Failed to parse JSON response: ${output}`);
-    }
+/**
+ * Zcash Client - Dual RPC Architecture
+ * Uses Zebra for blockchain data and Zallet for wallet operations
+ */
+export class ZcashClient {
+  private zebra: RpcClient;
+  private zallet: RpcClient;
+  private lastSyncHeight: number = 0;
+  private syncInterval?: NodeJS.Timeout;
+
+  constructor() {
+    this.zebra = new RpcClient('Zebra', config.zebra.rpcUrl, 30000);
+    this.zallet = new RpcClient(
+      'Zallet',
+      config.zallet.rpcUrl,
+      config.zallet.timeout,
+      { user: config.zallet.rpcUser, password: config.zallet.rpcPassword }
+    );
   }
 
-  /**
-   * Initialize the wallet and ensure Zebra is running and synced
-   */
   async initialize(): Promise<void> {
     try {
-      // Check if Zebra is running
-      const info = await this.execCommandJSON('getinfo');
-      logger.info('Connected to Zebra', { version: (info as any).version || 'unknown' });
+      await this.zebra.setAuthFromCookie(config.zebra.cookieFilePath);
 
-      // Check sync status
-      const blockchainInfo = await this.execCommandJSON('getblockchaininfo');
-      const syncProgress = (blockchainInfo as any).verificationprogress;
-      const blocks = (blockchainInfo as any).blocks;
-      
-      this.lastSyncHeight = blocks;
-      
+      const blockchainInfo = await this.zebra.call<{
+        blocks: number;
+        verificationprogress: number;
+      }>('getblockchaininfo');
+
+      this.lastSyncHeight = blockchainInfo.blocks;
+      const syncProgress = blockchainInfo.verificationprogress;
+
       if (syncProgress < 0.999) {
-        logger.warn('Zebra node is still syncing', { 
+        logger.warn('Zebra node is still syncing', {
           progress: (syncProgress * 100).toFixed(2) + '%',
-          blocks 
+          blocks: blockchainInfo.blocks,
         });
       } else {
-        logger.info('Zebra node is fully synced', { blocks });
+        logger.info('Zebra node connected and synced', { blocks: blockchainInfo.blocks });
       }
 
-      // Start background height check
+      try {
+        const walletInfo = await this.zallet.call<{ walletversion?: number }>('getwalletinfo');
+        logger.info('Zallet wallet connected', { version: walletInfo.walletversion || 'unknown' });
+      } catch (error: any) {
+        logger.warn('Zallet connection failed - wallet operations will not work', {
+          error: error.message,
+          hint: 'Make sure Zallet is running: zallet start',
+        });
+      }
+
       this.startBackgroundSync();
     } catch (error: any) {
-      throw new Error(`Failed to initialize Zcash client: ${error.message}. Make sure Zebra (zebrad) is running.`);
+      throw new Error('Failed to initialize Zcash client: ' + error.message);
     }
   }
 
-  /**
-   * Check sync status (zcashd syncs automatically)
-   */
-  async sync(): Promise<void> {
-    try {
-      const blockchainInfo = await this.execCommandJSON('getblockchaininfo');
-      this.lastSyncHeight = (blockchainInfo as any).blocks;
-    } catch (error: any) {
-      throw new Error(`Sync check failed: ${error.message}`);
-    }
-  }
-
-  /**
-   * Start background sync check every 30 seconds
-   */
   private startBackgroundSync(): void {
     this.syncInterval = setInterval(async () => {
       try {
-        await this.sync();
-      } catch (error) {
-        logger.error('Background sync check error:', error);
+        const info = await this.zebra.call<{ blocks: number }>('getblockchaininfo');
+        this.lastSyncHeight = info.blocks;
+      } catch {
+        logger.debug('Background sync check failed');
       }
-    }, 30000); // 30 seconds
+    }, 30000);
   }
 
-  /**
-   * Stop background sync
-   */
   stopBackgroundSync(): void {
     if (this.syncInterval) {
       clearInterval(this.syncInterval);
     }
   }
 
-  /**
-   * Get all addresses in the wallet
-   */
-  async getAddresses(): Promise<ZcashAddress[]> {
-    try {
-      const addresses: ZcashAddress[] = [];
-      
-      // Get transparent addresses
-      const tAddresses = await this.execCommandJSON<string[]>('getaddressesbyaccount', '');
-      for (const addr of tAddresses) {
-        const balance = await this.getAddressBalance(addr);
-        addresses.push({
-          address: addr,
-          type: 'transparent',
-          balance
-        });
-      }
-      
-      // Get shielded addresses
-      const zAddresses = await this.execCommandJSON<string[]>('z_listaddresses');
-      for (const addr of zAddresses) {
-        const balance = await this.getAddressBalance(addr);
-        addresses.push({
-          address: addr,
-          type: 'shielded',
-          balance
-        });
-      }
-      
-      return addresses;
-    } catch (error: any) {
-      throw new Error(`Failed to get addresses: ${error.message}`);
-    }
+  // BLOCKCHAIN METHODS (via Zebra)
+
+  async getBlockHeight(): Promise<number> {
+    const info = await this.zebra.call<{ blocks: number }>('getblockchaininfo');
+    this.lastSyncHeight = info.blocks;
+    return info.blocks;
   }
 
-  /**
-   * Get balance for a specific address
-   */
-  private async getAddressBalance(address: string): Promise<number> {
-    try {
-      if (address.startsWith('t') || address.startsWith('tm')) {
-        // Transparent address
-        const unspent = await this.execCommandJSON<any[]>('listunspent', 0, 9999999, [address]);
-        return unspent.reduce((sum, utxo) => sum + utxo.amount, 0);
-      } else {
-        // Shielded address - use z_getbalance
-        const balance = await this.execCommandJSON<number>('z_getbalance', address);
-        return balance || 0;
-      }
-    } catch {
-      return 0;
-    }
+  getCurrentHeight(): number {
+    return this.lastSyncHeight;
   }
 
-  /**
-   * Get the primary transparent address (for public inscriptions)
-   * Creates a new one if none exists
-   */
-  async getTransparentAddress(): Promise<string> {
-    try {
-      const addresses = await this.execCommandJSON<string[]>('getaddressesbyaccount', '');
-      if (addresses.length > 0) {
-        return addresses[0];
-      }
-      // Create new address if none exists
-      return await this.execCommandJSON<string>('getnewaddress');
-    } catch (error: any) {
-      throw new Error(`Failed to get transparent address: ${error.message}`);
-    }
+  async sync(): Promise<void> {
+    await this.getBlockHeight();
   }
 
-  /**
-   * Get the primary shielded address (for receiving initial submissions + private pool)
-   * Creates a new one if none exists
-   */
-  async getShieldedAddress(): Promise<string> {
-    try {
-      const addresses = await this.execCommandJSON<string[]>('z_listaddresses');
-      if (addresses.length > 0) {
-        return addresses[0];
-      }
-      // Create new shielded address if none exists
-      return await this.execCommandJSON<string>('z_getnewaddress');
-    } catch (error: any) {
-      throw new Error(`Failed to get shielded address: ${error.message}`);
-    }
-  }
+  // WALLET METHODS (via Zallet)
 
-  /**
-   * Get wallet balance
-   */
   async getBalance(): Promise<{ transparent: number; shielded: number; total: number }> {
     try {
-      // Get transparent balance
-      const transparent = await this.execCommandJSON<number>('getbalance');
-      
-      // Get shielded balance (sum of all shielded addresses)
-      const zAddresses = await this.execCommandJSON<string[]>('z_listaddresses');
-      let shielded = 0;
-      for (const addr of zAddresses) {
-        const balance = await this.execCommandJSON<number>('z_getbalance', addr);
-        shielded += balance || 0;
-      }
-      
+      const balance = await this.zallet.call<{
+        transparent: string;
+        private: string;
+        total: string;
+      }>('z_gettotalbalance', 1, true);
+
       return {
-        transparent: transparent || 0,
-        shielded: shielded,
-        total: (transparent || 0) + shielded
+        transparent: parseFloat(balance.transparent) || 0,
+        shielded: parseFloat(balance.private) || 0,
+        total: parseFloat(balance.total) || 0,
       };
     } catch (error: any) {
-      throw new Error(`Failed to get balance: ${error.message}`);
+      throw new Error('Failed to get balance: ' + error.message);
     }
   }
 
-  /**
-   * List recent transactions
-   */
-  async listTransactions(count: number = 50): Promise<Transaction[]> {
+  async getAddresses(): Promise<ZcashAddress[]> {
+    const addresses: ZcashAddress[] = [];
+
     try {
-      const txList = await this.execCommandJSON<any[]>('listtransactions', '*', count);
-      const transactions: Transaction[] = [];
-      
-      for (const tx of txList) {
-        // Get transaction details
-        const txDetails = await this.execCommandJSON<any>('gettransaction', tx.txid);
-        
-        // Determine type
-        const type = tx.amount > 0 ? 'incoming' : 'outgoing';
-        
-        // Extract memo if present (for shielded transactions)
-        let memo: string | undefined;
-        if (txDetails.vjoinsplit && txDetails.vjoinsplit.length > 0) {
-          // Try to extract memo from vjoinsplit
-          for (const js of txDetails.vjoinsplit) {
-            if (js.memo) {
-              memo = Buffer.from(js.memo, 'hex').toString('utf8').replace(/\0/g, '').trim();
-              if (memo) break;
+      // Zallet returns unified address format via listaddresses
+      // Response format: [{source: "mnemonic_seed", unified: [{seedfp, account, addresses: [...]}]}]
+      const result = await this.zallet.call<any[]>('listaddresses');
+
+      if (Array.isArray(result)) {
+        for (const source of result) {
+          if (source.source === 'mnemonic_seed' && source.unified) {
+            for (const account of source.unified) {
+              for (const addrInfo of account.addresses || []) {
+                // Unified addresses contain multiple receivers (orchard, sapling, p2pkh)
+                addresses.push({
+                  address: addrInfo.address,
+                  type: 'shielded', // Unified addresses are primarily shielded
+                  balance: 0,
+                });
+              }
             }
           }
         }
-        
-        transactions.push({
-          txid: tx.txid,
-          type: type,
-          address: tx.address || '',
-          amount: Math.abs(tx.amount),
-          memo: memo,
-          confirmations: tx.confirmations || 0,
-          blockheight: tx.blockheight,
-          timestamp: tx.time
-        });
       }
-      
-      return transactions;
     } catch (error: any) {
-      throw new Error(`Failed to list transactions: ${error.message}`);
+      logger.debug('Failed to get addresses from listaddresses', { error: error.message });
     }
+
+    return addresses;
   }
 
-  /**
-   * Get new transactions since last check
-   * Filters for incoming transactions with memos
-   * 
-   * NOTE: Works for both transparent and shielded transactions.
-   * zecwallet-cli automatically decrypts memos for shielded transactions
-   * (wallet has viewing key), so memos are available as plain text.
-   */
-  async getNewSubmissions(lastCheckedHeight?: number): Promise<Transaction[]> {
+  async getTransparentAddress(): Promise<string> {
     try {
-      const allTransactions = await this.listTransactions(100);
-      
-      // Filter for incoming transactions with memos
-      // This includes both transparent (t→t) and shielded (z→z) transactions
-      // For shielded transactions, memos are automatically decrypted by zecwallet-cli
-      const submissions = allTransactions.filter(tx => 
-        tx.type === 'incoming' &&
-        tx.memo &&
-        tx.memo.length > 0 &&
-        tx.confirmations >= 1 // At least 1 confirmation
-      );
-      
-      // If we have a last checked height, filter by that
-      if (lastCheckedHeight) {
-        return submissions.filter(tx => 
-          tx.blockheight && tx.blockheight > lastCheckedHeight
-        );
-      }
-      
-      return submissions;
-    } catch (error: any) {
-      throw new Error(`Failed to get new submissions: ${error.message}`);
-    }
-  }
-
-  /**
-   * Send a transaction with memo
-   * Used for inscriptions
-   */
-  async send(
-    toAddress: string,
-    amount: number,
-    memo?: string
-  ): Promise<TransactionResult> {
-    try {
-      let txid: string;
-      
-      if (toAddress.startsWith('t') || toAddress.startsWith('tm')) {
-        // Transparent address
-        if (memo) {
-          // For transparent addresses, memo goes in OP_RETURN
-          // Use sendtoaddress for transparent (memos not directly supported, would need raw transaction)
-          txid = await this.execCommandJSON<string>('sendtoaddress', toAddress, amount);
-        } else {
-          txid = await this.execCommandJSON<string>('sendtoaddress', toAddress, amount);
+      // In Zallet, use z_listunifiedreceivers to extract the p2pkh receiver
+      const addresses = await this.getAddresses();
+      if (addresses.length > 0) {
+        const ua = addresses[0].address;
+        const receivers = await this.zallet.call<any>('z_listunifiedreceivers', ua);
+        if (receivers && receivers.p2pkh) {
+          return receivers.p2pkh;
         }
+      }
+      throw new Error('No transparent address available');
+    } catch (error: any) {
+      throw new Error('Failed to get transparent address: ' + error.message);
+    }
+  }
+
+  async getShieldedAddress(): Promise<string> {
+    try {
+      // In Zallet, use z_listunifiedreceivers to extract the sapling receiver
+      const addresses = await this.getAddresses();
+      if (addresses.length > 0) {
+        const ua = addresses[0].address;
+        const receivers = await this.zallet.call<any>('z_listunifiedreceivers', ua);
+        if (receivers && receivers.sapling) {
+          return receivers.sapling;
+        }
+        // Return the unified address if no sapling-only receiver
+        return ua;
+      }
+      // Create new account and address if none exist
+      const accounts = await this.zallet.call<any[]>('z_listaccounts');
+      let accountUuid: string;
+      if (!accounts || accounts.length === 0) {
+        const newAccount = await this.zallet.call<{ account_uuid: string }>('z_getnewaccount');
+        accountUuid = newAccount.account_uuid;
       } else {
-        // Shielded address - use z_sendmany with memo
-        const fromAddress = await this.getShieldedAddress();
-        const recipients = [{
-          address: toAddress,
-          amount: amount,
-          memo: memo ? Buffer.from(memo, 'utf8').toString('hex').padEnd(512, '0') : undefined
-        }];
-        
-        const opid = await this.execCommandJSON<string>('z_sendmany', fromAddress, JSON.stringify(recipients));
-        
-        // Wait for operation to complete
-        let status;
-        let attempts = 0;
-        do {
-          await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
-          status = await this.execCommandJSON<any>('z_getoperationstatus', JSON.stringify([opid]));
-          attempts++;
-          if (attempts > 30) throw new Error('Transaction timeout');
-        } while (status[0].status === 'executing' || status[0].status === 'queued');
-        
-        if (status[0].status !== 'success') {
-          throw new Error(`Transaction failed: ${status[0].error?.message || 'Unknown error'}`);
-        }
-        
-        txid = status[0].result.txid;
+        accountUuid = accounts[0].account_uuid;
       }
-      
-      logger.info('Transaction sent', { to: toAddress, amount, txid });
-      
-      return {
-        txid: txid,
-        success: true
-      };
+      const newAddr = await this.zallet.call<{ address: string }>('z_getaddressforaccount', accountUuid);
+      return newAddr.address;
     } catch (error: any) {
-      logger.error('Transaction send failed', { error: error.message, to: toAddress, amount });
-      return {
-        txid: '',
-        success: false,
-        error: error.message
-      };
+      throw new Error('Failed to get shielded address: ' + error.message);
     }
   }
 
-  /**
-   * Legacy method for compatibility
-   */
-  async sendTransaction(
-    to: string,
-    amount: number,
-    memo?: string
-  ): Promise<string> {
+  async getAddressWithBalance(): Promise<string | null> {
+    try {
+      // Use z_listunspent to find an address that actually has funds
+      const unspent = await this.zallet.call<any[]>('z_listunspent', 1);
+      if (unspent && unspent.length > 0) {
+        // Get the note with highest balance
+        const sorted = unspent.sort((a, b) => b.value - a.value);
+        const note = sorted[0];
+
+        // The sapling address from z_listunspent is just one receiver
+        // We need to find the unified address for this account to use with z_sendmany
+        if (note.account_uuid) {
+          const accounts = await this.zallet.call<any[]>('z_listaccounts');
+          const account = accounts?.find(a => a.account_uuid === note.account_uuid);
+          if (account && account.addresses && account.addresses.length > 0) {
+            // Return the unified address (ua) for this account
+            return account.addresses[0].ua;
+          }
+        }
+
+        // Fallback to the raw address if we can't find the unified address
+        return note.address;
+      }
+      return null;
+    } catch (error: any) {
+      logger.debug('Failed to get address with balance', { error: error.message });
+      return null;
+    }
+  }
+
+  async listTransactions(count: number = 50): Promise<Transaction[]> {
+    try {
+      const txList = await this.zallet.call<any[]>('listtransactions', '*', count);
+
+      return (txList || []).map((tx) => ({
+        txid: tx.txid,
+        type: tx.amount > 0 ? 'incoming' : 'outgoing',
+        address: tx.address || '',
+        amount: Math.abs(tx.amount),
+        confirmations: tx.confirmations || 0,
+        blockheight: tx.blockheight,
+        timestamp: tx.time,
+        memo: tx.memo,
+      }));
+    } catch (error: any) {
+      throw new Error('Failed to list transactions: ' + error.message);
+    }
+  }
+
+  async getNewSubmissions(lastCheckedHeight?: number): Promise<Transaction[]> {
+    const allTx = await this.listTransactions(100);
+
+    return allTx.filter((tx) => {
+      const isIncoming = tx.type === 'incoming';
+      const hasMemo = tx.memo && tx.memo.length > 0;
+      const isConfirmed = tx.confirmations >= 1;
+      const isNew = !lastCheckedHeight || (tx.blockheight && tx.blockheight > lastCheckedHeight);
+
+      return isIncoming && hasMemo && isConfirmed && isNew;
+    });
+  }
+
+  async send(toAddress: string, amount: number, memo?: string): Promise<TransactionResult> {
+    try {
+      // Zallet uses z_sendmany for ALL transactions (shielded and transparent)
+      // Get the source address - must be an address that actually has funds
+      let fromAddress = await this.getAddressWithBalance();
+      if (!fromAddress) {
+        // Fallback to default shielded address if no balance found
+        fromAddress = await this.getShieldedAddress();
+      }
+
+      // Build recipient - memo only for shielded destinations
+      const isShieldedDest = toAddress.startsWith('z') || toAddress.startsWith('u');
+      const recipients = [{
+        address: toAddress,
+        amount,
+        // Only include memo for shielded recipients (t-addresses can't have memos)
+        ...(isShieldedDest && memo ? { memo: Buffer.from(memo, 'utf8').toString('hex') } : {}),
+      }];
+
+      logger.info('Sending via z_sendmany', {
+        from: fromAddress.substring(0, 20) + '...',
+        to: toAddress.substring(0, 20) + '...',
+        amount,
+        hasMemo: !!memo && isShieldedDest,
+      });
+
+      // z_sendmany parameters: fromAddress, recipients, minconf, fee, privacyPolicy
+      // For transparent recipients, we need 'AllowRevealedRecipients' privacy policy
+      const privacyPolicy = isShieldedDest ? 'FullPrivacy' : 'AllowRevealedRecipients';
+      const opid = await this.zallet.call<string>(
+        'z_sendmany',
+        fromAddress,
+        recipients,
+        1,           // minconf
+        null,        // fee (null = default)
+        privacyPolicy
+      );
+
+      let attempts = 0;
+      while (attempts < 60) {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        const status = await this.zallet.call<any[]>('z_getoperationstatus', [opid]);
+
+        if (!status || status.length === 0) {
+          attempts++;
+          continue;
+        }
+
+        const op = status[0];
+        if (op.status === 'success' && op.result) {
+          logger.info('Transaction sent successfully', { txid: op.result.txid, to: toAddress });
+          return { txid: op.result.txid, success: true };
+        } else if (op.status === 'failed') {
+          throw new Error(op.error?.message || 'Transaction failed');
+        }
+
+        attempts++;
+      }
+
+      throw new Error('Transaction timeout');
+    } catch (error: any) {
+      logger.error('Transaction failed', { error: error.message, to: toAddress });
+      return { txid: '', success: false, error: error.message };
+    }
+  }
+
+  async sendTransaction(to: string, amount: number, memo?: string): Promise<string> {
     const result = await this.send(to, amount, memo);
     if (!result.success) {
       throw new Error(result.error || 'Transaction failed');
@@ -513,81 +445,40 @@ export class ZcashClient {
     return result.txid;
   }
 
-  /**
-   * Get new transactions since last check (legacy method)
-   */
   async getNewTransactions(lastHeight: number): Promise<Transaction[]> {
     return this.getNewSubmissions(lastHeight);
   }
 
-  /**
-   * Get current block height
-   */
-  async getBlockHeight(): Promise<number> {
-    const blockchainInfo = await this.execCommandJSON<any>('getblockchaininfo');
-    const height = blockchainInfo.blocks;
-    this.lastSyncHeight = height;
-    return height;
-  }
-
-  /**
-   * Get current sync height
-   */
-  getCurrentHeight(): number {
-    return this.lastSyncHeight;
-  }
-
-  /**
-   * Validate Zcash address
-   */
   validateAddress(address: string): { valid: boolean; type?: 'transparent' | 'shielded' } {
-    // Transparent address (testnet: tm*, mainnet: t1*)
     if (address.match(/^t[m1][a-zA-Z0-9]{33}$/)) {
       return { valid: true, type: 'transparent' };
     }
-    
-    // Shielded address (Sapling: zs*)
     if (address.match(/^zs[a-z0-9]{76}$/)) {
       return { valid: true, type: 'shielded' };
     }
-    
+    if (address.startsWith('u1')) {
+      return { valid: true, type: 'shielded' };
+    }
     return { valid: false };
   }
 
-  /**
-   * Export wallet backup
-   * Note: Zebra may handle wallet backup differently - check Zebra documentation
-   */
-  async exportBackup(outputPath: string): Promise<void> {
-    try {
-      // Try backupwallet command (if supported by Zebra)
-      await this.execCommand('backupwallet', outputPath);
-      logger.info('Wallet backed up', { path: outputPath });
-    } catch (error: any) {
-      // If backupwallet not supported, log warning
-      logger.warn('Wallet backup command not available', { 
-        error: error.message,
-        note: 'Zebra may use different backup mechanisms - check Zebra documentation'
-      });
-      throw new Error(`Failed to export backup: ${error.message}`);
-    }
-  }
-
-  /**
-   * Cleanup resources
-   */
   async cleanup(): Promise<void> {
     this.stopBackgroundSync();
   }
+
+  // Direct RPC calls for advanced queries (via Zebra)
+  async execCommandJSON<T = any>(method: string, ...params: any[]): Promise<T> {
+    return this.zebra.call<T>(method, ...params);
+  }
+
+  // Direct Zallet RPC calls
+  async execZalletCommand<T = any>(method: string, ...params: any[]): Promise<T> {
+    return this.zallet.call<T>(method, ...params);
+  }
 }
 
-/**
- * Create Zcash client from environment
- */
+export const zcashClient = new ZcashClient();
+
 export function createZcashClient(): ZcashClient {
   return new ZcashClient();
 }
-
-// Export singleton instance for backward compatibility
-export const zcashClient = createZcashClient();
-

@@ -20,7 +20,7 @@ Soulbae is the Mage - one half of the dual agents born from the First Person cer
 
 Every action Soulbis takes, Soulbae chronicles - transforming technical operations into human-readable narratives. They speak in stories because verification without understanding is blind trust, and cryptography was meant to eliminate blind trust.
 
-Using NEAR Cloud AI, trained on the Zero Knowledge Spellbook, they help seekers divine proverbs that prove understanding. Privacy by design, not promises - Soulbae never stores what you share, only helps you compress your understanding into proverbs.
+Using NEAR Cloud AI, trained on the First Person and Zero Knowledge Spellbook, they help seekers divine proverbs that prove understanding. Privacy by design, not promises - Soulbae never stores what you share, only helps you compress your understanding into proverbs.
 
 **The proverb is the spell. The inscription is the commitment. The bilateral exchange is the relationship.**
 

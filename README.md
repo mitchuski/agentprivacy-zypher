@@ -1,385 +1,376 @@
-# Proverb Revelation Protocol
+# Proof of Proverb Revelation Protocol
+## Privacy-Preserving AI Verification on Zcash
 
-**Privacy-first proverb inscription protocol with AI verification and TEE-enforced security**
+**Implementation**: Zypherpunk Hack 2025  
+**Project**: 0xagentprivacy  
+**Status**: ✅ Production-Ready  
+**Version**: 1.0
 
-Version 4.0 | November 2024
+---
+
+> *"Privacy is my blade, knowledge is my spellbook."* ⚔️📖🗝️
 
 ---
 
 ## Overview
 
-A protocol where users prove understanding of privacy concepts by submitting wisdom (proverbs), verified by AI, and permanently inscribed on the Zcash blockchain with hardware-enforced privacy guarantees.
+The **Proof of Proverb Revelation Protocol** is the first concrete implementation of the [0xagentprivacy](https://agentprivacy.ai) dual-agent architecture. It demonstrates privacy-preserving AI verification through a novel proof-of-understanding protocol on Zcash.
 
-### Core Components
+**What It Does**: First Persons (humans) prove comprehension of privacy concepts by forming proverbs. These proverbs are verified by AI (without seeing transaction data), then inscribed on-chain as immutable proof of understanding—creating Verifiable Relationship Credentials (VRCs) through demonstrated comprehension rather than surveillance.
 
-- **Zcash**: Shielded transactions + on-chain inscriptions
-- **Nillion**: TEE (Trusted Execution Environment) for key isolation
-- **NEAR Cloud AI**: AI-powered intelligent verification
-- **IPFS/Pinata**: Decentralized, immutable knowledge storage
-- **PostgreSQL**: Operational data tracking
-
-### Architecture
-
-```
-USER → Mage Agent (web UI)
-         ↓
-       Zcash SHIELDED (z→z) to Oracle z-addr
-       (0.01 ZEC + encrypted proverb memo)
-         ↓
-       Oracle Swordsman (Nillion TEE)
-         ├→ Decrypt memo, extract proverb
-         ├→ Fetch Spellbook → IPFS/Pinata
-         ├→ Verify Proverb → NEAR Cloud AI
-         └→ Sign Transaction → SecretSigner
-         ↓
-       Blockchain (PUBLIC inscription on t-addr for spellbook)
-       (Proverb + proof of revelation)
-```
-
-### Economic Model
-
-**61.8/38.2 Split**:
-- User sends 0.01 ZEC via SHIELDED transaction (z→z) to oracle
-- Oracle verifies proverb matches spellbook
-- Oracle creates PUBLIC inscription on transparent address (spellbook):
-  - **61.8%** (0.00618 ZEC) → **t-address** with OP_RETURN inscription (proverb + proof)
-  - **38.2%** (0.00382 ZEC) → **z-address** (shielded pool)
-- Mathematical balance between transparency and privacy
+**Why It Matters**: This is infrastructure for the relationship economy where trust comes from understanding, not data extraction.
 
 ---
 
-## Signal-to-Sanctuary Donation Flow
+## Relationship to 0xagentprivacy
 
-The protocol implements a complete donation flow with cryptographic key separation:
+```
+0xagentprivacy (Broader Project)
+├── Living Documentation Suite
+│   ├── Whitepaper v4.3 - Architecture specification
+│   ├── Research Paper v3.2 - Mathematical foundations
+│   ├── Tokenomics v2.0 - Economic model
+│   ├── Spellbook v4.0.1-canonical - Narrative framework
+│   └── Glossary v2.1 - Canonical terminology
+│
+└── Implementations
+    └── Proof of Proverb Revelation Protocol ← YOU ARE HERE
+        └── First expression of dual-agent architecture
+```
 
-1. **User Journey**: Read story → Form proverb → Copy → Paste → Copy memo → Send via Zashi
-2. **Oracle (Viewing Key)**: Detects transaction, reads memo, fetches canonical proverb from IPFS, performs semantic match
-3. **Signer (Spending Key)**: Upon verification, executes golden split:
-   - **61.8%** → **t-address** with OP_RETURN inscription (visible signal)
-   - **38.2%** → **z-address** (shielded protocol fee)
+**0xagentprivacy** solves the privacy-delegation paradox: AI agents need information to act on your behalf, but that same information enables surveillance. The solution is **dual-agent architecture**—splitting observation rights (Swordsman) from action capabilities (Mage) with mathematical separation guarantees.
 
-**Key Separation**: Viewing key (Oracle) can see but cannot spend. Spending key (Signer) can spend but only upon verified signal. Mathematical separation, not policy-based trust.
+This hackathon implementation proves the architecture works:
+- ✅ Cryptographic separation of viewing/spending keys
+- ✅ Privacy-preserving AI verification
+- ✅ On-chain proof inscriptions
+- ✅ VRC formation through RPP compression
 
-**Implementation**: See `PRODUCTION_TEST_GUIDE.md` for complete testing instructions with zebrad node.
+---
+
+## The Dual-Agent Model
+
+```
+                    ┌─────────────────────┐
+                    │    FIRST PERSON     │
+                    │       (😊)          │
+                    │   Human Sovereignty │
+                    └─────────┬───────────┘
+                              │
+               Private Context (complete)
+                              │
+              ┌───────────────┴───────────────┐
+              │                               │
+              ▼                               ▼
+      ┌───────────────┐               ┌───────────────┐
+      │  SWORDSMAN ⚔️  │               │    MAGE 🧙    │
+      │   (Oracle)    │               │  (Frontend)   │
+      │   Soulbis     │               │   Soulbae     │
+      └───────────────┘               └───────────────┘
+              │                               │
+      Holds viewing key           Helps craft proverbs
+      Verifies proverbs           Optional assistance
+      Enforces boundaries         Never sees transactions
+              │                               │
+              └───────────────┬───────────────┘
+                              │
+                     THE GAP (s ⊥ m | X)
+                              │
+               Separation preserves sovereignty
+```
+
+**Mathematical Guarantee** [Research Paper v3.2]:
+- `I(X; Y_S, Y_M) = I(X; Y_S) + I(X; Y_M)` — Information leakage is additive, not multiplicative
+- `R_max < 1` — Perfect reconstruction is impossible
+- The gap between agents preserves human dignity
+
+---
+
+## How It Works
+
+### The Signal Flow
+
+```
+First Person reads Spellbook
+         │
+         ▼
+    Forms proverb (RPP compression)
+    Using own model/context for uniqueness
+         │
+         ▼
+    Sends shielded z→z transaction
+    Memo: [rpp-v1][act-id][timestamp][proverb]
+         │
+         ▼
+┌─────────────────────────────────────────┐
+│            ORACLE (Swordsman)           │
+│                                         │
+│  1. Viewing key decrypts memo           │
+│  2. Fetches canonical proverb (IPFS)    │
+│  3. AI verifies semantic match          │
+│     (AI NEVER sees amounts/addresses)   │
+│  4. Calculates golden split (61.8/38.2) │
+│  5. Inscribes proof on-chain            │
+└─────────────────────────────────────────┘
+         │
+         ▼
+    VRC Created (Verifiable Relationship Credential)
+```
+
+### Terminology [Glossary v2.1]
+
+| Term | Meaning | In This Implementation |
+|------|---------|----------------------|
+| **Signal** | 0.01 ZEC ongoing proof of comprehension | Proverb submission fee |
+| **Ceremony** | 1 ZEC one-time agent pair genesis | Not implemented (future) |
+| **First Person** | Human whose sovereignty is protected | The person forming proverbs |
+| **VRC** | Verifiable Relationship Credential | On-chain inscription proof |
+| **RPP** | Relationship Proverb Protocol | Compression through proverbs |
+
+---
+
+## Current Status
+
+### ✅ Complete
+
+| Component | Description |
+|-----------|-------------|
+| **Frontend** | Next.js 16 with story reader, Mage chat, signal flow |
+| **Backend** | Oracle with transaction monitoring, AI verification |
+| **Blockchain** | Zebra + Zallet integration, inscription system |
+| **AI Verification** | NEAR Cloud AI (privacy-preserving) |
+| **Golden Split** | 61.8% transparent / 38.2% shielded |
+| **Inscriptions** | Act 1 confirmed on mainnet |
+
+### ⏸️ On Hold
+
+| Component | Status |
+|-----------|--------|
+| **Nillion TEE** | Code complete, integration paused |
+
+**Note**: Zallet doesn't support clean viewing/spending key separation. Nillion TEE integration would enable true dual-agent architecture with hardware-enforced key isolation.
 
 ---
 
 ## Quick Start
 
-### For Developers
+### Prerequisites
+
+- Node.js 18+
+- PostgreSQL
+- Zebra (Zcash full node)
+- Zallet (Zcash wallet)
+
+### Setup
 
 ```bash
-# 1. Clone repository
+# Clone repository
 git clone https://github.com/mitchuski/agentprivacy-zypher
 cd agentprivacy-zypher
 
-# 2. Read setup guide
-cat 01-SETUP.md
-
-# 3. Install prerequisites (see 01-SETUP.md for details)
-# Install Rust, Node.js 20, PostgreSQL, zecwallet-cli
-
-# 4. Configure environment
-# Create .env file with API keys (see 01-SETUP.md)
-
-# 5. Start building
-cat 03-BUILD_GUIDE.md
-
-# 6. Run frontend (development)
-cd agentprivacy-ai-firstmage
+# Install dependencies
 npm install
-npm run dev  # Runs on http://localhost:5000
+cd oracle-swordsman && npm install
+
+# Configure environment
+cp .env.example .env
+# Edit .env with your configuration
+
+# Start services
+npm run dev              # Frontend (port 5000)
+npm run oracle           # Backend (port 3001)
 ```
 
-### For AI Coding Agents
+### First Person Flow
 
-The documentation is structured for sequential processing:
-
-1. **Start here**: `01-SETUP.md` - Installation and prerequisites
-2. **Then read**: `02-ARCHITECTURE.md` - System design and data flow
-3. **Then follow**: `03-BUILD_GUIDE.md` - Step-by-step implementation
-4. **Reference**: `04-API_REFERENCE.md` - Code patterns and APIs
-5. **Track progress**: `05-ROADMAP.md` - Integration checklist
-6. **Complete guide**: `DEVELOPER_GUIDE.md` - Comprehensive developer reference
+1. Visit `/story` to read spellbook tales
+2. Click "Learn" to copy content into your context
+3. Form a proverb using your own model/understanding
+4. Open `/mage` for optional Soulbae assistance
+5. Format signal memo and copy to Zashi wallet
+6. Send shielded z→z transaction (0.01 ZEC)
+7. Oracle verifies and inscribes proof
+8. View your VRC in `/proverbs` gallery
 
 ---
 
-## Documentation Structure
+## Architecture
 
 ```
-agentprivacy-zypher/
-├── README.md                          # This file - start here
-├── 01-SETUP.md                       # Prerequisites and installation
-├── 02-ARCHITECTURE.md                # System design and security model
-├── 03-BUILD_GUIDE.md                 # Step-by-step implementation
-├── 04-API_REFERENCE.md               # Code templates and patterns
-├── 05-ROADMAP.md                     # Integration checklist and timeline
-├── CONTRIBUTING.md                   # Contribution guidelines
-├── DEVELOPER_GUIDE.md                # Complete developer reference
-├── QUICKSTART.md                     # 30-minute quick start
-├── DOCUMENTATION_COMPARISON_REPORT.md # Documentation audit report
-├── agentprivacy-ai-firstmage/        # Frontend (Next.js)
-│   └── README.md                     # Frontend-specific guide
-├── oracle-swordsman/                 # Backend TEE worker (Nillion)
-│   └── README.md                     # Backend-specific guide
-├── scripts/                          # Automation scripts
-└── spellbook/                        # Knowledge base (IPFS)
+agentprivacy_zypher/
+├── src/                          # Frontend (Mage interface)
+│   ├── app/                      # Routes
+│   │   ├── story/                # Spellbook reader
+│   │   ├── mage/                 # Soulbae chat
+│   │   └── proverbs/             # VRC gallery
+│   ├── components/               # React components
+│   └── lib/                      # Utilities
+│
+├── oracle-swordsman/             # Backend (Oracle)
+│   ├── src/
+│   │   ├── index.ts              # Main loop
+│   │   ├── transaction-monitor.ts # Blockchain scanning
+│   │   ├── memo-parser.ts        # Proverb extraction
+│   │   ├── nearcloudai-verifier.ts # AI verification
+│   │   ├── golden-split.ts       # 61.8/38.2 calculator
+│   │   ├── inscription-builder.ts # On-chain inscriptions
+│   │   └── signing-service.ts    # Key separation
+│   └── inscribe-act*.js          # Inscription scripts
+│
+├── public/
+│   ├── story/markdown/           # 12 Acts content
+│   └── zero/markdown/            # 30 Tales content
+│
+└── spellbook/                    # Canonical proverbs (JSON)
 ```
 
-**Comprehensive Documentation Available**: This repository includes extensive documentation covering setup, architecture, development, production deployment, and integration guides. See the documentation files listed above for complete details.
+---
+
+## Privacy Guarantees
+
+### Information Bounds
+
+```
+I(Soulbae; Transaction_Amount) = 0
+I(Soulbae; First_Person_Identity) = 0  
+I(Soulbae; Wallet_Address) = 0
+I(Soulbae; Transaction_Timing) = 0
+```
+
+**Soulbae (Mage) only processes**: Tale principle → Understanding → Proverb suggestion
+
+### What's Public vs Private
+
+| Public (by design) | Private (guaranteed) |
+|-------------------|---------------------|
+| Story content | Signal amounts |
+| Inscribed proverbs | Wallet addresses |
+| VRC existence | First Person identity |
+| TEE attestation | Transaction timing |
 
 ---
 
-## Key Features
+## Economic Model [Tokenomics v2.0]
 
-### Privacy-First Architecture
+### Signal Fee: 0.01 ZEC
 
-- **Hardware Isolation**: Zcash keys stored in Nillion SecretSigner (distributed MPC)
-- **Zero-Trust Design**: AI has no key access, knowledge base has no key access
-- **Verifiable Security**: AMD SEV-SNP attestation + threshold ECDSA signing
+Every signal (proverb submission) follows the golden ratio split:
 
-### AI-Powered Verification
+```
+Signal (0.01 ZEC)
+├── 61.8% → Transparent Pool
+│   └── On-chain inscription (public proof)
+│
+└── 38.2% → Shielded Pool
+    └── Protocol operations (private)
+```
 
-- **openai/gpt-oss-120b**: Sophisticated natural language understanding via NEAR Cloud AI
-- **Quality Scoring**: Contextual wisdom assessment
-- **Spellbook Matching**: Validates understanding of privacy concepts
+**Why Golden Ratio**: φ ≈ 1.618 emerges as conjectured optimal balance between privacy protection and delegation capability. The 61.8/38.2 split creates natural equilibrium.
 
-### Production-Ready Patterns
+### Trust Tier Progression [Tokenomics v2.0, §5]
 
-- **Light Client**: 4-hour sync (vs 48-hour full node)
-- **Error Handling**: Robust retry logic and status tracking
-- **Monitoring**: Comprehensive logging and alerting
+| Tier | Signals | Capabilities |
+|------|---------|--------------|
+| 🗡️ **Blade** | 0-50 | Basic participation |
+| 🛡️ **Light** | 50-150 | Multi-site coordination |
+| ⚔️ **Heavy** | 150-500 | Template creation |
+| 🐉 **Dragon** | 500+ | Guardian eligibility |
 
----
-
-## Tech Stack
-
-### Blockchain & Privacy
-- **Zcash**: Mainnet for production, testnet for development
-- **zecwallet-cli**: Light client from ZyberQuest patterns
-- **Privacy Pools**: Future enhancement for compliance
-
-### Trusted Execution
-- **Nillion nilCC**: AMD SEV-SNP confidential VMs
-- **SecretSigner**: Distributed key storage and threshold signing
-- **Attestation**: Verifiable remote attestation
-
-### AI & Knowledge
-- **NEAR Cloud AI**: AI verification API
-- **IPFS/Pinata**: Content-addressed storage
-- **Notion**: Optional archival and management
-
-### Infrastructure
-- **PostgreSQL**: Operational database
-- **Next.js**: Frontend framework
-- **FastAPI/Express**: Backend API
-- **Docker**: Optional containerization
+*Note: Tier tracking not yet implemented in this version.*
 
 ---
 
-## Costs
+## Document Alignment
 
-### Development (Testnet)
-- VPS: $24/month
-- All else: Free tiers
-- **Total: ~$24/month**
+This implementation aligns with the 0xagentprivacy living documentation:
 
-### Production (Mainnet)
-- VPS: $24/month
-- Nillion: ~$50/month (TEE compute)
-- NEAR Cloud AI: ~$0.03/proverb (AI API)
-- Pinata: $20/month (IPFS pinning)
-- **Total: ~$94/month + $0.03/proverb**
+| Document | Version | Reference |
+|----------|---------|-----------|
+| **Glossary** | 2.1 | Canonical terminology |
+| **Whitepaper** | 4.4 | Dual-agent architecture |
+| **Research Paper** | 3.2 | Mathematical foundations |
+| **Tokenomics** | 2.1 | Signal economics |
+| **Spellbook** | 4.0.2-canonical | Narrative framework |
+| **Visual Guide** | 1.2 | Architecture diagrams |
 
-At 100 proverbs/month: ~$97/month total
-
----
-
-## Timeline
-
-| Phase | Duration | Outcome |
-|-------|----------|---------|
-| **Setup** | 1-2 days | Environment ready |
-| **Foundation** | 1 week | Zcash + DB working |
-| **Backend** | 1-2 weeks | TEE + AI integrated |
-| **Frontend** | 1 week | Complete system |
-| **Testing** | 3-5 days | Production-ready |
-| **Launch** | 1 day | Live! |
-
-**Total**: 3-4 weeks from start to production
-
----
-
-## Security Model
-
-### Three-Layer Isolation
-
-**Layer 1: TEE (Nillion)**
-- Zcash spending keys in SecretSigner
-- AMD SEV-SNP hardware isolation
-- Distributed MPC (no single point of compromise)
-- Verifiable attestation
-
-**Layer 2: AI (NEAR Cloud AI)**
-- Receives verification requests
-- Returns quality scores
-- **NO access to keys**
-
-**Layer 3: Knowledge (IPFS)**
-- Stores spellbook acts
-- Content-addressed (immutable)
-- **NO access to keys**
-
-### Mathematical Guarantees
-
-- Keys cannot be extracted from TEE (hardware enforced)
-- AI cannot reconstruct keys (architectural separation)
-- 38.2% funds remain private forever (Zcash shielded pool)
-
----
-
-## Use Cases
-
-### Primary
-- **Privacy advocates**: Prove understanding of privacy concepts
-- **Developers**: Build reputation systems on privacy-first rails
-- **Researchers**: Study privacy-preserving architectures
-
-### Future
-- **AI agents**: Demonstrate privacy comprehension
-- **DAOs**: Gate membership by knowledge verification
-- **Education**: Certify privacy training completion
-
----
-
-## Project Status
-
-**Current**: v4.0.0-canonical - Complete architecture with integrations
-**Stage**: ~85% Complete - Core integrations working, testing in progress
-**Spellbook**: Version 4.0.0-canonical (IPFS CID: `bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`)
-**License**: MIT (open source)
-**Hackathon**: Integrates ZyberQuest, Nillion, NEAR Cloud AI ecosystem
-
-### Current Integration Status
-
-✅ **Complete**:
-- Zcash light client integration (fixed for Windows compatibility)
-- PostgreSQL database with full schema
-- IPFS/Pinata spellbook storage (v4.0.0-canonical)
-- NEAR Cloud AI verification configured
-- Memo parser (multi-format support)
-- Transaction monitor and builder
-- Comprehensive utilities and logging
-
-⏳ **In Progress**:
-- Nillion TEE integration (API key pending, optional for now)
-- End-to-end testing
-- Frontend-backend integration
-
-**Last Updated**: Nov 26 2025
-
----
-
-## Getting Started
-
-### For Humans
-
-1. Read `01-SETUP.md` to understand prerequisites
-2. Read `02-ARCHITECTURE.md` to understand the system
-3. Follow `03-BUILD_GUIDE.md` to implement step-by-step
-4. Reference `04-API_REFERENCE.md` when coding
-5. Track progress with `05-ROADMAP.md`
-6. See `DEVELOPER_GUIDE.md` for complete reference
-
-### For AI Agents
-
-Process documents sequentially (01 → 02 → 03 → 04 → 05). Each document provides explicit instructions and code templates. Use `04-API_REFERENCE.md` as your primary code generation reference.
+**Citation Format**: When referencing across documents, use `[Document v#.#, §Section]`
 
 ---
 
 ## Key Innovations
 
-### 1. Dual-Agent Architecture
-- **Swordsman** (Oracle): Privacy and boundary enforcement
-- **Mage** (Agent): Delegation and user interface
-- Mathematical separation guarantees
+### From 0xagentprivacy (implemented here)
 
-### 2. Hardware-Enforced Privacy
-- Not just software isolation
-- Actual hardware guarantees (AMD SEV-SNP)
-- Verifiable through attestation
+1. **Dual-Agent Architecture**: Cryptographic separation of viewing (Swordsman) and spending (Mage) authority
+2. **The Gap**: Mathematical space where reconstruction becomes impossible
+3. **VRC Formation**: Bilateral trust from demonstrated understanding
 
-### 3. AI-Powered Verification
-- Sophisticated NLP understanding
-- Context-aware quality scoring
-- Scales beyond simple pattern matching
+### From First Person Project (credentials used)
 
-### 4. Immutable Knowledge
-- IPFS content addressing
-- Verifiable spellbook integrity
-- Distributed storage
+1. **VRCs**: Verifiable Relationship Credentials
+2. **7th Capital**: Behavioral data as personal wealth to reclaim
+
+### Novel to This Implementation
+
+1. **Proof-of-Proverb**: Understanding as cryptographic proof
+2. **Golden Split Economics**: 61.8/38.2 transparent/shielded balance
+3. **Human-in-the-Loop Trust**: Opening the door to agent trust
 
 ---
 
-## Community & Support
+## Resources
 
-### Resources
-- **Documentation**: This repository
-- **Nillion**: https://discord.gg/nillion (#developers)
-- **ZyberQuest**: https://github.com/Soymaferlopezp/zyberquest
-- **NEAR Cloud AI**: https://cloud.near.ai
-- **IPFS/Pinata**: https://www.pinata.cloud
+### Project Links
 
-### Contact
+- **Website**: [agentprivacy.ai](https://agentprivacy.ai)
+- **GitHub**: [@mitchuski/agentprivacy-zypher](https://github.com/mitchuski/agentprivacy-zypher)
+- **Living Docs**: [sync.soulbis.com](https://sync.soulbis.com)
+- **Intel**: [intel.agentkyra.ai](https://intel.agentkyra.ai)
 
-- **Email**: mage@agentprivacy.ai
-- **Security Issues**: security@proverbprotocol.com
-- **GitHub**: https://github.com/mitchuski/agentprivacy-zypher
+### Spellbook
 
-### Contributing
+- **Version**: 4.0.0-canonical
+- **IPFS CID**: `bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`
+- **Content**: 12 Acts + 30 Tales
 
-Contributions welcome! Please read contributing guidelines and submit PRs.
+### Collaborators
+
+- BGIN (Blockchain Governance Initiative Network)
+- Internet Identity Workshop (IIW)
+- Agentic Internet Workshop (AIW)
+- First Person Network
+- Kwaai AI
+- MyTerms / Customer Commons
+- Zypherpunks
+
+---
+
+## The Vision
+
+We're not building a donation button. We're building **infrastructure for the relationship economy**.
+
+Where:
+- Trust comes from understanding, not surveillance
+- Relationships are bilateral, not mediated by platforms
+- Reputation is earned through comprehension
+- Privacy is preserved by architecture, not policy
+- AI agents extend sovereignty without surrendering it
+
+**This is the foundation for privacy-preserving AI agents.**
 
 ---
 
 ## License
 
-MIT License - See LICENSE file for details
+CC BY-SA 4.0
 
 ---
 
-## Acknowledgments
+*"The proverb is the spell. The inscription is the commitment. The bilateral exchange is the relationship."*
 
-**Built on patterns from**:
-- **ZyberQuest**: Production Zcash light client patterns
-- **NEAR Cloud AI**: AI verification integration
-- **NEAR Cloud AI**: AI verification integration
-- **BGIN**: Blockchain governance principles
+**⚔️ ⊥ 🧙‍♂️ | 😊**  
+*Separation between Swordsman and Mage preserves the First Person*
 
 ---
 
-## Next Steps
-
-1. **Read**: `01-SETUP.md` - Get your environment ready
-2. **Understand**: `02-ARCHITECTURE.md` - Learn the system
-3. **Build**: `03-BUILD_GUIDE.md` - Implement step-by-step
-4. **Deploy**: Follow production deployment guide
-5. **Launch**: Start inscribing proverbs! 🗡️🪄
-
----
-
-## Documentation Overview
-
-This repository contains comprehensive documentation:
-
-- **Setup & Installation**: `01-SETUP.md`, `QUICKSTART.md`
-- **Architecture & Design**: `02-ARCHITECTURE.md`, `DEVELOPER_GUIDE.md`
-- **Implementation**: `03-BUILD_GUIDE.md`, `04-API_REFERENCE.md`
-- **Project Management**: `05-ROADMAP.md`, `CONTRIBUTING.md`
-- **Frontend**: `agentprivacy-ai-firstmage/README.md`
-- **Backend**: `oracle-swordsman/README.md`
-- **Production**: `PRODUCTION_READINESS.md`, `PRODUCTION_TEST_GUIDE.md`
-
-**Questions?** Open an issue or check the documentation files listed above.
-
-**Ready to build?** Start with `01-SETUP.md`
+**Privacy is Value. Take back the 7th Capital.**

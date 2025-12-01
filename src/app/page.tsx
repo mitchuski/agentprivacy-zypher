@@ -107,12 +107,6 @@ export default function LandingPage() {
                   zero
                 </a>
                 <a
-                  href="/story/stats"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  stats
-                </a>
-                <a
                   href="/proverbs"
                   className="text-text hover:text-primary transition-colors font-medium"
                 >

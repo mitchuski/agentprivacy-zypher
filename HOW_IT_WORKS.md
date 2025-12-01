@@ -1,6 +1,8 @@
 # How the Spellbook Works
 
-**A technical overview of the spellbook architecture and data flow.**
+**A technical overview of the Proof of Proverb Revelation Protocol architecture and data flow.**
+
+**Project Context**: This is the Zypherpunk Hack 2025 implementation of the broader AgentPrivacy project, demonstrating the dual-agent architecture through a privacy-preserving AI verification system.
 
 ---
 
@@ -174,6 +176,78 @@ Pastes memo, sets amount, sends z→z transaction
 const validation = validateProverb(userProverb);
 // Returns: { valid: boolean, length: number, maxLength: 512 }
 ```
+
+---
+
+## 🎯 The Signal-to-Sanctuary Donation Flow
+
+Here's the elegant simplicity of how the proverb protocol creates verified, privacy-preserving donations:
+
+### The Journey
+
+#### 1. Discovery → Understanding
+
+A person encounters one of the twelve acts through the First Person Spellbook. They follow Soulbae (the Mage) and Soulbis (the Swordsman) through narratives embodying the dual-agent architecture—delegation and protection, projection and boundaries. Each act contains teachings that must be genuinely understood, not just read. Users use the "Learn" button to copy stories, proverbs, and inscriptions into their own model/context, then craft unique proverbs using their own AI models, context, and memory.
+
+#### 2. Proverb Formation
+
+The person crafts their version of the relationship proverb embedded in the act. This serves as both key and proof-of-understanding—you can't fake having absorbed Soulbae's wisdom or Soulbis's discipline. The RPP ensures engagement is bilateral, not extractive.
+
+#### 3. Copy → Paste → Copy → Zashi
+
+The flow is intentionally tactile:
+
+1. **Copy** the proverb from their reflection
+2. **Paste** into the donation interface
+3. **Copy** the generated transaction memo
+4. Open **Zashi wallet**
+5. Initiate **shielded transaction** to that act's z-address
+
+The transaction travels through Zcash's shielded pool—sender, amount, and destination all private.
+
+#### 4. Oracle Verification (Viewing Key + TEE + IPFS)
+
+Here's where Zcash's key separation becomes elegant:
+
+The oracle agent holds only the **viewing key** for the shielded address. This allows it to:
+
+- See incoming transactions and read memo fields
+- Retrieve the canonical proverb from IPFS
+- Evaluate semantic match inside the TEE
+
+But the viewing key **cannot sign**. The oracle can verify—it cannot spend.
+
+#### 5. The Golden Split (Signing Key Separation)
+
+The signing key remains separate, held by the commitment authority. Only upon successful proverb verification does the signing key holder execute:
+
+- **61.8%** to transparent **t-address** with OP_RETURN inscription—the visible sanctuary signal
+- **38.2%** to shielded **z-address** as protocol fee
+
+This is Swordsman-Mage separation made cryptographic: the agent that sees cannot act, the agent that acts only does so upon verified signal. Mathematical separation of capabilities, not policy-based trust.
+
+**Key Separation:**
+- **Viewing key** = read-only verification (Mage's sight)
+- **Signing key** = commitment authority (Swordsman's action)
+- **Neither alone** can corrupt the flow.
+
+### Implementation Files
+
+The Signal-to-Sanctuary flow is implemented in:
+
+- **`DonationFlow.tsx`** - React component for the UI flow (5 steps)
+- **`test-flow.sh`** - Comprehensive test script for all components
+- **`golden-split.ts`** - Golden ratio split calculator (61.8/38.2)
+- **`inscription-builder.ts`** - Creates OP_RETURN inscriptions for t-address
+- **`semantic-matcher.ts`** - AI-powered proverb matching
+- **`ipfs-proverb-fetcher.ts`** - Fetches canonical proverbs from IPFS
+- **`rpc-client.ts`** - Zebra RPC client for blockchain operations
+- **`setup-keys.sh`** - Key generation and configuration
+- **`docker-compose.yml`** - Service orchestration
+
+### Testing the Flow
+
+See **[PRODUCTION_TEST_GUIDE.md](../PRODUCTION_TEST_GUIDE.md)** for complete testing instructions with zebrad node.
 
 ---
 
@@ -595,4 +669,5 @@ public/
 ---
 
 **Understanding how it works is the first step to making it your own!** 🧙‍♂️📖
+
 

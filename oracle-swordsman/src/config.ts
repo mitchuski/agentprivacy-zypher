@@ -6,20 +6,21 @@ export const config = {
   nillion: {
     apiKey: process.env.NILLION_API_KEY || 'placeholder-nillion-api-key',
     network: process.env.NILLION_NETWORK || 'testnet',
+    apiUrl: process.env.NILLION_API_URL || 'https://api.nilcc.nillion.network',
+    apiVersion: 'v1',
+    timeout: parseInt(process.env.NILLION_TIMEOUT || '30000'),
   },
-  
+
   // NEAR Cloud AI
   near: {
-    // Mage agent key (for frontend/website)
     mageApiKey: process.env.NEAR_API_KEY!,
-    // Swordsman agent key (for oracle verification - MUST be separate)
     swordsmanApiKey: process.env.NEAR_SWORDSMAN_API_KEY || process.env.NEAR_API_KEY!,
     model: process.env.NEAR_MODEL || 'openai/gpt-oss-120b',
     apiUrl: process.env.NEAR_API_URL || 'https://cloud-api.near.ai/v1',
     chatEndpoint: 'https://cloud-api.near.ai/v1/chat/completions',
     attestationEndpoint: 'https://cloud-api.near.ai/v1/attestation/report',
   },
-  
+
   // IPFS
   ipfs: {
     jwt: process.env.PINATA_JWT!,
@@ -27,28 +28,47 @@ export const config = {
     spellbookCid: process.env.SPELLBOOK_CID || 'bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4',
     spellbookUrl: process.env.SPELLBOOK_URL || 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4',
   },
-  
-  // Zcash (Zebra full node - zebrad)
+
+  // Zebra (full node - blockchain data only, NO wallet functionality)
+  zebra: {
+    network: process.env.ZCASH_NETWORK || 'mainnet',
+    rpcPort: parseInt(process.env.ZEBRA_RPC_PORT || '8233'),
+    rpcHost: process.env.ZEBRA_RPC_HOST || '127.0.0.1',
+    rpcUrl: process.env.ZEBRA_RPC_URL || 'http://127.0.0.1:8233',
+    cookieFilePath: process.env.ZEBRA_COOKIE_PATH || (process.env.APPDATA ? `${process.env.APPDATA}/../Local/zebra/.cookie` : '~/.zebra/.cookie'),
+  },
+
+  // Zallet (wallet - signing, keys, balances, sending)
+  zallet: {
+    rpcPort: parseInt(process.env.ZALLET_RPC_PORT || '28232'),
+    rpcHost: process.env.ZALLET_RPC_HOST || '127.0.0.1',
+    rpcUrl: process.env.ZALLET_RPC_URL || 'http://127.0.0.1:28232',
+    rpcUser: process.env.ZALLET_RPC_USER || '',
+    rpcPassword: process.env.ZALLET_RPC_PASS || '',
+    timeout: parseInt(process.env.ZALLET_TIMEOUT || '60000'),
+  },
+
+  // Legacy zcash config (for backward compatibility)
   zcash: {
     network: process.env.ZCASH_NETWORK || 'mainnet',
     rpcPort: parseInt(process.env.ZCASH_RPC_PORT || (process.env.ZCASH_NETWORK === 'testnet' ? '18232' : '8232')),
     rpcHost: process.env.ZCASH_RPC_HOST || '127.0.0.1',
-    rpcUrl: process.env.ZCASH_RPC_URL, // Optional: full RPC URL (e.g., http://127.0.0.1:8232)
-    cookieFilePath: process.env.ZCASH_COOKIE_FILE_PATH, // Optional: path to Zebra cookie file (defaults to AppData\Local\zebra\.cookie)
+    rpcUrl: process.env.ZCASH_RPC_URL,
+    cookieFilePath: process.env.ZCASH_COOKIE_FILE_PATH,
   },
-  
+
   // Database
   database: {
     url: process.env.DATABASE_URL!,
   },
-  
+
   // Oracle settings
   oracle: {
     checkInterval: parseInt(process.env.ORACLE_CHECK_INTERVAL || '30') * 1000,
     retryAttempts: parseInt(process.env.ORACLE_RETRY_ATTEMPTS || '3'),
     retryDelay: parseInt(process.env.ORACLE_RETRY_DELAY || '60') * 1000,
   },
-  
+
   // Economic model
   economics: {
     proverb_cost: parseFloat(process.env.PROVERB_COST || '0.01'),
@@ -56,7 +76,7 @@ export const config = {
     private_split: parseFloat(process.env.PRIVATE_SPLIT || '0.382'),
     network_fee: parseFloat(process.env.NETWORK_FEE || '0.0001'),
   },
-  
+
   // Logging
   logging: {
     level: process.env.LOG_LEVEL || 'info',
@@ -64,21 +84,20 @@ export const config = {
   },
 };
 
-// Validate required env vars (Nillion is optional for now)
+// Validate required env vars
 const required = [
-  'NEAR_API_KEY', // Mage agent key (frontend)
-  'NEAR_SWORDSMAN_API_KEY', // Swordsman agent key (oracle - MUST be separate)
+  'NEAR_API_KEY',
+  'NEAR_SWORDSMAN_API_KEY',
   'DATABASE_URL',
 ];
 
-// Optional but recommended
 const recommended = [
-  'PINATA_JWT', // Only needed if uploading new spellbooks
-  'SPELLBOOK_CID', // Will use default if not set
+  'PINATA_JWT',
+  'SPELLBOOK_CID',
 ];
 
 const optional = [
-  'NILLION_API_KEY', // Optional - will be needed for production
+  'NILLION_API_KEY',
 ];
 
 const missing: string[] = [];
@@ -90,13 +109,11 @@ for (const key of required) {
 
 if (missing.length > 0) {
   console.error('Missing required environment variables:');
-  missing.forEach(key => console.error(`  - ${key}`));
-  console.error('\nPlease check your .env file and ensure all required variables are set.');
-  console.error('\nNote: NEAR_SWORDSMAN_API_KEY must be separate from NEAR_API_KEY (mage agent).');
+  missing.forEach(key => console.error('  - ' + key));
+  console.error('\nPlease check your .env file.');
   process.exit(1);
 }
 
-// Warn about recommended variables
 const missingRecommended: string[] = [];
 for (const key of recommended) {
   if (!process.env[key]) {
@@ -105,12 +122,10 @@ for (const key of recommended) {
 }
 
 if (missingRecommended.length > 0) {
-  console.warn('\n⚠️  Recommended environment variables not set (using defaults):');
-  missingRecommended.forEach(key => console.warn(`  - ${key}`));
-  console.warn('');
+  console.warn('\nRecommended env vars not set (using defaults):');
+  missingRecommended.forEach(key => console.warn('  - ' + key));
 }
 
-// Warn about optional but recommended variables
 const missingOptional: string[] = [];
 for (const key of optional) {
   if (!process.env[key]) {
@@ -119,8 +134,6 @@ for (const key of optional) {
 }
 
 if (missingOptional.length > 0) {
-  console.warn('\n⚠️  Optional environment variables not set (will use placeholders):');
-  missingOptional.forEach(key => console.warn(`  - ${key}`));
-  console.warn('');
+  console.warn('\nOptional env vars not set:');
+  missingOptional.forEach(key => console.warn('  - ' + key));
 }
-

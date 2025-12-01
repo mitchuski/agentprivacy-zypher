@@ -539,12 +539,6 @@ export default function StoryPage() {
                   zero
                 </a>
                 <a
-                  href="/story/stats"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  stats
-                </a>
-                <a
                   href="/proverbs"
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >

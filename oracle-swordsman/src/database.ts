@@ -190,6 +190,25 @@ export const db = {
     return result.rows[0] || null;
   },
 
+  // Get submissions with filters
+  async getSubmissions(limit: number = 50, offset: number = 0, status?: string): Promise<Submission[]> {
+    let query = `SELECT * FROM submissions`;
+    const params: any[] = [];
+    
+    if (status) {
+      query += ` WHERE status = $1`;
+      params.push(status);
+      query += ` ORDER BY created_at DESC LIMIT $${params.length + 1} OFFSET $${params.length + 2}`;
+      params.push(limit, offset);
+    } else {
+      query += ` ORDER BY created_at DESC LIMIT $1 OFFSET $2`;
+      params.push(limit, offset);
+    }
+    
+    const result = await pool.query<Submission>(query, params);
+    return result.rows;
+  },
+
   // Get stats
   async getStats(): Promise<any> {
     const result = await pool.query(`SELECT * FROM proverb_stats`);
