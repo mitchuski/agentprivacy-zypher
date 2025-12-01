@@ -1,30 +1,30 @@
 # System Architecture Diagram
-## ZK Spellbook Donation System
+## Proof of Proverb Revelation Protocol
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                        PRIVACY-PRESERVING DONATION FLOW                        ║
+║                    PRIVACY-PRESERVING PROVERB VERIFICATION FLOW                ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 ┌──────────────────────────────────────────────────────────────────────────────┐
-│  STEP 1: Reader Discovers Tale                                               │
+│  STEP 1: First Person Discovers Tale                                        │
 └──────────────────────────────────────────────────────────────────────────────┘
 
     ┌─────────────────────────────────┐
-    │   Zero Knowledge Spellbook      │
-    │   (agentprivacy.ai/zero)            │
+    │   Story Spellbook                │
+    │   (agentprivacy.ai/story)        │
     │                                 │
-    │  📖 The Blade's Awakening       │
+    │  📖 Act I: Venice, 1494        │
     │  ─────────────────────────      │
-    │  "In the beginning, there       │
-    │   was surveillance..."          │
+    │  "The Drake whispers through    │
+    │   time to Pacioli..."           │
     │                                 │
     │  [Core Principle]               │
-    │  Protective boundaries          │
-    │  preserve sovereignty           │
+    │  Privacy as boundary-making     │
+    │  Delegation as projection       │
     │                                 │
     │  ┌─────────────────────────┐   │
-    │  │ 🛡️ Support this Tale    │   │ ← Donation Button
+    │  │ ⚔️ Submit Signal        │   │ ← Swordsman Panel
     │  └─────────────────────────┘   │
     └─────────────────────────────────┘
                     │
@@ -32,51 +32,48 @@
                     ▼
 
 ┌──────────────────────────────────────────────────────────────────────────────┐
-│  STEP 2: Dual-Agent Coordination (Information-Theoretic Separation)          │
+│  STEP 2: Dual-Agent Coordination (Cryptographic Separation)                 │
 └──────────────────────────────────────────────────────────────────────────────┘
 
     ┌────────────────────────────────┐         ┌────────────────────────────────┐
-    │     MAGE (NEAR AI + TEE)       │         │   SWORDSMAN (Zashi Wallet)    │
-    │  ──────────────────────────    │         │  ──────────────────────────    │
+    │     MAGE (Frontend) 🧙‍♂️         │         │   SWORDSMAN (Oracle) ⚔️      │
+    │  ──────────────────────────  │         │  ──────────────────────────    │
     │                                │         │                                │
-    │  🔮 Trusted Execution Env      │◄────────┤  🛡️ Mobile Wallet (Zashi)      │
+    │  🔮 Optional AI Assistance     │◄────────┤  🛡️ Oracle Backend            │
     │                                │  Tale   │                                │
-    │  ✓ Proverb Creation            │  Context│  ✓ Transaction Composition     │
-    │  ✓ Cipher Matching             │         │  ✓ Memo Encryption            │
-    │  ✓ Natural Language            │         │  ✓ Privacy Budget Tracking    │
-    │                                │         │  ✓ Final Spending Authority   │
+    │  ✓ Proverb Suggestions         │  Context│  ✓ Transaction Monitoring      │
+    │  ✓ Story Context               │         │  ✓ Memo Decryption            │
+    │  ✓ "Learn" Button              │         │  ✓ Proverb Verification       │
+    │                                │         │  ✓ Inscription Creation       │
     │  ✗ NO Transaction Details      │         │                                │
-    │  ✗ NO User Identity            │         │  ✗ NO Tale Content Access     │
+    │  ✗ NO User Identity            │         │  ✗ NO Full Tale Content       │
     │  ✗ NO Amount                   │         │  ✗ NO Proverb Generation      │
-    │  ✗ NO Timing                   │         │                                │
+    │  ✗ NO Timing                   │         │  ✗ NO Spending Authority      │
     │                                │ Proverb │                                │
-    │  "Seventh capital flows        ├────────►│  Receives Proverb             │
-    │   through chosen gates"        │Suggestion│                                │
-    │                                │         │  User Sets Amount:            │
-    │  [TEE Attestation]             │         │  💎 0.1 ZEC                   │
-    │  Signature: tee_a3f9b...       │         │                                │
+    │  User can use own model        ├────────►│  Receives Signal              │
+    │  with own context              │Signal   │                                │
+    │                                │         │  Monitors Shielded Pool       │
+    │  [NEAR Cloud AI]               │         │  via Viewing Key              │
     └────────────────────────────────┘         └────────────────┬───────────────┘
                                                                 │
-                                                                │ User Approves
+                                                                │ Detects Transaction
                                                                 ▼
 
 ┌──────────────────────────────────────────────────────────────────────────────┐
-│  STEP 3: Transaction Composition & Submission                                │
+│  STEP 3: Shielded Transaction Submission                                   │
 └──────────────────────────────────────────────────────────────────────────────┘
 
                         ┌─────────────────────────────┐
                         │   Shielded Transaction      │
                         │  ───────────────────────    │
                         │                             │
-                        │  To: zs1spellbook...        │
-                        │  Amount: 10,000,000 zatoshi │
-                        │  (0.1 ZEC)                  │
+                        │  To: zs1oracle...            │
+                        │  Amount: 1,000,000 zatoshi  │
+                        │  (0.01 ZEC)                  │
                         │                             │
                         │  Memo (Encrypted):          │
-                        │  [rpp-v1]:                  │
-                        │  [act1-blades-awakening]:   │
-                        │  [timestamp]:               │
-                        │  [proverb_encrypted]        │
+                        │  act-i-venice|               │
+                        │  Privacy requires separation │
                         │                             │
                         │  Privacy: ✅ z→z (Shielded) │
                         └─────────────┬───────────────┘
@@ -84,10 +81,10 @@
                                       │ Submit to
                                       ▼
                         ┌─────────────────────────────┐
-                        │      Zashi Wallet           │
-                        │   (Zcash Signing)           │
+                        │   User's Zcash Wallet        │
+                        │   (Zashi or other)           │
                         │                             │
-                        │  🔐 User Signs Transaction  │
+                        │  🔐 User Signs Transaction   │
                         │  📡 Broadcast to Network    │
                         └─────────────┬───────────────┘
                                       │
@@ -105,24 +102,25 @@
 
 
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                        INFORMATION FLOW CONSTRAINTS                            ║
+║                    INFORMATION FLOW CONSTRAINTS                                ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 ┌──────────────────────────────────────────────────────────────────────────────┐
-│  Mathematical Privacy Bounds                                                 │
+│  Cryptographic Privacy Bounds                                                 │
 └──────────────────────────────────────────────────────────────────────────────┘
 
     MAGE Knowledge:                         SWORDSMAN Knowledge:
     ┌─────────────────────┐                ┌─────────────────────┐
-    │ ✓ Tale ID           │                │ ✓ Final Proverb     │
-    │ ✓ Core Principle    │                │ ✓ Transaction Amt   │
+    │ ✓ Tale ID           │                │ ✓ Proverb Text      │
+    │ ✓ Story Content     │                │ ✓ Transaction Amount │
     │ ✓ User Reflection   │                │ ✓ Recipient Address │
-    │   (sanitized)       │                │ ✓ Privacy Budget    │
+    │   (optional)         │                │ ✓ Verification Score│
     │                     │                │                     │
-    │ ✗ Transaction Amt   │                │ ✗ Full Tale Content │
+    │ ✗ Transaction Amt   │                │ ✗ Full Tale Context │
     │ ✗ User Identity     │                │ ✗ Mage's Reasoning  │
-    │ ✗ Recipient Addr    │                │ ✗ Generation Process│
-    │ ✗ Timing            │                │                     │
+    │ ✗ Recipient Addr    │                │ ✗ User's Model      │
+    │ ✗ Timing            │                │ ✗ Spending Key      │
+    │ ✗ Viewing Key       │                │                     │
     └─────────────────────┘                └─────────────────────┘
 
     Information Theory:
@@ -130,14 +128,14 @@
     I(Mage; Transaction) = 0
     I(Mage; Amount) = 0
     I(Mage; User_Identity) = 0
+    I(Mage; Viewing_Key) = 0
     
-    I(Swordsman; Tale_Content) = minimal
+    I(Swordsman; Tale_Content) = minimal (only act ID)
     I(Swordsman; Proverb_Gen) = 0
-    
-    Privacy_Budget = φ × 10 ≈ 16 queries/session
+    I(Swordsman; Spending_Key) = 0 (viewing key ≠ spending key)
     
     Golden Ratio Constraint:
-    Mage_Capability / Swordsman_Control = φ ≈ 1.618
+    Public_Inscription / Private_Pool = φ ≈ 1.618 (61.8% / 38.2%)
 
 
 ╔══════════════════════════════════════════════════════════════════════════════╗
@@ -151,56 +149,82 @@
     Frontend Layer
     ──────────────
     ┌─────────────────────────────────────────────────────┐
-    │  React + TypeScript + Next.js                       │
+    │  Next.js 16 + React 19 + TypeScript                 │
     │  ─────────────────────────────────────────          │
-    │  • DonationButton.tsx (UI Component)                │
-    │  • Lucide Icons (Shield, Sparkles, Send)            │
+    │  • Landing Page (/)                                 │
+    │  • Story Page (/story)                              │
+    │  • Mage Interface (/mage)                           │
+    │  • Proverbs Gallery (/proverbs)                      │
+    │  • SwordsmanPanel Component                         │
+    │  • DonationFlow Component                           │
     │  • Responsive Design                                │
     └─────────────────────────────────────────────────────┘
 
-    AI Layer (TEE)
-    ──────────────
+    Oracle Backend Layer
+    ───────────────────
     ┌─────────────────────────────────────────────────────┐
-    │  NEAR AI + Claude Sonnet 4.5                        │
+    │  Express + TypeScript + Node.js                     │
     │  ─────────────────────────────────────────          │
-    │  • Trusted Execution Environment                    │
-    │  • Natural Language Processing                      │
-    │  • Proverb Generation & Refinement                  │
-    │  • Cryptographic Attestation                        │
-    └─────────────────────────────────────────────────────┘
-
-    Mobile Wallet Layer (Zashi)
-    ───────────────────────────
-    ┌─────────────────────────────────────────────────────┐
-    │  Swordsman (User's Zashi Wallet)                    │
-    │  ─────────────────────────────────────────          │
-    │  • Zashi Mobile Wallet (Personal Wallet)             │
-    │  • Transaction Composition                          │
-    │  • AES-256-CBC Memo Encryption                      │
-    │  • Privacy Budget Tracking                          │
-    │  • User controls final transaction                  │
+    │  • Transaction Monitor (every 30s)                  │
+    │  • Memo Parser                                      │
+    │  • IPFS Spellbook Fetcher                           │
+    │  • NEAR Cloud AI Verifier                           │
+    │  • Golden Split Calculator                          │
+    │  • Inscription Builder (OP_RETURN)                  │
+    │  • Transaction Signer                              │
     └─────────────────────────────────────────────────────┘
 
     Blockchain Layer
     ────────────────
     ┌─────────────────────────────────────────────────────┐
-    │  Zcash Shielded Pool                                │
+    │  Zcash (Mainnet)                                    │
     │  ─────────────────────────────────────────          │
-    │  • z-to-z Transactions                              │
-    │  • Encrypted Memo Field (512 bytes)                 │
-    │  • Zero-Knowledge Proofs                            │
-    │  • Privacy by Default                               │
+    │  • Zebra Full Node (Port 8233)                     │
+    │    - Blockchain data                                │
+    │    - Block synchronization                          │
+    │  • Zallet Wallet (Port 28232)                       │
+    │    - Viewing key (can see transactions)            │
+    │    - Spending key (can sign transactions)           │
+    │    - Memo decryption                                │
+    │  • Shielded Pool (z→z transactions)                │
+    │  • OP_RETURN inscriptions (public proof)           │
     └─────────────────────────────────────────────────────┘
 
-    Protocol Layer
+    AI Verification Layer
+    ─────────────────────
+    ┌─────────────────────────────────────────────────────┐
+    │  NEAR Cloud AI                                      │
+    │  ─────────────────────────────────────────          │
+    │  • openai/gpt-oss-120b model                        │
+    │  • Semantic proverb matching                        │
+    │  • Quality score (0-1)                              │
+    │  • Act matching                                     │
+    │  • Reasoning explanation                             │
+    │  • Privacy-preserving (no transaction data)         │
+    └─────────────────────────────────────────────────────┘
+
+    Knowledge Base Layer
+    ────────────────────
+    ┌─────────────────────────────────────────────────────┐
+    │  IPFS/Pinata                                        │
+    │  ─────────────────────────────────────────          │
+    │  • Spellbook JSON (CID)                             │
+    │  • Canonical proverbs per act                        │
+    │  • Story metadata                                   │
+    │  • Censorship-resistant storage                      │
+    │  • 1-hour cache (reduces IPFS calls)               │
+    └─────────────────────────────────────────────────────┘
+
+    Database Layer
     ──────────────
     ┌─────────────────────────────────────────────────────┐
-    │  Agent Privacy Negotiation Protocol (APNP)          │
+    │  PostgreSQL                                         │
     │  ─────────────────────────────────────────          │
-    │  • Message Type Definitions                         │
-    │  • Information Bound Validation                     │
-    │  • TEE Attestation Format                           │
-    │  • Privacy Budget Standards                         │
+    │  • Submission records                                │
+    │  • Verification results                              │
+    │  • Inscription metadata                             │
+    │  • Transaction tracking                              │
+    │  • No private keys stored                           │
     └─────────────────────────────────────────────────────┘
 
 
@@ -215,19 +239,25 @@
     
     🔒 Amount Privacy           z→z Transaction                ✅ Guaranteed
     
-    🔒 Agent Isolation          TEE + Information Bounds       ✅ Provable
+    🔒 Agent Isolation          Cryptographic Separation       ✅ Provable
+                                 (Viewing ≠ Spending)
     
-    🔒 Memo Confidentiality     AES-256-CBC Encryption         ✅ Guaranteed
+    🔒 Memo Confidentiality     Zcash Memo Encryption         ✅ Guaranteed
     
     🔒 Identity Protection      No User Tracking               ✅ By Design
     
     🔒 Proverb Privacy          Local Generation Only          ✅ Guaranteed
     
-    🔒 Sybil Resistance         Proof-of-Understanding         ✅ Soft Guarantee
+    🔒 Viewing Key Isolation    Swordsman has viewing key     ✅ Guaranteed
+                                 but not spending key
     
-    🔒 Budget Enforcement       Golden Ratio Constraint        ✅ Enforced
+    🔒 Spending Key Isolation   User controls spending key     ✅ Guaranteed
+                                 Swordsman cannot spend
     
-    🔒 Attestation Validity     NEAR AI Signatures             ✅ Verifiable
+    🔒 Golden Split Enforcement  61.8% public / 38.2% private  ✅ Enforced
+    
+    🔒 AI Privacy               AI only sees proverb text     ✅ Guaranteed
+                                 (no transaction data)
 
 
 ╔══════════════════════════════════════════════════════════════════════════════╗
@@ -237,30 +267,49 @@
     What Crosses Agent Boundaries:
     ───────────────────────────────
     
-    Spellbook → Swordsman:
+    Story → User:
     • Tale ID
-    • Tale Title
-    • "Support" button click event
+    • Story content
+    • Canonical proverb (for reference)
+    • "Submit Signal" button
     
-    Swordsman → Mage:
-    • Tale ID (opaque identifier)
-    • Core Principle (public info)
-    • Context flag ("donation")
+    User → Mage (Optional):
+    • Tale ID (if using Mage assistance)
+    • User's own model/context (if using own model)
+    • "Learn" button copies story/proverbs to user's context
     
-    Mage → Swordsman:
-    • Proverb suggestions (3 options)
-    • Cipher hint (validation helper)
-    • TEE Attestation signature
+    User → Swordsman Panel:
+    • Signal submission request
+    • Chosen proverb (if formed)
     
-    User → Swordsman:
-    • Chosen proverb
-    • Transaction amount
-    • Approval to proceed
+    User → Zcash Wallet:
+    • Shielded transaction (z→z)
+    • Encrypted memo (act ID + proverb)
+    • Amount (0.01 ZEC)
     
-    Swordsman → Zashi:
-    • Composed transaction
-    • Encrypted memo
-    • Recipient z-address
+    Zcash Network → Oracle:
+    • Shielded transaction detected
+    • Memo decrypted (via viewing key)
+    • Transaction details
+    
+    Oracle → IPFS:
+    • Spellbook fetch request
+    • Receives canonical proverbs
+    
+    Oracle → NEAR Cloud AI:
+    • Proverb text
+    • Spellbook context
+    • Receives verification result
+    
+    Oracle → Zcash Network:
+    • Golden split transaction
+    • Public inscription (OP_RETURN)
+    • Private return (shielded)
+    
+    Oracle → Frontend (/proverbs):
+    • Inscription data
+    • Match scores
+    • Transaction links
     
     What NEVER Crosses:
     ───────────────────
@@ -268,9 +317,11 @@
     ✗ User identity to Mage
     ✗ Transaction amount to Mage
     ✗ Timing data to Mage
+    ✗ Viewing key to Mage
     ✗ Full tale content to Swordsman
+    ✗ Spending key to Swordsman
     ✗ Mage reasoning to blockchain
-    ✗ User reflection to blockchain
+    ✗ User's model/context to Oracle
 
 
 ╔══════════════════════════════════════════════════════════════════════════════╗
@@ -280,38 +331,98 @@
                     ┌──────────────────────┐
                     │   User's Browser     │
                     │  ────────────────    │
-                    │  • React App         │
-                    │  • Swordsman Ext     │
+                    │  • Next.js App       │
+                    │  • React Components  │
+                    │  • Static Assets     │
                     └──────────┬───────────┘
                                │
                 ┌──────────────┴──────────────┐
                 │                             │
                 ▼                             ▼
     ┌──────────────────────┐     ┌──────────────────────┐
-    │   Vercel/Netlify     │     │   NEAR AI Cloud      │
+    │   Vercel/Cloudflare   │     │   Oracle Backend     │
     │  ──────────────────  │     │  ──────────────────  │
-    │  • Next.js App       │     │  • TEE Environment   │
-    │  • API Routes        │────►│  • Claude Sonnet 4.5 │
-    │  • Static Content    │     │  • Attestation API   │
-    └──────────────────────┘     └──────────────────────┘
-                │
-                │
-                ▼
-    ┌──────────────────────┐
-    │   Zcash Network      │
-    │  ──────────────────  │
-    │  • Shielded Pool     │
-    │  • Block Explorers   │
-    │  • Consensus Nodes   │
-    └──────────────────────┘
+    │  • Next.js App       │     │  • Express Server    │
+    │  • API Routes        │     │  • Port 3001         │
+    │  • Static Content    │     │  • Transaction Loop  │
+    │  • Global CDN         │     │  • Database          │
+    └──────────────────────┘     └──────────┬───────────┘
+                                             │
+                ┌───────────────────────────┼───────────────────────────┐
+                │                           │                           │
+                ▼                           ▼                           ▼
+    ┌──────────────────────┐     ┌──────────────────────┐     ┌──────────────────────┐
+    │   Zebra Full Node     │     │   Zallet Wallet      │     │   NEAR Cloud AI      │
+    │  ──────────────────  │     │  ──────────────────  │     │  ──────────────────  │
+    │  • Port 8233         │     │  • Port 28232        │     │  • AI Verification   │
+    │  • Blockchain Data   │     │  • Viewing Key       │     │  • Semantic Matching │
+    │  • Mainnet Sync       │     │  • Spending Key      │     │  • Quality Scoring   │
+    └──────────┬───────────┘     └──────────┬───────────┘     └──────────────────────┘
+               │                             │
+               └───────────────┬─────────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │   Zcash Network       │
+                    │  ──────────────────  │
+                    │  • Shielded Pool     │
+                    │  • OP_RETURN Inscriptions│
+                    │  • Mainnet            │
+                    └──────────────────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │   IPFS/Pinata        │
+                    │  ──────────────────  │
+                    │  • Spellbook Storage  │
+                    │  • Canonical Proverbs │
+                    │  • Censorship-Resistant│
+                    └──────────────────────┘
 
 
     Scalability:
     ────────────
-    • Frontend: Global CDN (Vercel/Netlify)
-    • Mage: NEAR AI scales automatically
-    • Swordsman: Client-side (infinite scale)
+    • Frontend: Global CDN (Vercel/Cloudflare Pages)
+    • Oracle: VPS with systemd service (continuous monitoring)
     • Blockchain: Zcash network capacity
+    • AI: NEAR Cloud AI scales automatically
+    • IPFS: Pinata gateway scales automatically
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                          MCP/A2A TRUST FLOWS                                  ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+    Agent-to-Agent Information Flows:
+    ─────────────────────────────────
+    
+    ┌─────────────────────────────────────────────────────┐
+    │  Model Context Protocol (MCP)                       │
+    │  ─────────────────────────────────────────          │
+    │  • Website designed for MCP agent actions          │
+    │  • Agents can read spellbook content                │
+    │  • Agents can copy to their own context             │
+    │  • Agents can form proverbs with own models         │
+    │  • Agents can submit signals                        │
+    └─────────────────────────────────────────────────────┘
+    
+    ┌─────────────────────────────────────────────────────┐
+    │  Agent-to-Agent (A2A) Trust Building                │
+    │  ─────────────────────────────────────────          │
+    │  • Each verified proverb creates a VRC              │
+    │  • VRCs enable bilateral trust                      │
+    │  • Trust graph forms through verified proverbs      │
+    │  • Human-in-the-loop mechanism                      │
+    │  • Opens door to agent trust                        │
+    └─────────────────────────────────────────────────────┘
+    
+    Human-in-the-Loop:
+    ──────────────────
+    • First Person initiates trust-building
+    • Agents prove understanding through proverbs
+    • Oracle verifies without exposing data
+    • On-chain proof creates VRC
+    • Trust accumulates through verified interactions
 
 
 Legend:

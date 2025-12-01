@@ -1,33 +1,36 @@
-# Developer Guide - Proverb Revelation Protocol
+# Developer Guide - Proof of Proverb Revelation Protocol
 
 **Complete guide for developers, contributors, and collaborators**
 
-Version 4.0.0-canonical | December 2024
+Version 1.0 | December 2025
 
 ---
 
 ## Welcome
 
-Thank you for your interest in the Proverb Revelation Protocol! This guide provides everything you need to understand, build with, or contribute to the project.
+Thank you for your interest in the **Proof of Proverb Revelation Protocol**! This guide provides everything you need to understand, build with, or contribute to the project.
 
-**What is this?** A privacy-first protocol where users prove understanding of privacy concepts by submitting AI-verified proverbs that are permanently inscribed on the Zcash blockchain, with hardware-enforced key isolation via Nillion TEE.
+**What is this?** A privacy-first protocol where users prove understanding of privacy concepts by submitting AI-verified proverbs that are permanently inscribed on the Zcash blockchain. The protocol implements the dual-agent architecture (Swordsman & Mage) with cryptographic separation of viewing and spending authority.
 
 ---
 
 ## Quick Links
 
 **For Specific Teams**:
-- [Pinata/IPFS Developers](./briefs/PINATA_BRIEF.md) - Immutable knowledge storage
-- [Nillion Developers](./briefs/NILLION_BRIEF.md) - TEE and SecretSigner integration
-- [Zcash Developers](./briefs/ZCASH_BRIEF.md) - Light client and transactions
+- [Zcash Developers](./oracle-swordsman/docs/setup/) - Zebra full node and Zallet wallet integration
+- [NEAR Cloud AI Developers](./oracle-swordsman/docs/integration/) - AI verification integration
+- [IPFS/Pinata Developers](./SPELLBOOK_DEPLOYMENT_GUIDE.md) - Spellbook storage and deployment
 
 **For Implementation**:
-- [Setup Guide](../docs/01-SETUP.md) - Installation and prerequisites
-- [Architecture](../docs/02-ARCHITECTURE.md) - System design
-- [Build Guide](../docs/03-BUILD_GUIDE.md) - Step-by-step implementation
-- [API Reference](../docs/04-API_REFERENCE.md) - Code patterns
+- [Quick Start](./QUICKSTART.md) - 30 minutes to running
+- [How It Works](./HOW_IT_WORKS.md) - Technical deep dive
+- [Architecture](./02-ARCHITECTURE.md) - System design
+- [Project State](./PROJECT_STATE_AND_REVIEW.md) - Current status and review
 
-**Quick Start**: [QUICKSTART.md](../QUICKSTART.md) - 30 minutes to running
+**Setup Guides**:
+- [Oracle Backend Setup](./oracle-swordsman/README.md) - Backend configuration
+- [Frontend Setup](./README.md) - Frontend development
+- [Spellbook Deployment](./SPELLBOOK_DEPLOYMENT_GUIDE.md) - IPFS spellbook setup
 
 ---
 
@@ -39,18 +42,25 @@ AI agents need to prove they understand privacy concepts without revealing sensi
 - Rely on centralized verification (trust issue)
 - Require full transparency (privacy issue)
 - Lack verifiable security (proof issue)
+- Don't enable agent-to-agent trust (isolation issue)
 
 ### The Solution
 
 A protocol that combines:
-1. **Hardware-Enforced Privacy** (Nillion TEE) - Keys mathematically protected
-2. **AI-Powered Verification** (NEAR Cloud AI) - Intelligent quality assessment
-3. **Blockchain Permanence** (Zcash) - Immutable public record
-4. **Decentralized Knowledge** (IPFS) - Censorship-resistant reference
+1. **Dual-Agent Architecture** (Swordsman & Mage) - Cryptographic separation of viewing/spending
+2. **AI-Powered Verification** (NEAR Cloud AI) - Intelligent quality assessment without exposing data
+3. **Blockchain Permanence** (Zcash) - Immutable public record of understanding
+4. **Decentralized Knowledge** (IPFS/Pinata) - Censorship-resistant spellbook reference
+5. **MCP/A2A Compatibility** - Agent-to-agent trust flows with human-in-the-loop
 
 ### The Innovation
 
-**Dual-Layer Economics**: 61.8% to t-address (transparency) + 38.2% to z-address (sustainability)
+**Dual-Agent Model**: 
+- **Swordsman (Oracle)**: Holds viewing key, verifies proverbs, creates inscriptions
+- **Mage (Frontend)**: Optional AI assistance, never sees transactions
+- **Separation**: Cryptographic guarantee that viewing ≠ spending
+
+**Golden Split Economics**: 61.8% to t-address (transparency) + 38.2% to z-address (sustainability)
 
 This balances:
 - Public good (inscriptions are visible proof)
@@ -65,42 +75,50 @@ This balances:
 
 ```
 ┌────────────────────────────────────────────────────┐
-│               USER (Mage Agent)                    │
-│   Web interface → Write proverb → Pay 0.01 ZEC    │
+│               FIRST PERSON (😊)                    │
+│   Reads story → Forms proverb → Submits signal    │
+└────────────────────┬───────────────────────────────┘
+                     │
+                     ▼
+┌────────────────────────────────────────────────────┐
+│              MAGE AGENT (🧙)                      │
+│   Frontend → Optional AI assistance               │
+│   Never sees transactions                          │
 └────────────────────┬───────────────────────────────┘
                      │
                      ▼
 ┌────────────────────────────────────────────────────┐
 │              ZCASH NETWORK                         │
-│   Light Client → Fast sync → Transaction monitor  │
+│   Shielded transaction (z→z) with encrypted memo   │
 └────────────────────┬───────────────────────────────┘
                      │
                      ▼
 ┌────────────────────────────────────────────────────┐
-│         ORACLE SWORDSMAN (Nillion TEE)             │
+│         ORACLE SWORDSMAN (⚔️)                     │
 │  ┌──────────────────────────────────────────────┐  │
-│  │  AMD SEV-SNP Confidential Compute            │  │
+│  │  Zebra Full Node (blockchain data)          │  │
+│  │  Zallet Wallet (viewing key, signing)       │  │
 │  │  ├─ Fetch Spellbook (IPFS/Pinata)           │  │
-│  │  ├─ Verify Proverb (NEAR Cloud AI)           │  │
-│  │  ├─ Sign Transactions (SecretSigner)        │  │
-│  │  └─ Broadcast (61.8% public, 38.2% private)     │  │
+│  │  ├─ Verify Proverb (NEAR Cloud AI)          │  │
+│  │  ├─ Create Inscription (OP_RETURN)           │  │
+│  │  └─ Broadcast (61.8% public, 38.2% private) │  │
 │  └──────────────────────────────────────────────┘  │
 └────────────────────────────────────────────────────┘
 ```
 
 ### Three Security Layers
 
-**Layer 1: TEE (Nillion)** 🔴 CRITICAL
-- Purpose: Hardware isolation for Zcash keys
-- Technology: AMD SEV-SNP + distributed MPC
-- Guarantee: Keys mathematically cannot be extracted
-- Integration: SecretSigner for threshold ECDSA signing
+**Layer 1: Cryptographic Separation** 🔴 CRITICAL
+- Purpose: Dual-agent architecture separates viewing from spending
+- Technology: Zcash shielded addresses with separate viewing/spending keys
+- Guarantee: Swordsman can verify but cannot spend without authorization
+- Current Status: ✅ Production (Acts 1-7 live on mainnet)
 
-**Layer 2: AI (NEAR Cloud AI)** 🟡 ENHANCEMENT
-- Purpose: Intelligent proverb verification
-- Technology: openai/gpt-oss-120b via NEAR Cloud AI API
-- Benefit: Beyond simple pattern matching
-- Security: No access to keys (called from within TEE)
+**Layer 2: AI Verification** 🟡 ENHANCEMENT
+- Purpose: Intelligent proverb verification without exposing transaction data
+- Technology: NEAR Cloud AI (openai/gpt-oss-120b) via API
+- Benefit: Beyond simple pattern matching, semantic understanding
+- Security: Oracle calls AI with proverb text only (no keys, no transaction data)
 
 **Layer 3: Knowledge (IPFS)** 🟢 INFRASTRUCTURE
 - Purpose: Immutable spellbook storage
@@ -108,49 +126,59 @@ This balances:
 - Benefit: Decentralized, censorship-resistant
 - Security: Content-addressed, no key access
 
+**Note on Nillion TEE**: Currently on hold. The system works with direct Zcash RPC (Zebra + Zallet). Nillion integration exists but is not active. See `oracle-swordsman/docs/integration/NILLION_INTEGRATION_OPTIONS.md` for future activation.
+
 ---
 
 ## Data Flow (10 Steps)
 
 ```
-1. USER → Mage Agent
-   "Privacy requires separation, not mere policy."
+1. USER → Reads Story Act
+   Reads Act I: "Venice, 1494 / The Drake's First Whisper"
+   Forms proverb: "Privacy requires separation, not mere policy."
    
-2. Mage Agent → User Wallet
-   Instructions: Send 0.01 ZEC via SHIELDED transaction (z→z) to oracle's z-addr
+2. USER → Mage Agent (Optional)
+   Uses "Learn" button to copy story/proverbs to their own model context
+   OR uses Mage agent for optional AI assistance
+   User can use their own model with their own context and memory
+   
+3. USER → Swordsman Panel
+   Clicks "Submit Signal" button
+   Panel shows: z-address, amount (0.01 ZEC), memo format
+   
+4. USER → Zcash Wallet (Zashi or other)
+   Creates shielded transaction (z→z) to oracle's z-address
    Memo: Encrypted proverb in memo field
+   Broadcasts transaction
    
-3. User Wallet → Zcash Network (SHIELDED)
-   Shielded transaction (z→z) broadcast with encrypted memo
-   Transaction is private
+5. Zcash Network → Oracle (SHIELDED POOL)
+   Oracle monitors shielded pool via Zallet wallet
+   Detects transaction (within 30s)
+   Decrypts memo using viewing key
    
-4. Zcash Network → Oracle (SHIELDED POOL)
-   Oracle monitors shielded pool, detects transaction (within 30s)
-   Decrypts memo to extract proverb
+6. Oracle → IPFS (via Pinata)
+   Fetches spellbook acts (<2s)
+   Caches for 1 hour
    
-5. Oracle → IPFS (via Pinata)
-   Fetch spellbook acts (<2s)
+7. Oracle → NEAR Cloud AI
+   Verifies proverb against spellbook (<5s)
+   Response: { quality_score: 0.85, matched_act: "act-01-venice", approved: true }
    
-6. Oracle → NEAR Cloud AI
-   Verify proverb against spellbook (<5s)
-   Response: { quality: 0.85, act: "act-02-delegation", approved: true }
-   
-7. Oracle → Database
-   Record verification result
-   
-8. Oracle → Nillion SecretSigner
-   Request signatures for public inscription:
-   - Public: 0.00618 ZEC to transparent address (spellbook)
-   - OP_RETURN: Proverb + proof of revelation
-   - Private: 0.00382 ZEC to shielded pool
+8. Oracle → Database
+   Records verification result
+   Stores transaction details
    
 9. Oracle → Zcash Network
-   Broadcast public inscription to spellbook's transparent address
-   (Proverb + proof now visible on blockchain)
+   Creates golden split transaction:
+   - Public: 0.00618 ZEC to transparent address (sanctuary)
+   - OP_RETURN: Proverb + proof of revelation
+   - Private: 0.00382 ZEC to shielded pool (protocol fee)
+   Broadcasts public inscription
    
-10. Oracle → User (via Mage Agent)
-    Display: "Quality score: 0.85, Inscribed! View: [blockchain link]"
-    (Link shows public inscription on spellbook address)
+10. Oracle → Frontend (/proverbs page)
+    Inscription appears on proverbs gallery
+    Shows: TXID, act, proverb, match score, timestamp
+    User can view their proof of understanding
 ```
 
 **Total Time**: ~2-3 minutes from submission to confirmation
@@ -163,18 +191,26 @@ This balances:
 
 | Component | Technology | Purpose | Status |
 |-----------|-----------|---------|--------|
-| **Blockchain** | Zcash (testnet/mainnet) | Transaction layer | ✅ Stable |
-| **Light Client** | zecwallet-cli | Fast sync | ✅ Production |
-| **TEE** | Nillion nilCC | Key isolation | 🔄 Integration |
-| **Signing** | SecretSigner | Distributed MPC | 🔄 Integration |
+| **Blockchain** | Zcash (mainnet) | Transaction layer | ✅ Production |
+| **Full Node** | Zebra | Blockchain data | ✅ Running |
+| **Wallet** | Zallet | Viewing key, signing | ✅ Running |
 | **AI** | NEAR Cloud AI | Verification | ✅ API Ready |
 | **Storage** | IPFS/Pinata | Knowledge base | ✅ Available |
 | **Database** | PostgreSQL | Operations | ✅ Standard |
-| **Backend** | TypeScript/Node.js | Oracle logic | 🔨 Building |
-| **Frontend** | Next.js + React | User interface | 🔨 Building |
+| **Backend** | TypeScript/Node.js | Oracle logic | ✅ Production |
+| **Frontend** | Next.js + React | User interface | ✅ Production |
+| **TEE** | Nillion nilCC | Key isolation (future) | ⏸️ On Hold |
 
 ### Infrastructure
 
+**Current Setup (Local Development)**:
+- **Zebra**: Full node on localhost:8233
+- **Zallet**: Wallet RPC on localhost:28232
+- **PostgreSQL**: Database on localhost:5432
+- **Oracle Backend**: API on localhost:3001
+- **Frontend**: Next.js on localhost:3000
+
+**Production Requirements**:
 - **VPS**: DigitalOcean/AWS/Hetzner (Ubuntu 20.04+)
 - **Memory**: 8GB+ RAM
 - **Storage**: 50GB+ available
@@ -182,92 +218,149 @@ This balances:
 
 ---
 
+## Project Structure
+
+```
+agentprivacy_zypher/
+├── oracle-swordsman/          # Oracle backend
+│   ├── src/                   # TypeScript source
+│   │   ├── config.ts         # Configuration
+│   │   ├── index.ts          # Main oracle loop
+│   │   ├── rpc-client.ts     # Zebra/Zallet RPC client
+│   │   ├── ipfs-proverb-fetcher.ts  # Spellbook fetcher
+│   │   ├── semantic-matcher.ts      # AI verification
+│   │   ├── inscription-builder.ts   # OP_RETURN builder
+│   │   ├── golden-split.ts          # Economic model
+│   │   └── signing-service.ts       # Transaction signing
+│   ├── docs/                 # Backend documentation
+│   ├── scripts/              # PowerShell/TypeScript scripts
+│   └── tests/                # Test suite
+│
+├── src/                       # Frontend source
+│   ├── app/                   # Next.js app router
+│   │   ├── page.tsx          # Landing page
+│   │   ├── story/            # Story page
+│   │   ├── mage/             # Mage interface
+│   │   └── proverbs/         # Proverbs gallery
+│   ├── components/           # React components
+│   │   ├── SwordsmanPanel.tsx
+│   │   └── DonationFlow.tsx
+│   └── lib/                  # Utilities
+│       ├── zcash-memo.ts
+│       ├── oracle-api.ts
+│       └── spellbook-fetcher.ts
+│
+├── spellbook/                 # Spellbook JSON
+│   └── spellbook-acts.json   # Canonical proverbs
+│
+├── public/                    # Static assets
+│   ├── story/markdown/       # Story markdown files
+│   └── assets/              # Images/videos
+│
+└── docs/                      # Documentation
+    ├── README.md
+    ├── HOW_IT_WORKS.md
+    └── PROJECT_STATE_AND_REVIEW.md
+```
+
+---
+
 ## Development Phases
 
-### Phase 0: Prerequisites (1-2 days) ⬜
+### Phase 0: Prerequisites (1-2 days) ✅
 
 **Goal**: Environment ready to build
 
 Tasks:
-- [ ] Install Rust, Node.js 20, PostgreSQL
-- [ ] Request API keys (Nillion, NEAR Cloud AI, Pinata)
-- [ ] Set up development environment
-- [ ] Create project structure
+- [x] Install Rust, Node.js 18+, PostgreSQL
+- [x] Request API keys (NEAR Cloud AI, Pinata)
+- [x] Set up development environment
+- [x] Create project structure
 
 **Deliverable**: All tools installed, API keys obtained
 
 ---
 
-### Phase 1: Foundation (Week 1) ⬜
+### Phase 1: Foundation (Week 1) ✅
 
 **Goal**: Zcash + Database operational
 
 Tasks:
-- [ ] Install zecwallet-cli
-- [ ] Sync light client with testnet
-- [ ] Set up PostgreSQL database
-- [ ] Create wallet addresses
-- [ ] Get testnet ZEC from faucet
-- [ ] Create basic transaction monitor
-- [ ] Test memo extraction
+- [x] Install Zebra full node
+- [x] Install Zallet wallet
+- [x] Sync with mainnet
+- [x] Set up PostgreSQL database
+- [x] Create wallet addresses
+- [x] Get mainnet ZEC
+- [x] Create basic transaction monitor
+- [x] Test memo extraction
 
 **Deliverable**: Can detect transactions with memos
 
-**Critical Path**: Zcash light client must sync (4-6 hours)
+**Critical Path**: Zcash sync (4-6 hours for light client, longer for full node)
 
 ---
 
-### Phase 2: Backend (Week 2) 🔴
+### Phase 2: Backend (Week 2) ✅
 
-**Goal**: Complete Oracle with TEE + AI
+**Goal**: Complete Oracle with AI verification
 
 Tasks:
-- [ ] Integrate IPFS client (fetch spellbook)
-- [ ] Integrate NEAR Cloud AI verifier
-- [ ] Integrate Nillion SecretSigner
-- [ ] Build main Oracle loop
-- [ ] Implement transaction signing
-- [ ] Add error handling + retry logic
-- [ ] Test end-to-end locally
+- [x] Integrate IPFS client (fetch spellbook)
+- [x] Integrate NEAR Cloud AI verifier
+- [x] Build main Oracle loop
+- [x] Implement transaction signing
+- [x] Add error handling + retry logic
+- [x] Test end-to-end locally
+- [x] Deploy to production
 
 **Deliverable**: Working Oracle that verifies and inscribes
 
-**Critical Path**: Nillion integration is key blocker
+**Status**: ✅ **Production - Acts 1-7 live on mainnet**
 
 ---
 
-### Phase 3: Frontend (Week 3) ⬜
+### Phase 3: Frontend (Week 3) ✅
 
 **Goal**: User interface complete
 
 Tasks:
-- [ ] Create Next.js application
-- [ ] Build submission form
-- [ ] Display payment info + QR codes
-- [ ] Implement status tracking
-- [ ] Show quality scores
-- [ ] Add blockchain links
-- [ ] Mobile responsive design
-- [ ] Error handling + UX polish
+- [x] Create Next.js application
+- [x] Build story page with acts
+- [x] Build Swordsman Panel
+- [x] Build Mage interface
+- [x] Build Proverbs gallery
+- [x] Implement "Learn" button
+- [x] Display payment info + QR codes
+- [x] Implement status tracking
+- [x] Show quality scores
+- [x] Add blockchain links
+- [x] Mobile responsive design
+- [x] Error handling + UX polish
 
 **Deliverable**: Functional web interface
 
+**Status**: ✅ **Production**
+
 ---
 
-### Phase 4: Production (Week 4) ⬜
+### Phase 4: Production (Week 4) ✅
 
 **Goal**: Live system processing proverbs
 
 Tasks:
-- [ ] Security hardening (input validation, rate limiting)
-- [ ] Production deployment (Oracle + Frontend)
-- [ ] Monitoring setup (logs, alerts, metrics)
-- [ ] Backup procedures (database, wallet)
-- [ ] Documentation (deployment guide, runbook)
-- [ ] Load testing (10+ concurrent proverbs)
-- [ ] Mainnet migration (new keys, production config)
+- [x] Security hardening (input validation, rate limiting)
+- [x] Production deployment (Oracle + Frontend)
+- [x] Monitoring setup (logs, alerts, metrics)
+- [x] Backup procedures (database, wallet)
+- [x] Documentation (deployment guide, runbook)
+- [x] Load testing
+- [x] Mainnet migration (production keys, config)
+- [x] First inscriptions (Acts 1-7)
 
 **Deliverable**: Production-ready system
+
+**Status**: ✅ **Live on Mainnet**
 
 ---
 
@@ -279,18 +372,18 @@ Tasks:
 User Pays: 0.01 ZEC (~$0.40 USD)
     ↓
 ┌─────────────────────────────────┐
-│  Public Inscription (61.8%)       │
-│  Amount: 0.00618 ZEC              │
-│  Method: OP_RETURN               │
+│  Public Inscription (61.8%)     │
+│  Amount: 0.00618 ZEC            │
+│  Method: OP_RETURN              │
 │  Content: PROVERB:CODE:text...  │
 │  Purpose: Permanent public proof │
 └─────────────────────────────────┘
     ↓
 ┌─────────────────────────────────┐
-│  Private Pool (38.2%)              │
-│  Amount: 0.00382 ZEC              │
-│  Method: Shielded transfer       │
-│  Content: [encrypted]            │
+│  Private Pool (38.2%)           │
+│  Amount: 0.00382 ZEC            │
+│  Method: Shielded transfer      │
+│  Content: [encrypted]           │
 │  Purpose: Economic sustainability│
 └─────────────────────────────────┘
 
@@ -301,19 +394,20 @@ Network Fee: ~0.0001 ZEC
 
 **Monthly Fixed**:
 - VPS hosting: $24
-- Nillion TEE: $50
-- Pinata IPFS: $20
-- **Total**: $94/month
+- Pinata IPFS: $20 (or free tier)
+- **Total**: $44/month (or $24/month with free tier)
 
 **Variable Per Proverb**:
-- NEAR Cloud AI: $0.03
+- NEAR Cloud AI: $0.03 (or free tier: 100/month free)
 - Zcash fee: $0.004
 
 **Break-Even Analysis**:
-- At 100 proverbs/month: ~$97 total cost
+- At 100 proverbs/month: ~$47 total cost
 - Revenue: 1.0 ZEC (~$40)
 - Requires ~240 proverbs/month to break even at current ZEC price
 - Sustainable with 500+ proverbs/month
+
+**Note**: Nillion TEE costs (~$50/month) are not currently active.
 
 ---
 
@@ -322,55 +416,45 @@ Network Fee: ~0.0001 ZEC
 ### Threat Model
 
 **What We Protect Against** ✅:
-- Key extraction from TEE
-- AI provider accessing keys
-- IPFS provider accessing keys  
-- Database compromise revealing keys
-- Network eavesdropping
-- Malicious insiders
-- Oracle compromise
+- Key extraction (viewing key ≠ spending key)
+- AI provider accessing keys (AI only sees proverb text)
+- IPFS provider accessing keys (IPFS only stores spellbook)
+- Database compromise revealing keys (keys not in database)
+- Network eavesdropping (shielded transactions)
+- Oracle compromise (viewing key cannot spend)
 
 **What We Don't Protect Against** ⚠️:
 - Zcash protocol vulnerabilities (trust Zcash Foundation)
-- AMD SEV-SNP hardware bugs (trust AMD)
-- Nillion network compromise (trust distributed MPC)
 - User's device security
 - Social engineering
+- Nillion TEE hardware bugs (if/when activated - trust AMD SEV-SNP)
 
 ### Security Guarantees
 
-**Hardware-Enforced**:
+**Cryptographic Separation**:
 ```
-Zcash Private Key (256-bit)
+Zcash Shielded Address
          ↓
-Split via MPC (threshold ECDSA)
+Viewing Key (Swordsman)     Spending Key (User/Oracle)
+         ↓                           ↓
+Can see transactions      Can spend funds
+Cannot spend              Cannot see (if separated)
          ↓
-Distributed across n Nillion nodes
-         ↓
-Requires t nodes to sign (t < n)
-         ↓
-No single node has complete key
-         ↓
-AMD SEV-SNP encrypts memory
-         ↓
-Remote attestation proves environment
-         ↓
-RESULT: Mathematical impossibility to extract key
+RESULT: Viewing ≠ Spending (mathematical guarantee)
 ```
 
 **Architectural Isolation**:
-- NEAR Cloud AI called via HTTPS from within TEE
-- Only proverb text sent (no keys)
-- IPFS fetched via HTTPS from within TEE  
+- NEAR Cloud AI called via HTTPS from Oracle
+- Only proverb text sent (no keys, no transaction data)
+- IPFS fetched via HTTPS from Oracle
 - Only spellbook data received (no keys)
-- PostgreSQL stores only public data
-- Private key never leaves SecretSigner
+- PostgreSQL stores only public data (inscriptions, verification results)
+- Private keys stored in Zallet wallet (not in code)
 
 **Verification**:
-- Nillion provides attestation proof
-- Users can verify TEE authenticity
 - Blockchain provides public audit trail
 - 38.2% remains private forever (shielded pool)
+- 61.8% is public proof (OP_RETURN inscriptions)
 
 ---
 
@@ -378,18 +462,32 @@ RESULT: Mathematical impossibility to extract key
 
 ### External APIs Used
 
-**Nillion** (Critical):
-```typescript
-POST /v1/secretsigner/store
-POST /v1/secretsigner/sign
-GET  /v1/attestation
-```
-
 **NEAR Cloud AI** (Enhancement):
 ```typescript
-POST https://cloud.near.ai/v1/verify
-Body: { model, proverb, spellbook_acts, context }
-Response: { quality_score, matched_act, reasoning, approved }
+POST https://cloud-api.near.ai/v1/chat/completions
+Headers: {
+  "Authorization": "Bearer YOUR_API_KEY",
+  "Content-Type": "application/json"
+}
+Body: {
+  "model": "openai/gpt-oss-120b",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Verify proverb against spellbook..."
+    },
+    {
+      "role": "user",
+      "content": "Proverb: ...\nSpellbook: ..."
+    }
+  ]
+}
+Response: {
+  quality_score: number,
+  matched_act: string,
+  reasoning: string,
+  approved: boolean
+}
 ```
 
 **Pinata** (Infrastructure):
@@ -398,33 +496,56 @@ GET https://gateway.pinata.cloud/ipfs/{CID}
 Response: JSON (spellbook)
 ```
 
-**Zcash** (Foundation):
-```bash
-# Via zecwallet-cli commands
-list      # List transactions
-balance   # Check balances  
-send      # Send transactions
-sync      # Sync blockchain
+**Zcash RPC** (Foundation):
+```typescript
+// Zebra (Full Node)
+POST http://localhost:8233
+Body: {
+  "method": "getblockchaininfo",
+  "params": []
+}
+
+// Zallet (Wallet)
+POST http://localhost:28232
+Body: {
+  "method": "z_listreceivedbyaddress",
+  "params": ["zs1..."]
+}
 ```
 
 ### Internal APIs Exposed
 
-**Mage Agent → Oracle**:
+**Frontend → Oracle**:
 ```typescript
-POST /api/submit
-Body: { proverb, tracking_code }
-Response: { payment_address, amount, memo, tracking_code }
+GET /api/inscriptions
+Response: {
+  inscriptions: [{
+    txid: string,
+    blockHeight: number,
+    actNumber: number,
+    actTitle: string,
+    proverb: string,
+    matchScore: number,
+    timestamp: number
+  }]
+}
 
-GET /api/status/:tracking_code
-Response: { 
-  status: "pending" | "verified" | "inscribed",
-  quality_score?: number,
-  matched_act?: string,
-  reasoning?: string,
-  public_txid?: string,
-  private_txid?: string
+GET /api/inscriptions/:actNumber
+Response: {
+  inscriptions: [...],
+  actTitle: string,
+  statistics: {
+    total: number,
+    averageScore: number
+  }
 }
 ```
+
+**Oracle Internal**:
+- Transaction monitoring loop (every 30 seconds)
+- Spellbook fetching (cached for 1 hour)
+- Proverb verification (on-demand)
+- Inscription creation (on verification approval)
 
 ---
 
@@ -437,18 +558,27 @@ Response: {
 - Database operations
 - Memo parsing
 - Transaction creation
-- Signature handling
+- Golden split calculation
+- Inscription building
 - Error recovery
 
 **Framework**: Jest or Vitest
 
 ```typescript
 describe('parseMemo', () => {
-  it('should extract tracking code and proverb', () => {
-    const memo = 'TRACK:ABC123|Privacy requires separation';
+  it('should extract act and proverb', () => {
+    const memo = 'act-i-venice|Privacy requires separation';
     const result = parseMemo(memo);
-    expect(result.tracking_code).toBe('ABC123');
+    expect(result.actId).toBe('act-i-venice');
     expect(result.proverb).toBe('Privacy requires separation');
+  });
+});
+
+describe('goldenSplit', () => {
+  it('should calculate 61.8/38.2 split', () => {
+    const result = goldenSplit(0.01);
+    expect(result.public).toBeCloseTo(0.00618, 5);
+    expect(result.private).toBeCloseTo(0.00382, 5);
   });
 });
 ```
@@ -475,7 +605,6 @@ describe('End-to-end submission', () => {
     // 3. Create inscriptions
     const inscriptions = await inscribeProverb(submission);
     expect(inscriptions.public_txid).toBeTruthy();
-    expect(inscriptions.private_txid).toBeTruthy();
   });
 });
 ```
@@ -483,7 +612,7 @@ describe('End-to-end submission', () => {
 ### Manual Testing Checklist
 
 **Testnet**:
-- [ ] Submit proverb via Mage Agent
+- [ ] Submit proverb via Swordsman Panel
 - [ ] Verify payment info displays correctly
 - [ ] Send testnet ZEC with memo
 - [ ] Verify Oracle detects transaction
@@ -493,14 +622,17 @@ describe('End-to-end submission', () => {
 - [ ] Verify status updates correctly
 - [ ] Verify quality score displays
 - [ ] Verify blockchain links work
+- [ ] Verify /proverbs page loads
+- [ ] Verify "Learn" button copies content
 
 **Production**:
-- [ ] All testnet checks pass
-- [ ] Mainnet wallet funded
-- [ ] First real proverb inscribed
-- [ ] Monitoring confirms success
-- [ ] No errors in logs
-- [ ] User receives confirmation
+- [x] All testnet checks pass
+- [x] Mainnet wallet funded
+- [x] First real proverb inscribed (Act 1)
+- [x] Acts 1-7 inscribed on mainnet
+- [x] Monitoring confirms success
+- [x] No errors in logs
+- [x] User receives confirmation
 
 ---
 
@@ -511,8 +643,8 @@ describe('End-to-end submission', () => {
 **Health**:
 - Zcash sync status (current vs latest block)
 - Database connection status
-- Nillion TEE attestation validity
 - API response times (NEAR Cloud AI, Pinata)
+- Oracle processing status
 
 **Performance**:
 - Proverbs processed per hour
@@ -548,7 +680,6 @@ Retention:
 - Oracle stopped processing
 - Zcash wallet balance < 0.1 ZEC
 - Database connection failed
-- Nillion TEE attestation invalid
 - >50% transaction failures
 
 **Warning Alerts** (response within 24h):
@@ -565,28 +696,19 @@ Retention:
 
 **Zcash sync stuck**:
 ```bash
-# Check sync status
-zecwallet-cli --data-dir ~/proverb-protocol/zcash-wallet --command "sync"
+# Check Zebra sync status
+curl -X POST http://localhost:8233 \
+  -H "Content-Type: application/json" \
+  -d '{"method":"getblockchaininfo","params":[]}'
 
-# Try different server
-zecwallet-cli --server https://mainnet.lightwalletd.com:9067
+# Check Zallet sync status
+curl -X POST http://localhost:28232 \
+  -H "Content-Type: application/json" \
+  -d '{"method":"z_getbalance","params":[]}'
 
-# Last resort: resync from scratch
-rm -rf ~/proverb-protocol/zcash-wallet
-# Re-initialize
-```
-
-**Nillion signing fails**:
-```typescript
-// Check attestation
-const attestation = await client.getAttestation();
-const valid = await client.verifyAttestation(attestation);
-console.log('Attestation valid:', valid);
-
-// Reinitialize if needed
-if (!valid) {
-  await nillionSigner.initializeKey(privateKey);
-}
+# Restart if needed
+# Windows: Restart-ZcashNode.ps1
+# Linux: systemctl restart zebrad
 ```
 
 **AI verification timeout**:
@@ -603,13 +725,28 @@ try {
 **Database connection refused**:
 ```bash
 # Check PostgreSQL status
-sudo systemctl status postgresql
+# Windows: Get-Service postgresql*
+# Linux: sudo systemctl status postgresql
 
 # Restart if needed
-sudo systemctl restart postgresql
+# Windows: Restart-Service postgresql*
+# Linux: sudo systemctl restart postgresql
 
 # Check firewall
-sudo ufw allow 5432/tcp
+# Windows: Check Windows Firewall
+# Linux: sudo ufw allow 5432/tcp
+```
+
+**Oracle not detecting transactions**:
+```typescript
+// Check monitoring loop
+console.log('Last check:', lastCheckTime);
+console.log('Current block:', currentBlock);
+console.log('Processed transactions:', processedTxids.size);
+
+// Verify Zallet is receiving transactions
+const received = await zalletClient.z_listreceivedbyaddress(address);
+console.log('Received transactions:', received);
 ```
 
 ---
@@ -622,13 +759,15 @@ sudo ufw allow 5432/tcp
 # Local machine
 - PostgreSQL (Docker or native)
 - Oracle Swordsman (npm run dev)
-- Mage Agent (npm run dev)
-- Zcash light client (testnet)
+- Frontend (npm run dev)
+- Zebra full node (localhost:8233)
+- Zallet wallet (localhost:28232)
 
 # Access
 - Frontend: http://localhost:3000
-- API: http://localhost:3001
+- Oracle API: http://localhost:3001
 - Database: localhost:5432
+- Wallet UI: http://localhost:3001/wallet
 ```
 
 ### Production Environment
@@ -637,13 +776,14 @@ sudo ufw allow 5432/tcp
 # VPS (Ubuntu 20.04+)
 - Nginx (reverse proxy + SSL)
 - PostgreSQL (managed or local)
-- Oracle Swordsman (systemd service → deployed to Nillion nilCC)
-- Mage Agent (Next.js production build)
-- Zcash light client (mainnet)
+- Oracle Swordsman (systemd service)
+- Frontend (Next.js production build on Vercel/Cloudflare)
+- Zebra full node (mainnet)
+- Zallet wallet (mainnet)
 
 # Access
 - Frontend: https://yourdomain.com
-- API: https://api.yourdomain.com
+- Oracle API: https://api.yourdomain.com
 - Database: Internal only
 ```
 
@@ -675,13 +815,8 @@ sudo ufw allow 5432/tcp
 
 3. **Deploy Frontend**:
    ```bash
-   cd mage-agent
-   npm run build
-   
-   # Configure Nginx
-   sudo cp nginx.conf /etc/nginx/sites-available/proverb-protocol
-   sudo ln -s /etc/nginx/sites-available/proverb-protocol /etc/nginx/sites-enabled/
-   sudo systemctl reload nginx
+   # Deploy to Vercel/Cloudflare Pages
+   # See SPELLBOOK_DEPLOYMENT_GUIDE.md
    ```
 
 4. **Configure SSL**:
@@ -692,9 +827,39 @@ sudo ufw allow 5432/tcp
 
 ---
 
+## MCP/A2A Trust Flows
+
+### Human-in-the-Loop Mechanism
+
+The system is designed for **MCP-compatible agent actions** enabling:
+
+1. **Read Spellbook Content**: Agents access story acts and tales
+2. **Copy to Context**: "Learn" button copies to agent's model context
+3. **Form Proverbs**: Agents craft unique proverbs with their own models
+4. **Submit Signals**: Agents compose and submit shielded transactions
+5. **Verify Understanding**: Oracle verifies against canonical spellbook
+6. **Build Trust**: Each verified proverb creates a VRC
+
+### VRC Formation
+
+Each verified proverb creates a **Verifiable Relationship Credential**:
+- Agent understood the tale (verified proverb)
+- Agent committed resources (0.01 ZEC signal)
+- Agent's understanding is on-chain (immutable inscription)
+- Relationship is verifiable (blockchain proof)
+
+### Agent-to-Agent Information Flows
+
+- **MCP Actions**: Website designed for Model Context Protocol agent actions
+- **A2A Trust**: Agent-to-agent information flows build trust
+- **Human Initiation**: Human-in-the-loop mechanism opens door to agent trust
+- **Trust Game**: This is a trust game - each verified proverb builds trust
+
+---
+
 ## Contributing
 
-We welcome contributions! See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
+We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
 **Areas Needing Help**:
 - Testing (unit + integration)
@@ -703,6 +868,7 @@ We welcome contributions! See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelin
 - Security auditing
 - UI/UX improvements
 - Additional spellbook acts
+- MCP/A2A protocol enhancements
 
 **How to Contribute**:
 1. Fork the repository
@@ -719,11 +885,11 @@ We welcome contributions! See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelin
 
 **Documentation**:
 - This guide (you are here)
-- [Architecture](../docs/02-ARCHITECTURE.md)
-- [API Reference](../docs/04-API_REFERENCE.md)
+- [How It Works](./HOW_IT_WORKS.md) - Technical deep dive
+- [Project State](./PROJECT_STATE_AND_REVIEW.md) - Current status
+- [Spellbook Deployment](./SPELLBOOK_DEPLOYMENT_GUIDE.md) - IPFS setup
 
 **External**:
-- Nillion: https://discord.gg/nillion
 - Zcash: https://forum.zcashcommunity.com
 - NEAR Cloud AI: https://cloud.near.ai
 - Pinata: https://www.pinata.cloud
@@ -746,7 +912,7 @@ We welcome contributions! See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelin
 3. Open discussion on GitHub
 
 **For Security Issues**:
-- Email: security@proverbprotocol.com
+- Email: security@agentprivacy.ai
 - Do NOT open public issue
 - Provide details privately
 
@@ -754,23 +920,28 @@ We welcome contributions! See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelin
 
 ## Roadmap
 
-### Current: v4.0 (Building)
-- Nillion TEE integration
-- IPFS/Pinata knowledge storage
-- NEAR Cloud AI verification
-- 61.8/38.2 golden ratio economic model
+### Current: v1.0 (Production) ✅
+- ✅ Dual-agent architecture
+- ✅ IPFS/Pinata knowledge storage
+- ✅ NEAR Cloud AI verification
+- ✅ 61.8/38.2 golden ratio economic model
+- ✅ Acts 1-7 live on mainnet
+- ✅ Proverbs gallery page
+- ✅ MCP/A2A compatibility
 
-### Next: v4.1 (Q1 2025)
+### Next: v1.1 (Q1 2025)
+- Complete Acts 8-12
 - Production hardening
 - Performance optimization
 - Additional spellbook acts
 - Community features
 
-### Future: v5.0 (Q2 2025+)
+### Future: v2.0 (Q2 2025+)
+- Nillion TEE activation (if needed)
 - Multi-chain support (Ethereum, Solana)
-- Agent-to-agent protocol
 - Advanced reputation systems
 - DAO governance
+- Trust tier tracking (Blade → Light → Heavy → Dragon)
 
 ---
 
@@ -778,9 +949,9 @@ We welcome contributions! See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelin
 
 **Technology Stack**:
 - ✅ Zcash (Zebra + Zallet) - Shielded transactions
-- ✅ Nillion (TEE security) - Key isolation
 - ✅ NEAR Cloud AI (AI verification) - Proverb matching
 - ✅ Pinata (IPFS storage) - Spellbook hosting
+- ⏸️ Nillion (TEE security) - Key isolation (on hold)
 
 This demonstrates how privacy technologies compose into complete solutions.
 
@@ -791,56 +962,65 @@ This demonstrates how privacy technologies compose into complete solutions.
 **Q: Why Zcash instead of Bitcoin/Ethereum?**  
 A: Zcash provides shielded pools (privacy), while Bitcoin/Ethereum are fully transparent. The 61.8/38.2 split enables both transparency and privacy.
 
-**Q: Why light client instead of full node?**  
-A: 4-6 hour sync vs 48+ hours. Production needs fast deployment and low resource usage.
+**Q: Why Zebra + Zallet instead of just one?**  
+A: Zebra provides blockchain data (viewing), Zallet provides wallet operations (signing). Separation aligns with dual-agent architecture.
 
-**Q: Why Nillion instead of other TEEs?**  
-A: Distributed MPC (no single point of failure) + part of hackathon ecosystem + SecretSigner is perfect for our use case.
+**Q: Why NEAR Cloud AI instead of OpenAI directly?**  
+A: NEAR Cloud AI provides privacy-preserving AI access with better rate limits and pricing for our use case.
+
+**Q: Why Nillion is on hold?**  
+A: Current implementation works with direct Zcash RPC. Nillion TEE would provide additional security but is not required for core functionality. Can be activated if needed.
 
 **Q: Can I use this for my own project?**  
 A: Yes! MIT license. Fork it, adapt it, build on it.
 
 **Q: How do I verify the Oracle is secure?**  
-A: Check the Nillion attestation proof. It cryptographically proves execution in genuine TEE.
+A: Check the blockchain inscriptions. All verified proverbs are publicly visible. The 38.2% private split ensures economic sustainability.
 
 **Q: What if NEAR Cloud AI goes down?**  
 A: Oracle falls back to basic pattern matching. AI is an enhancement, not a requirement.
 
-**Q: What if Nillion goes down?**  
-A: This is critical - signing stops. We need distributed MPC to prevent single point of failure.
-
 **Q: How do I update the spellbook?**  
-A: Upload new version to IPFS (gets new CID), update Oracle config, restart. Old versions remain accessible.
+A: Upload new version to IPFS (gets new CID), update Oracle config (`SPELLBOOK_CID`), restart. Old versions remain accessible.
+
+**Q: Can users use their own AI models?**  
+A: Yes! Users can use their own models with their own context and memory. The Mage agent is optional assistance. The "Learn" button copies stories/proverbs/inscriptions to the user's model context.
+
+**Q: What is MCP/A2A?**  
+A: Model Context Protocol (MCP) enables agent actions. Agent-to-Agent (A2A) information flows build trust. This is a human-in-the-loop mechanism for opening the door to agent trust.
 
 ---
 
 ## License
 
-MIT License - See [LICENSE](../LICENSE) file for details.
+MIT License - See [LICENSE](./LICENSE) file for details.
 
 ---
 
 ## Acknowledgments
 
 **Built on patterns from**:
-- **NEAR Cloud AI** - AI verification integration  
+- **0xagentprivacy** - Dual-agent architecture and privacy-preserving systems
+- **First Person Project** - Credential types (VRCs and personhood credentials)
+- **Zcash Foundation** - Shielded transactions and privacy technology
 - **NEAR Cloud AI** - AI verification integration
-- **BGIN** - Blockchain governance principles
+- **Pinata** - IPFS infrastructure
 
 **Thanks to**:
-- Nillion team for TEE platform
 - Zcash community for protocol + tools
 - NEAR Cloud AI for AI API
 - Pinata for IPFS infrastructure
+- All contributors and testers
 
 ---
 
 ## Contact
 
-**Project Lead**: AgentPrivacy.ai Team  
-**Email**: mage@agentprivacy.ai  
-**GitHub**: github.com/mitchuski/agentprivacy-zypher  
-**Discord**: discord.gg/0xagentprivacy
+**Project**: Proof of Proverb Revelation Protocol  
+**Parent Project**: 0xagentprivacy  
+**Event**: Zypherpunk Hack 2025  
+**Status**: ✅ Production (Acts 1-7 live on mainnet)  
+**GitHub**: github.com/mitchuski/agentprivacy-zypher
 
 ---
 
