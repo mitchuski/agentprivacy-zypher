@@ -1,62 +1,44 @@
 # Zcash Keys Generated - Summary
 
-## ⚠️ IMPORTANT: Save These Keys Securely!
+## ⚠️ SECURITY NOTICE: Keys Removed
 
-### Mnemonic (24 words):
-```
-fitness earn flower dignity chair cloth ring flame drive nasty release wait section grant satisfy moment warrior liar immune crumble luggage width kick actual
-```
+**This file previously contained private keys, mnemonics, and spending keys. These have been removed for security.**
 
-### Seed Fingerprint:
-```
-zip32seedfp01fde46e
-```
+**If this file was ever committed to git, those keys are compromised and MUST be rotated immediately.**
 
-### Keys:
+## Key Storage
 
-**Spending Key:**
-```
-09d31b8a870f219de595d9b68fd7b5bdf9030f3ecc25f69570e350b67bf363e2
-```
+Keys should be stored:
+- ✅ In environment variables (`.env` file - NOT in git)
+- ✅ In secure secret management services (AWS Secrets Manager, HashiCorp Vault, etc.)
+- ✅ Encrypted and stored separately from code
+- ❌ NEVER in git repositories
+- ❌ NEVER in documentation files
+- ❌ NEVER in code files
 
-**Viewing Key:**
-```
-a9aa0e164ba91d3b3b88325c66f9e296d01cd953b58086d395bf0cc564871b68
-```
+## What Was Here
 
-**Transparent Private Key:**
-```
-2d9d7b9d6955eec912da844fd5fa35181499e5a6751aa50ff22f36b690984478
-```
-
-**Z-Address (Sapling Shielded):**
-```
-zs1pdxcp0h2lpz9yqjts9rtvz3wncu2mev0
-```
-
-**T-Address (Transparent):**
-```
-CXAGFsyjoHDpKoXdhq9YbTkPfdQDjNAoXJ
-```
-
-**Note:** This is a simplified t-address. For production, verify with zcash-cli or use proper secp256k1 library for accurate address generation.
+This file previously documented:
+- Mnemonic (24 words) - **ROTATE IF EXPOSED**
+- Spending Key - **ROTATE IF EXPOSED**
+- Viewing Key - **ROTATE IF EXPOSED**
+- Transparent Private Key - **ROTATE IF EXPOSED**
+- Generated addresses
 
 ## Next Steps
 
-1. ✅ **Save the mnemonic** - Write it down on paper, store securely
-2. ✅ **Save the keys** - Encrypt and store in secure location
-3. ✅ **Backup** - Create multiple encrypted backups
-4. ⏳ **Use for Oracle Swordsman** - Store spending key in Nillion workload
-5. ⏳ **Configure addresses** - Derive Zcash addresses from these keys
+1. ⚠️ **If keys were exposed**: Generate new keys immediately
+2. ✅ **Use environment variables**: Store keys in `.env` (gitignored)
+3. ✅ **Use secret management**: For production, use proper secret management
+4. ✅ **Never commit keys**: Add key files to `.gitignore`
 
 ## Security Notes
 
 - **Never share these keys** - They control your Zcash funds
 - **Store mnemonic separately** - Can recover all keys from mnemonic
-- **Use spending key only in TEE** - Store in Nillion workload
-- **Viewing key is safer** - Can share for transaction monitoring
+- **Use spending key only in TEE** - Store in Nillion workload or secure environment
+- **Viewing key is safer** - Can share for transaction monitoring (but still be careful)
 
 ## File Status
 
-The temporary key file has been deleted as requested. These keys are now only in this summary document and your secure storage.
-
+**Keys have been removed from this file. If this file was in git, assume keys are compromised.**

@@ -12,9 +12,13 @@ CXAGFsyjoHDpKoXdhq9YbTkPfdQDjNAoXJ
 ## Address Details
 
 - **Type:** Transparent address
-- **Private Key:** `2d9d7b9d6955eec912da844fd5fa35181499e5a6751aa50ff22f36b690984478`
+- **Private Key:** ⚠️ **REMOVED - Store in environment variables**
 - **Public Key:** `020a09b94526415d41a790286e3ce894a6c977e0941f403fa634717bba0cde2ec8`
 - **Network:** Mainnet
+
+## ⚠️ Security Notice
+
+**Private keys have been removed from this file. If this file was ever committed to git, those keys are compromised and MUST be rotated.**
 
 ## ⚠️ Important Note
 
@@ -54,7 +58,7 @@ This t-address can be used to:
 
 ## Files
 
-- `zcash-t-address-info.json` - Complete address information
+- `zcash-t-address-info.json` - Complete address information (keys removed)
 - `ZCASH_T_ADDRESS_GENERATED.md` - This file
 
 ## Next Steps
@@ -63,4 +67,3 @@ This t-address can be used to:
 2. Add to Oracle Swordsman configuration
 3. Use for receiving/sending transparent transactions
 4. Configure for the golden ratio split (61.8% public, 38.2% private)
-

@@ -6,11 +6,9 @@
 
 ### ✅ 1. Zcash Key Generation
 - **Generated complete key set:**
-  - Mnemonic (24 words): `fitness earn flower dignity chair cloth ring flame drive nasty release wait section grant satisfy moment warrior liar immune crumble luggage width kick actual`
-  - Seed Fingerprint: `zip32seedfp01fde46e`
-  - Spending Key: `09d31b8a870f219de595d9b68fd7b5bdf9030f3ecc25f69570e350b67bf363e2`
-  - Viewing Key: `a9aa0e164ba91d3b3b88325c66f9e296d01cd953b58086d395bf0cc564871b68`
-  - Transparent Private Key: `2d9d7b9d6955eec912da844fd5fa35181499e5a6751aa50ff22f36b690984478`
+  - ⚠️ **KEYS REMOVED FOR SECURITY** - Keys were previously documented here but have been removed
+  - Keys should be stored in environment variables or secret management services
+  - If keys were ever committed to git, they MUST be rotated immediately
 
 - **Files Created:**
   - `KEYS_GENERATED_SUMMARY.md` - Complete key documentation

@@ -48,7 +48,7 @@ cd ..
 ```bash
 # Run container
 docker run -p 8080:8080 \
-  -e PRIVATE_KEY=09d31b8a870f219de595d9b68fd7b5bdf9030f3ecc25f69570e350b67bf363e2 \
+  -e PRIVATE_KEY=your_private_key_from_env \
   -e NETWORK=mainnet \
   secret-signer:latest
 
