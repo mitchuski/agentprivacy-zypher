@@ -8,7 +8,7 @@
 
 ---
 
-> *"Privacy is my blade, knowledge is my spellbook."* ⚔️📖🗝️
+> *"Privacy is my blade, knowledge is my spellbook."* (⚔️⊥🧙‍♂️)🙂
 
 ---
 
