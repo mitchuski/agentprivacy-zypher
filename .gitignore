@@ -41,3 +41,60 @@ next-env.d.ts
 /src/app/zero/
 !/src/app/zero/page.tsx
 
+# sensitive keys and secrets
+oracle-swordsman/PRODUCTION_ZCASH_KEYS.json
+oracle-swordsman/secretsigner-workload-config-with-keys.json
+oracle-swordsman/zcash-addresses-controlled.json
+oracle-swordsman/zallet-addresses.txt
+oracle-swordsman/act-p2sh-addresses.txt
+**/*-keys.json
+**/*-keys.txt
+**/*-addresses.txt
+**/*-addresses.json
+**/secretsigner-workload-config*.json
+**/PRODUCTION_*.json
+**/PRODUCTION_*.txt
+
+# environment files
+.env
+.env.local
+.env.production
+.env.development
+.env*.local
+# Allow .env.example files (they contain placeholders, not real secrets)
+!.env.example
+!**/.env.example
+
+# logs
+*.log
+logs/
+oracle-swordsman/logs/
+
+# temp files
+temp/
+oracle-swordsman/temp/
+*.tmp
+
+# build artifacts
+oracle-swordsman/dist/
+oracle-swordsman/build/
+
+# database
+*.db
+*.sqlite
+*.sqlite3
+
+
+# legacy development scripts (contain hardcoded keys)
+oracle-swordsman/legacy/
+oracle-swordsman/verify-act.js
+
+# Inscription scripts with private keys
+oracle-swordsman/inscribe-act*.js
+oracle-swordsman/spend-act*.js
+# Files with hardcoded secrets - DO NOT TRACK
+oracle-swordsman/scripts/archive/
+oracle-swordsman/scripts/deployment/setup-with-keys.ts
+oracle-swordsman/scripts/key-generation/generate-addresses-proper.ts
+oracle-swordsman/scripts/key-generation/SPELLBOOK_ADDRESS_GUIDE.md
+oracle-swordsman/tests/integration/test-secretsigner.ts

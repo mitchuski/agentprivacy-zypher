@@ -82,5 +82,3 @@ export function getActByTaleId(taleId: string, spellbook: Spellbook): SpellbookA
   return spellbook.acts.find(act => act.id === mapping.actId) || null;
 }
 
-import { Spellbook, SpellbookAct } from './ipfs-client';
-

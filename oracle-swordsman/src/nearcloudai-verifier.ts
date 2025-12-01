@@ -78,7 +78,8 @@ export class NearVerifier {
         );
 
         // Extract response from OpenAI format
-        const completion = response.data.choices?.[0]?.message?.content || '';
+        const message = response.data.choices?.[0]?.message;
+        const completion = message?.content || message?.reasoning_content || '';
         
         // Parse JSON response from the model
         let result: VerificationResult;

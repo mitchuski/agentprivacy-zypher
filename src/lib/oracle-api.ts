@@ -123,3 +123,30 @@ export async function getStats(): Promise<any> {
   }
 }
 
+/**
+ * Get on-chain inscriptions from the inscription indexer
+ */
+export async function getInscriptions(): Promise<{
+  inscriptions: any[];
+  total: number;
+  countByAct: Record<number, number>;
+} | null> {
+  try {
+    const response = await fetch(`${ORACLE_API_URL}/api/inscriptions`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    return await response.json();
+  } catch (error: any) {
+    // Silently handle network errors
+    return null;
+  }
+}
+

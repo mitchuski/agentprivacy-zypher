@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oracle Swordsman - Wallet Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #1a1f3a;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .address-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .address-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+        }
+
+        .address-card:hover {
+            border-color: #4a5a8a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .address-card.transparent {
+            border-left: 4px solid #28a745;
+        }
+
+        .address-card.shielded {
+            border-left: 4px solid #6f42c1;
+        }
+
+        .address-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .address-value {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #333;
+            word-break: break-all;
+            margin-bottom: 10px;
+        }
+
+        .balance {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #28a745;
+            margin-top: 10px;
+        }
+
+        .balance.zero {
+            color: #999;
+        }
+
+        .button {
+            background: #2d3561;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+
+        .button:hover {
+            background: #3a4275;
+        }
+
+        .button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .button.secondary {
+            background: #6c757d;
+        }
+
+        .button.secondary:hover {
+            background: #5a6268;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #4a5a8a;
+        }
+
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .badge.transparent {
+            background: #28a745;
+            color: white;
+        }
+
+        .badge.shielded {
+            background: #6f42c1;
+            color: white;
+        }
+
+        .refresh-btn {
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔐 Oracle Swordsman Wallet</h1>
+            <p>Manage your Zcash addresses and transactions</p>
+        </div>
+
+        <div class="card">
+            <h2>
+                Your Addresses
+                <button class="button secondary refresh-btn" onclick="loadAddresses()">🔄 Refresh</button>
+            </h2>
+            <div id="addresses-container" class="loading">Loading addresses...</div>
+        </div>
+
+        <div class="card">
+            <h2>
+                Successful Proverbs
+                <button class="button secondary refresh-btn" onclick="loadProverbs()">🔄 Refresh</button>
+            </h2>
+            <div id="proverbs-container" class="loading">Loading proverbs...</div>
+        </div>
+
+        <div class="card">
+            <h2>Send Transaction</h2>
+            <div id="send-status"></div>
+            <form id="send-form" onsubmit="sendTransaction(event)">
+                <div class="form-group">
+                    <label>From Address</label>
+                    <select id="from-address" required>
+                        <option value="">Select address...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>To Address</label>
+                    <input type="text" id="to-address" placeholder="Enter recipient address" required>
+                </div>
+                <div class="form-group">
+                    <label>Amount (ZEC)</label>
+                    <input type="number" id="amount" step="0.00000001" min="0.00000001" placeholder="0.001" required>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="is-shielded"> Shielded Transaction
+                    </label>
+                </div>
+                <button type="submit" class="button">Send Transaction</button>
+            </form>
+        </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+
+        // Load addresses and proverbs on page load
+        window.onload = () => {
+            loadAddresses();
+            loadProverbs();
+        };
+
+        async function loadAddresses() {
+            const container = document.getElementById('addresses-container');
+            container.innerHTML = '<div class="loading">Loading addresses...</div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/wallet/addresses`);
+                if (!response.ok) {
+                    throw new Error('Failed to load addresses');
+                }
+
+                const data = await response.json();
+                
+                // Load balances
+                const balancesResponse = await fetch(`${API_BASE}/api/wallet/balances`);
+                const balancesData = balancesResponse.ok ? await balancesResponse.json() : { balances: [] };
+                const balancesMap = new Map(balancesData.balances.map(b => [b.address, b.balance]));
+
+                // Display addresses with act mapping
+                const addressesHtml = `
+                    <div class="address-grid">
+                        ${data.addresses.map(addr => {
+                            const balance = balancesMap.get(addr.address) || 0;
+                            const actInfo = addr.act_id ? 
+                                `<div style="font-size: 0.85em; color: #4a5a8a; margin-top: 5px; font-weight: bold;">
+                                    ${addr.act_title || `Act ${addr.act_number || ''}`}
+                                    ${addr.spellbook ? `(${addr.spellbook === 'story' ? 'Story' : 'Zero Knowledge'} Spellbook)` : ''}
+                                </div>
+                                <div style="font-size: 0.75em; color: #666; margin-top: 2px;">
+                                    ${addr.purpose === 'receive_donations' ? '📥 Receives donations' : '📊 Tracks inscriptions'}
+                                </div>` : '';
+                            return `
+                                <div class="address-card ${addr.type}">
+                                    <div class="address-label">
+                                        ${addr.label || (addr.type === 'transparent' ? 'T-Address' : 'Z-Address')}
+                                        <span class="badge ${addr.type}">${addr.type}</span>
+                                    </div>
+                                    ${actInfo}
+                                    <div class="address-value">${addr.address}</div>
+                                    <div class="balance ${balance === 0 ? 'zero' : ''}">
+                                        ${balance.toFixed(8)} ZEC
+                                    </div>
+                                    ${addr.path ? `<div style="font-size: 0.8em; color: #666; margin-top: 5px;">Path: ${addr.path}</div>` : ''}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+
+                container.innerHTML = addressesHtml;
+
+                // Populate from address dropdown
+                const fromSelect = document.getElementById('from-address');
+                fromSelect.innerHTML = '<option value="">Select address...</option>';
+                data.addresses.forEach(addr => {
+                    const option = document.createElement('option');
+                    option.value = addr.address;
+                    option.textContent = `${addr.address} (${addr.type})`;
+                    fromSelect.appendChild(option);
+                });
+
+            } catch (error) {
+                container.innerHTML = `<div class="status error">Error: ${error.message}</div>`;
+            }
+        }
+
+        async function sendTransaction(event) {
+            event.preventDefault();
+            
+            const statusDiv = document.getElementById('send-status');
+            statusDiv.innerHTML = '<div class="status info">Sending transaction...</div>';
+
+            const fromAddress = document.getElementById('from-address').value;
+            const toAddress = document.getElementById('to-address').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const isShielded = document.getElementById('is-shielded').checked;
+
+            try {
+                const response = await fetch(`${API_BASE}/api/wallet/send`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        fromAddress,
+                        toAddress,
+                        amount,
+                        isShielded,
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    statusDiv.innerHTML = `
+                        <div class="status success">
+                            ✅ Transaction sent successfully!<br>
+                            TXID: ${data.txid}
+                        </div>
+                    `;
+                    // Refresh addresses to update balances
+                    setTimeout(loadAddresses, 2000);
+                } else {
+                    throw new Error(data.error || 'Transaction failed');
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="status error">
+                        ❌ Error: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function loadProverbs() {
+            const container = document.getElementById('proverbs-container');
+            container.innerHTML = '<div class="loading">Loading proverbs...</div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/wallet/proverbs?limit=20`);
+                if (!response.ok) {
+                    throw new Error('Failed to load proverbs');
+                }
+
+                const data = await response.json();
+                
+                if (data.proverbs.length === 0) {
+                    container.innerHTML = '<div class="status info">No verified proverbs yet. Submit a proverb to see it here!</div>';
+                    return;
+                }
+
+                const proverbsHtml = `
+                    <div style="display: grid; gap: 15px;">
+                        ${data.proverbs.map(proverb => {
+                            const tAddressInfo = proverb.tAddress ? 
+                                `<div style="margin-top: 10px; padding: 10px; background: #f0f4ff; border-radius: 5px; border-left: 3px solid #4a5a8a;">
+                                    <div style="font-size: 0.9em; font-weight: bold; color: #4a5a8a; margin-bottom: 5px;">📊 T-Address Tracking</div>
+                                    <div style="font-size: 0.85em; color: #333;">
+                                        <strong>Address:</strong> <span style="font-family: monospace; font-size: 0.8em;">${proverb.tAddress}</span><br>
+                                        <strong>Balance:</strong> ${proverb.tAddressBalance ? proverb.tAddressBalance.toFixed(8) : '0.00000000'} ZEC
+                                        ${proverb.actTitle ? `<br><strong>Act:</strong> ${proverb.actTitle}` : ''}
+                                        ${proverb.tAddressLabel ? `<br><strong>Label:</strong> ${proverb.tAddressLabel}` : ''}
+                                    </div>
+                                </div>` : '';
+                            return `
+                            <div class="address-card" style="border-left: 4px solid #28a745;">
+                                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+                                    <div>
+                                        <div class="address-label">Tracking Code</div>
+                                        <div class="address-value" style="font-size: 0.9em; font-weight: bold;">${proverb.trackingCode}</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div class="address-label">Status</div>
+                                        <span class="badge transparent">${proverb.status}</span>
+                                    </div>
+                                </div>
+                                <div style="margin: 10px 0;">
+                                    <div class="address-label">Proverb</div>
+                                    <div style="font-style: italic; color: #333; padding: 10px; background: #f8f9fa; border-radius: 5px; margin-top: 5px;">
+                                        "${proverb.proverbText}"
+                                    </div>
+                                </div>
+                                ${proverb.memo ? `
+                                    <div style="margin: 10px 0;">
+                                        <div class="address-label">Transaction Memo</div>
+                                        <div style="font-family: monospace; font-size: 0.8em; color: #666; padding: 8px; background: #f8f9fa; border-radius: 5px; margin-top: 5px; word-break: break-all;">
+                                            ${proverb.memo}
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; font-size: 0.85em; color: #666;">
+                                    <div>
+                                        <strong>Tale ID:</strong> ${proverb.taleId || proverb.actId || 'N/A'}
+                                    </div>
+                                    <div>
+                                        <strong>Quality Score:</strong> ${proverb.qualityScore ? proverb.qualityScore.toFixed(2) : 'N/A'}
+                                    </div>
+                                    <div>
+                                        <strong>Matched Act:</strong> ${proverb.matchedAct || 'N/A'}
+                                    </div>
+                                    <div>
+                                        <strong>Amount:</strong> ${proverb.amount ? proverb.amount.toFixed(8) : '0.00000000'} ZEC
+                                    </div>
+                                    <div>
+                                        <strong>TXID:</strong> <span style="font-family: monospace; font-size: 0.8em;">${proverb.txid.substring(0, 16)}...</span>
+                                    </div>
+                                </div>
+                                ${tAddressInfo}
+                                ${proverb.reasoning ? `
+                                    <div style="margin-top: 10px; padding: 10px; background: #e7f3ff; border-radius: 5px; font-size: 0.85em;">
+                                        <strong>AI Reasoning:</strong> ${proverb.reasoning}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                        }).join('')}
+                    </div>
+                `;
+
+                container.innerHTML = proverbsHtml;
+            } catch (error) {
+                container.innerHTML = `<div class="status error">Error: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>
+

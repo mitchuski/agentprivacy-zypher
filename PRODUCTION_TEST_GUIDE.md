@@ -65,7 +65,7 @@ SANCTUARY_T_ADDRESS=t1...
 PROTOCOL_FEE_Z_ADDRESS=zs1...
 
 # NEAR Cloud AI - Oracle Swordsman (for verification)
-NEAR_SWORDSMAN_API_KEY=sk-876c0f435b14449bac47f13583f5fd68
+NEAR_SWORDSMAN_API_KEY=your_near_swordsman_api_key_here
 NEAR_API_URL=https://cloud-api.near.ai/v1
 NEAR_MODEL=openai/gpt-oss-120b
 

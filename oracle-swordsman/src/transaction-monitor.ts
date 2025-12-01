@@ -403,13 +403,5 @@ export interface TransactionMonitorEvents {
   error: (error: Error) => void;
 }
 
-declare interface TransactionMonitor {
-  on<U extends keyof TransactionMonitorEvents>(
-    event: U,
-    listener: TransactionMonitorEvents[U]
-  ): this;
-  emit<U extends keyof TransactionMonitorEvents>(
-    event: U,
-    ...args: Parameters<TransactionMonitorEvents[U]>
-  ): boolean;
-}
+// Event emitter interface is already handled by extending EventEmitter
+// No need for separate declare interface - it conflicts with the class
