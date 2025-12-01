@@ -235,10 +235,11 @@ The implementation proves the architecture works in production while the living 
 
 ## Quick Links
 
-### Living Documentation
+### Publication
 - **Sync Portal**: https://sync.soulbis.com
 - **Intel Hub**: https://intel.agentkyra.ai
 - **Website**: https://agentprivacy.ai
+- docs (coming soon)
 
 ### Implementation
 - **GitHub**: https://github.com/mitchuski/agentprivacy-zypher
