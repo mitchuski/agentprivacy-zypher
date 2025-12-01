@@ -10,8 +10,8 @@
 ### Critical Checks - All Passed
 
 1. **Sensitive Files**: ✅ Not tracked
-   - `PRODUCTION_ZCASH_KEYS.json` - Ignored
-   - `secretsigner-workload-config-with-keys.json` - Ignored
+   - `***_KEYS.json` - Ignored
+   - `secretsigner` - Ignored
    - All address files - Ignored
 
 2. **Environment Files**: ✅ Not tracked
