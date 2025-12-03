@@ -327,7 +327,7 @@ This implementation aligns with the 0xagentprivacy living documentation:
 
 ### Spellbook
 
-- **Version**: 4.0.0-canonical
+- **Version**: 4.2.0-canonical
 - **IPFS CID**: `bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`
 - **Content**: 12 Acts + 30 Tales
 
