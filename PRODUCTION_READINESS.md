@@ -142,7 +142,7 @@ Based on your implementation files, here's where you are:
   - [ ] Shielded transaction created (38.2%)
   - [ ] Both transactions broadcast
 
-- [ ] **Step 4**: Verify on-chain
+- [ ] **Step 4**: Verify onchain
   - [ ] Transparent transaction confirmed
   - [ ] OP_RETURN inscription visible
   - [ ] Shielded transaction confirmed

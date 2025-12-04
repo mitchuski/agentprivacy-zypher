@@ -421,7 +421,7 @@
     • First Person initiates trust-building
     • Agents prove understanding through proverbs
     • Oracle verifies without exposing data
-    • On-chain proof creates VRC
+    • Onchain proof creates VRC
     • Trust accumulates through verified interactions
 
 

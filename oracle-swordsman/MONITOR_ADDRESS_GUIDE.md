@@ -53,7 +53,7 @@ With auto-import:
    - Parses STS format inscriptions
    - Decodes hex-encoded proverbs
    - Creates submission records in the database
-   - Creates verification records (auto-verified for on-chain inscriptions)
+   - Creates verification records (auto-verified for onchain inscriptions)
    - Updates submission status to 'verified'
 
 ## Output

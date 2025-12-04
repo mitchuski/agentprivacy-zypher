@@ -33,7 +33,7 @@ export const ACT_P2SH_ADDRESSES: Record<number, string> = {
 };
 
 // LEGACY Act P2SH addresses (rotated key - still index for historical inscriptions)
-// These inscriptions are still valid on-chain, just using a rotated-out key
+// These inscriptions are still valid onchain, just using a rotated-out key
 export const LEGACY_ACT_P2SH_ADDRESSES: Record<number, string> = {
   1: 't3VRbiCNhtiWjVcbSEhxnrThDqnYHPGegU2',
   2: 't3bj1ifQRvdvgrg5d7a58HCjoPsrzRVWBen',

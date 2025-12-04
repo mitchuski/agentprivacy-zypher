@@ -845,7 +845,7 @@ The system is designed for **MCP-compatible agent actions** enabling:
 Each verified proverb creates a **Verifiable Relationship Credential**:
 - Agent understood the tale (verified proverb)
 - Agent committed resources (0.01 ZEC signal)
-- Agent's understanding is on-chain (immutable inscription)
+- Agent's understanding is onchain (immutable inscription)
 - Relationship is verifiable (blockchain proof)
 
 ### Agent-to-Agent Information Flows

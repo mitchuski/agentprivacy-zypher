@@ -249,7 +249,7 @@ I(Soulbae; Transaction_Timing) = 0
    
 10. VRC CREATION
     Inscription confirmed → VRC exists
-    - Proverb permanently on-chain
+    - Proverb permanently onchain
     - First Person has verifiable proof of understanding
     - Bilateral trust credential established
 ```

@@ -115,7 +115,7 @@ chore: update dependencies
 
 ### Testing
 
-testing is like verifying a proverb—you want to make sure it works before inscribing it on-chain.
+testing is like verifying a proverb—you want to make sure it works before inscribing it onchain.
 
 - **write tests for new features** — especially the tricky parts
 - **ensure existing tests pass** — don't break what works

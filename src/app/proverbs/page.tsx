@@ -9,7 +9,7 @@ import TAddressDisplay from '@/components/TAddressDisplay';
 import { getTaleIdFromAct } from '@/lib/zcash-memo';
 import { getInscriptions } from '@/lib/oracle-api';
 
-// On-chain inscription from the inscription indexer
+// Onchain inscription from the inscription indexer
 interface Inscription {
   txid: string;
   blockHeight: number;
@@ -71,10 +71,10 @@ export default function ProverbsPage() {
   const [inscriptions, setInscriptions] = useState<Inscription[]>([]);
   const [inscriptionsLoading, setInscriptionsLoading] = useState(true);
   const [inscriptionCountByAct, setInscriptionCountByAct] = useState<Record<number, number>>({});
-  const [expandedActs, setExpandedActs] = useState<Set<number>>(new Set([1, 2, 3, 4, 5, 6])); // Expand acts with inscriptions by default
+  const [expandedActs, setExpandedActs] = useState<Set<number>>(new Set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])); // Expand all acts by default
   const [donationAct, setDonationAct] = useState<number | null>(null);
 
-  // Fetch on-chain inscriptions
+  // Fetch onchain inscriptions
   useEffect(() => {
     const loadInscriptions = async () => {
       try {
@@ -302,14 +302,14 @@ export default function ProverbsPage() {
             </div>
           </motion.div>
 
-          {/* On-Chain Inscriptions */}
+          {/* Onchain Inscriptions */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
             className="mb-8"
           >
-            <h2 className="text-2xl font-bold text-text mb-4">On-Chain Proof Inscriptions</h2>
+            <h2 className="text-2xl font-bold text-text mb-4">Onchain Proof Inscriptions</h2>
 
             {inscriptionsLoading ? (
               <div className="text-center py-12 text-text-muted">

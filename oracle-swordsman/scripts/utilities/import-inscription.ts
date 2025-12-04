@@ -314,9 +314,9 @@ async function importInscription(txid: string, targetAddress: string) {
     const verification = await db.createVerification({
       submission_id: submission.id,
       ai_provider: 'inscription',
-      quality_score: 1.0, // Perfect score for on-chain inscriptions
+      quality_score: 1.0, // Perfect score for onchain inscriptions
       matched_act: actId,
-      reasoning: `On-chain inscription verified. Act ${stsData.actNumber} inscription with emoji: ${stsData.emojiInscription}`,
+      reasoning: `Onchain inscription verified. Act ${stsData.actNumber} inscription with emoji: ${stsData.emojiInscription}`,
     });
 
     console.log('✅ Verification created:');

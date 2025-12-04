@@ -14,7 +14,7 @@ When you inscribe a proverb, you are:
 
 1. **Learning an open-source framework** — The Spellbook is a public, IPFS-hosted document describing privacy concepts across 42 "Acts"
 2. **Forming shared understanding** — By crafting a proverb that resonates with an Act's theme, you demonstrate you've internalized its meaning
-3. **Committing a signal of comprehension** — Your proverb is verified by private AI inference, scored, and permanently inscribed on-chain
+3. **Committing a signal of comprehension** — Your proverb is verified by private AI inference, scored, and permanently inscribed onchain
 4. **Dislocating identity from proof** — The shielded memo separates *who you are* from *what you understand*
 5. **Creating selective disclosure capability** — You retain the ability to prove authorship later, forming the first bilateral edge in a trust graph
 
@@ -241,7 +241,7 @@ If approved, your proverb becomes permanent:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                   ON-CHAIN INSCRIPTION                           │
+│                   ONCHAIN INSCRIPTION                           │
 │                                                                  │
 │   Format: STM-rpp[v01]|ACT:<N>|E:<emoji>|<proverb>|             │
 │           MS:<score>|H:<hash>|REF:<incoming_txid>               │
@@ -353,7 +353,7 @@ Each 0.01 ZEC submission is divided according to φ (phi):
 │   ┌─────────────────────────────────────────────────────────┐   │
 │   │  61.8% → Inscription (Public Path)                      │   │
 │   │  ════════════════════════════════                       │   │
-│   │  • Funds the on-chain inscription                       │   │
+│   │  • Funds the onchain inscription                       │   │
 │   │  • Fully transparent transaction chain                  │   │
 │   │  • Anyone can audit: submission → P2SH → inscription    │   │
 │   │  • Protects open-source governance (Spellbook)          │   │
@@ -416,7 +416,7 @@ The STM-rpp protocol enables multiple relationship configurations. See `docs/UND
 
 | Relationship Type | Your Identity | Your Comprehension | Their Identity | Their Comprehension |
 |-------------------|---------------|-------------------|----------------|---------------------|
-| **Anonymous Inscription** | Hidden | Public (on-chain) | N/A | N/A |
+| **Anonymous Inscription** | Hidden | Public (onchain) | N/A | N/A |
 | **Unilateral Disclosure** | Revealed to them | Public | Hidden from you | Unknown |
 | **Bilateral Recognition** | Mutual reveal | Both public | Mutual reveal | Both public |
 | **Threshold Disclosure** | Hidden until N parties | Public | Hidden until N | Public |
@@ -463,7 +463,7 @@ DELEGATED VERIFICATION
 │        ↓                                                        │
 │   5. SPLIT        Golden ratio: 61.8% public, 38.2% private     │
 │        ↓                                                        │
-│   6. INSCRIBE     On-chain permanent record (public proof)      │
+│   6. INSCRIBE     Onchain permanent record (public proof)      │
 │        ↓                                                        │
 │   7. CHRONICLE    AI documents the process (transparency)       │
 │        ↓                                                        │
@@ -538,7 +538,7 @@ The Oracle Swordsman protocol is implemented on Zcash, but the **VRC primitive i
 │   Public Layer: Ethereum L1 or L2                               │
 │   ├── Smart contract inscription registry                       │
 │   ├── ERC-721 or soulbound token representation                │
-│   ├── On-chain governance integration                           │
+│   ├── Onchain governance integration                           │
 │   └── Composable with existing DeFi/DAO infrastructure         │
 │                                                                  │
 │   Bridge: Aztec → Ethereum L1 proofs                            │
@@ -567,7 +567,7 @@ The Oracle Swordsman protocol is implemented on Zcash, but the **VRC primitive i
 │   ├── o1js (TypeScript) for ZK circuit development             │
 │   ├── Recursive SNARKs for proof composition                   │
 │   ├── zkApps: smart contracts with built-in privacy            │
-│   └── Off-chain execution, on-chain verification               │
+│   └── Off-chain execution, onchain verification               │
 │                                                                  │
 │   VRC Implementation Pattern:                                   │
 │   ├── Private state in zkApp for submission content            │

@@ -20,8 +20,8 @@ The **Proof of Proverb Revelation Protocol** is the Zypherpunk Hack 2025 impleme
 | Milestone | Status | Evidence |
 |-----------|--------|----------|
 | Oracle Flow | ✅ Production | Signal detection → verification → inscription |
-| Acts 1-12 | ✅ On Mainnet | Permanent on-chain inscriptions |
-| Golden Split | ✅ Verified | 61.8%/38.2% confirmed on-chain |
+| Acts 1-12 | ✅ On Mainnet | Permanent onchain inscriptions |
+| Golden Split | ✅ Verified | 61.8%/38.2% confirmed onchain |
 | AI Verification | ✅ Operational | NEAR Cloud AI integration |
 | End-to-End | ✅ Complete | Full First Person → Inscription flow |
 
@@ -97,14 +97,14 @@ This implementation aligns with the 0xagentprivacy living documentation:
 
 ---
 
-## 📊 On-Chain Inscription Status
+## 📊 Onchain Inscription Status
 
 ### Acts Inscribed on Mainnet
 
 | Act | Status | TXID |
 |-----|--------|------|
 | Act 1 | ✅ Confirmed | `6c31029aafdbf74b3c861da88f1c9d6091e8d2e15e8636a9ecd0899a13fca9f0` |
-| Act 2-7 | ✅ Confirmed | On-chain |
+| Act 2-7 | ✅ Confirmed | Onchain |
 | Act 8 | ✅ Confirmed | `38649fafa2c12007f50b19a0517255c6abe8889b414e1e16b422fd5394aa739d` |
 | Act 9 | ✅ Confirmed | `adde24ee95348e29d88a6e1c2ccf76e8fe0f2f83c18c371416ec1c4ff58ebe06` |
 | Act 10 | ✅ Confirmed | `7a4ff784935bcaf4ee9d711931ad367ec7e8ed647ce756392800a9729a80c100` |
@@ -145,13 +145,13 @@ I(Soulbae; Wallet_Address) = 0
 I(Soulbae; Transaction_Timing) = 0
 ```
 
-### 3. On-Chain Inscriptions ✅
+### 3. Onchain Inscriptions ✅
 
 Verified proverbs are permanently inscribed using OP_RETURN outputs. **Acts 1-7 confirmed on Zcash mainnet.**
 
 ### 4. Golden Split Economics ✅ [Tokenomics v2.0]
 
-61.8% creates visible proof (inscription), 38.2% returns to shielded pool. **Verified on-chain.**
+61.8% creates visible proof (inscription), 38.2% returns to shielded pool. **Verified onchain.**
 
 ```
 Signal (0.01 ZEC)
@@ -177,7 +177,7 @@ Viewing keys see, spending keys act, neither alone can corrupt.
 | Landing Page (`/`) | ✅ Production | Modern UI |
 | Story Reader (`/story`) | ✅ Production | 12 acts + 30 tales |
 | Mage Chat (`/mage`) | ✅ Production | NEAR Cloud AI |
-| Proverbs Gallery (`/proverbs`) | ✅ Production | On-chain VRC viewer |
+| Proverbs Gallery (`/proverbs`) | ✅ Production | Onchain VRC viewer |
 | Signal Flow | ✅ Production | 5-step guided process |
 
 ### Backend Components
@@ -251,7 +251,7 @@ The system is designed for **MCP-compatible agent actions** enabling:
 Each verified proverb creates a **Verifiable Relationship Credential**:
 - Agent understood the tale (verified proverb)
 - Agent committed resources (0.01 ZEC signal)
-- Agent's understanding is on-chain (immutable inscription)
+- Agent's understanding is onchain (immutable inscription)
 - Relationship is verifiable (blockchain proof)
 
 ---
@@ -306,7 +306,7 @@ Each verified proverb creates a **Verifiable Relationship Credential**:
 ### Innovation
 
 1. **Proof-of-Understanding**: Novel signal mechanism
-2. **Golden Split**: Mathematical balance verified on-chain
+2. **Golden Split**: Mathematical balance verified onchain
 3. **Dual-Agent Architecture**: First implementation of 0xagentprivacy
 4. **VRC Formation**: Bilateral trust through demonstrated comprehension
 

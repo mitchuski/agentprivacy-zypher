@@ -16,7 +16,7 @@
 
 The **Proof of Proverb Revelation Protocol** is the first concrete implementation of the [0xagentprivacy](https://agentprivacy.ai) dual-agent architecture. It demonstrates privacy-preserving AI verification through a novel proof-of-understanding protocol on Zcash.
 
-**What It Does**: First Persons (humans) prove comprehension of privacy concepts by forming proverbs. These proverbs are verified by AI (without seeing transaction data), then inscribed on-chain as immutable proof of understanding—creating Verifiable Relationship Credentials (VRCs) through demonstrated comprehension rather than surveillance.
+**What It Does**: First Persons (humans) prove comprehension of privacy concepts by forming proverbs. These proverbs are verified by AI (without seeing transaction data), then inscribed onchain as immutable proof of understanding—creating Verifiable Relationship Credentials (VRCs) through demonstrated comprehension rather than surveillance.
 
 **Why It Matters**: This is infrastructure for the relationship economy where trust comes from understanding, not data extraction.
 
@@ -43,7 +43,7 @@ The **Proof of Proverb Revelation Protocol** is the first concrete implementatio
 This hackathon implementation proves the architecture works:
 - ✅ Cryptographic separation of viewing/spending keys
 - ✅ Privacy-preserving AI verification
-- ✅ On-chain proof inscriptions
+- ✅ Onchain proof inscriptions
 - ✅ VRC formation through RPP compression
 
 ---
@@ -110,7 +110,7 @@ First Person reads Spellbook
 │  3. AI verifies semantic match          │
 │     (AI NEVER sees amounts/addresses)   │
 │  4. Calculates golden split (61.8/38.2) │
-│  5. Inscribes proof on-chain            │
+│  5. Inscribes proof onchain            │
 └─────────────────────────────────────────┘
          │
          ▼
@@ -124,7 +124,7 @@ First Person reads Spellbook
 | **Signal** | 0.01 ZEC ongoing proof of comprehension | Proverb submission fee |
 | **Ceremony** | 1 ZEC one-time agent pair genesis | Not implemented (future) |
 | **First Person** | Human whose sovereignty is protected | The person forming proverbs |
-| **VRC** | Verifiable Relationship Credential | On-chain inscription proof |
+| **VRC** | Verifiable Relationship Credential | Onchain inscription proof |
 | **RPP** | Relationship Proverb Protocol | Compression through proverbs |
 
 ---
@@ -213,7 +213,7 @@ agentprivacy_zypher/
 │   │   ├── memo-parser.ts        # Proverb extraction
 │   │   ├── nearcloudai-verifier.ts # AI verification
 │   │   ├── golden-split.ts       # 61.8/38.2 calculator
-│   │   ├── inscription-builder.ts # On-chain inscriptions
+│   │   ├── inscription-builder.ts # Onchain inscriptions
 │   │   └── signing-service.ts    # Key separation
 │   └── inscribe-act*.js          # Inscription scripts
 │
@@ -259,7 +259,7 @@ Every signal (proverb submission) follows the golden ratio split:
 ```
 Signal (0.01 ZEC)
 ├── 61.8% → Transparent Pool
-│   └── On-chain inscription (public proof)
+│   └── Onchain inscription (public proof)
 │
 └── 38.2% → Shielded Pool
     └── Protocol operations (private)

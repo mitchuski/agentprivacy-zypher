@@ -110,7 +110,7 @@ The Spellbook's 12 Acts became 12 P2SH addresses. Reading an Act and forming a p
 
 ### "The Hash Binding Discovery"
 
-How do you cryptographically bind the oracle's proverb AND the First Person's proverb without revealing the oracle's response on-chain?
+How do you cryptographically bind the oracle's proverb AND the First Person's proverb without revealing the oracle's response onchain?
 
 Solution: `H = SHA256(oracle_proverb + submitted_proverb).slice(0,16)`
 

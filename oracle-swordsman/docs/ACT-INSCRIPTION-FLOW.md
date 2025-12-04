@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the complete proverb inscription flow, from shielded submission detection through on-chain inscription. This flow has been successfully used for Acts 1-7.
+This document describes the complete proverb inscription flow, from shielded submission detection through onchain inscription. This flow has been successfully used for Acts 1-7.
 
 ## Completed Inscriptions
 
@@ -53,7 +53,7 @@ Proverb inscriptions use a 3-transaction P2SH flow to embed inscription data in 
 │  Destination: Treasury t1 (t1aMR9MKx3xLso9c4Uq4MYX3cRvnDTp42av) │
 │  Amount: Previous - fee                                         │
 │  scriptSig: Contains inscription envelope with proverb data     │
-│  Purpose: Embed inscription on-chain in scriptSig               │
+│  Purpose: Embed inscription onchain in scriptSig               │
 └─────────────────────────────────────────────────────────────────┘
 ```
 

@@ -124,7 +124,7 @@ export async function getStats(): Promise<any> {
 }
 
 /**
- * Get on-chain inscriptions from the inscription indexer
+ * Get onchain inscriptions from the inscription indexer
  */
 export async function getInscriptions(): Promise<{
   inscriptions: any[];

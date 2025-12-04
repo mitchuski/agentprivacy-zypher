@@ -170,7 +170,7 @@ Flow simulation:
    • 0.00618 ZEC → t1... (transparent + inscription)
    • 0.00382 ZEC → zs1... (shielded fee)
    ↓
-10. Inscription recorded on-chain: STS|v01|ACT:5|...
+10. Inscription recorded onchain: STS|v01|ACT:5|...
 
 ======================================
 Test Summary
@@ -306,7 +306,7 @@ docker-compose logs -f signer
 [Signer] ✓ Golden split executed successfully
 ```
 
-### 5.2 Verify On-Chain
+### 5.2 Verify Onchain
 
 **Check Transparent Transaction (Sanctuary):**
 ```bash
@@ -462,7 +462,7 @@ curl -X POST http://localhost:8232 \
 - [ ] Test flow passes all checks
 - [ ] Test transaction verified
 - [ ] Golden split verified (61.8% / 38.2%)
-- [ ] Inscription appears on-chain
+- [ ] Inscription appears onchain
 - [ ] Semantic matching working
 - [ ] Error handling tested
 

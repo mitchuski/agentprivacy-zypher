@@ -425,7 +425,7 @@ open https://agentprivacy.ai/story/act1-blades-awakening.html
 - [ ] Tale page loads correctly
 - [ ] Copy button works
 - [ ] Memo format is correct
-- [ ] Transaction confirms on-chain
+- [ ] Transaction confirms onchain
 - [ ] VRC callback sends automatically
 - [ ] Recipient receives response
 

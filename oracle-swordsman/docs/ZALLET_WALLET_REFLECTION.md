@@ -228,7 +228,7 @@ z_inscriptionflow({
 The treasury t1 address accumulating inscription change is actually a **feature, not just a limitation**. It serves as a **transparent commitment pool** - publicly verifiable proof that:
 
 1. **Inscriptions occurred** - Every inscription leaves a trace in t1
-2. **Funds are accounted** - Golden split distributions are auditable on-chain
+2. **Funds are accounted** - Golden split distributions are auditable onchain
 3. **Protocol revenue is real** - Anyone can verify the treasury balance
 
 This transparency is valuable for protocol legitimacy. However, the **re-shielding capability** becomes critical for the next phase:

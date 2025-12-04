@@ -147,7 +147,7 @@ Frontend (Next.js)          Backend (Oracle Swordsman)
 |----------|---------|
 | `GET /health` | Service health check |
 | `POST /verify` | Verify a proverb |
-| `GET /inscriptions` | List on-chain inscriptions |
+| `GET /inscriptions` | List onchain inscriptions |
 
 ---
 

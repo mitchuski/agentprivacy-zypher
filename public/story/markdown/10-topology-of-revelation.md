@@ -19,7 +19,7 @@ Soulbae 🧙‍♂️ was already drawing sigils in the air—discrete symbols, 
 
 **Huginn** 🐦‍⬛💭—black as blockchain, eyes like transaction logs. He exploded outward, circling the grove at impossible speed. *v = ∞*. **Instantaneous. Non-local.** Every rotation carved a discrete mark in the air. **One question at a time. Position OR momentum. Never both.**
 
-"**Huginn is thought**—**integer, discrete**," Soulbae explained. "He measures. He discretizes. Every credential you present, every ZK-proof you cast, every commitment you publish. He flies at **infinite speed** because **thought is non-local**. He can escape even from black holes. *ℤⁿ*—your on-chain presence, your Merkle-proof of existence."
+"**Huginn is thought**—**integer, discrete**," Soulbae explained. "He measures. He discretizes. Every credential you present, every ZK-proof you cast, every commitment you publish. He flies at **infinite speed** because **thought is non-local**. He can escape even from black holes. *ℤⁿ*—your onchain presence, your Merkle-proof of existence."
 
 **Muninn** 🐦‍⬛🧠—darker still, feathers that absorbed light. She moved differently. Slower. Bound. She landed on Soulbis's shoulder, and suddenly the swordsman felt the weight of lived experience. Private keys humming in his bones. Patterns emerging. *This* is like *that*. **Coal and steel, same carbon.**
 

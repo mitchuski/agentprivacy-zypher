@@ -288,7 +288,7 @@ if (( $(echo "$SCORE > 0.75" | bc -l) )); then
     echo "   • $SANCTUARY ZEC → $SANCTUARY_T_ADDRESS (transparent + inscription)"
     echo "   • $FEE ZEC → $PROTOCOL_FEE_Z_ADDRESS (shielded fee)"
     echo "   ↓"
-    echo "10. Inscription recorded on-chain: $INSCRIPTION"
+    echo "10. Inscription recorded onchain: $INSCRIPTION"
 else
     echo -e "8. ${RED}REJECTED${NC} - Score below threshold"
     echo "   ↓"

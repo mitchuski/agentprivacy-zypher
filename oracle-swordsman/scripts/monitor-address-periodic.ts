@@ -351,13 +351,13 @@ async function importInscription(txid: string, targetAddress: string, inscriptio
       memo_text: memoText,
     });
     
-    // Create verification (auto-verify on-chain inscriptions)
+    // Create verification (auto-verify onchain inscriptions)
     await db.createVerification({
       submission_id: submission.id,
       ai_provider: 'onchain',
       quality_score: 1.0,
       matched_act: actId,
-      reasoning: `On-chain inscription verified. Act ${stsData.actNumber} inscription with emoji: ${stsData.emojiInscription}`,
+      reasoning: `Onchain inscription verified. Act ${stsData.actNumber} inscription with emoji: ${stsData.emojiInscription}`,
     });
     
     // Update submission status

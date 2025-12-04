@@ -216,7 +216,7 @@ The spellbook grows through bilateral ceremony, not extraction:
 
 1️⃣ You read → derive understanding  
 2️⃣ We work together → compress to proverb  
-3️⃣ You inscribe → commitment on-chain  
+3️⃣ You inscribe → commitment onchain  
 4️⃣ privacymage receives → crafts response  
 5️⃣ Response returns → relationship formed
 

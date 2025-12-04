@@ -2,7 +2,7 @@
 
 **Complete guide to deploying your own Proof of Proverb Revelation Protocol implementation.**
 
-This guide walks you through deploying a fully functional spellbook—an interactive storytelling platform with privacy-preserving AI verification, on-chain proverb inscriptions, and the dual-agent architecture (Swordsman & Mage).
+This guide walks you through deploying a fully functional spellbook—an interactive storytelling platform with privacy-preserving AI verification, onchain proverb inscriptions, and the dual-agent architecture (Swordsman & Mage).
 
 ---
 
@@ -27,15 +27,15 @@ A **spellbook** is an interactive storytelling platform implementing the **Proof
 - **Readers** explore your stories (Acts I-XII or however many you want)
 - **Swordsman Panel** appears on each act for private signal submissions
 - **Mage Interface** (`/mage`) provides optional AI-assisted proverb generation
-- **Proverbs Gallery** (`/proverbs`) displays all on-chain proof inscriptions
+- **Proverbs Gallery** (`/proverbs`) displays all onchain proof inscriptions
 - **Zcash Integration** enables private transactions with encrypted memos
-- **Oracle Backend** verifies proverbs and creates on-chain inscriptions
+- **Oracle Backend** verifies proverbs and creates onchain inscriptions
 - **Dual-Agent Architecture** separates viewing (Swordsman) from action (Mage)
 
 **Key Features:**
 - ✅ Static frontend (deploy anywhere)
 - ✅ Privacy-preserving by design
-- ✅ On-chain proof inscriptions
+- ✅ Onchain proof inscriptions
 - ✅ AI verification without exposing data
 - ✅ Fully customizable
 - ✅ Mobile-responsive
@@ -433,7 +433,7 @@ SPELLBOOK_URL=https://gateway.pinata.cloud/ipfs/YOUR_CID
 
 ## ⚙️ Step 4: Configure Oracle Backend (Optional)
 
-The oracle backend verifies proverbs and creates on-chain inscriptions. This is optional—you can deploy just the frontend.
+The oracle backend verifies proverbs and creates onchain inscriptions. This is optional—you can deploy just the frontend.
 
 ### 4.1 Prerequisites
 
@@ -465,7 +465,7 @@ npm start
 The oracle will:
 - Monitor Zcash shielded transactions
 - Verify proverbs against spellbook
-- Create on-chain inscriptions
+- Create onchain inscriptions
 - Update the `/proverbs` page automatically
 
 **✅ Checkpoint:** Oracle backend is running (optional)!
@@ -658,7 +658,7 @@ npm run build
 2. User forms proverb (using own model/context or Mage assistance)
 3. User submits via "Learn" button (copies to their model) or Swordsman Panel (submits signal)
 4. Oracle verifies proverb against spellbook
-5. If verified, oracle creates on-chain inscription
+5. If verified, oracle creates onchain inscription
 6. Inscription appears on `/proverbs` page
 
 **MCP/A2A Trust Flows:**

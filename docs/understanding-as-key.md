@@ -682,7 +682,7 @@ Ceremony Phase (1 ZEC):
 ├── Formal bilateral commitment
 ├── VRC established with chosen visibility
 ├── Key material derived for future coordination
-└── Relationship anchored on-chain
+└── Relationship anchored onchain
 
 Evolution Phase:
 ├── May re-ceremony at different visibility

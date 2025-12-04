@@ -26,7 +26,7 @@
 | Frontend | ✅ Complete | Next.js app (port 5000) |
 | Backend API | ✅ Complete | Express/TypeScript (port 3001) |
 | Database | ✅ Complete | PostgreSQL schema |
-| Proverbs Gallery | ✅ Complete | On-chain inscription viewer |
+| Proverbs Gallery | ✅ Complete | Onchain inscription viewer |
 | MCP Agent Actions | ✅ Complete | Human-in-the-loop mechanism |
 | A2A Trust Flows | ✅ Complete | Agent-to-agent information flows |
 | End-to-end flow | ✅ Complete | Production-ready |
@@ -63,7 +63,7 @@
 - `app/page.tsx` - Landing page
 - `app/story/page.tsx` - Story reader (12 acts + 30 zero tales)
 - `app/mage/page.tsx` - Soulbae chat (Mage agent)
-- `app/proverbs/page.tsx` - Proverbs gallery (on-chain inscriptions)
+- `app/proverbs/page.tsx` - Proverbs gallery (onchain inscriptions)
 - `components/SwordsmanPanel.tsx` - Donation UI
 - `components/DonationFlow.tsx` - 5-step donation flow
 

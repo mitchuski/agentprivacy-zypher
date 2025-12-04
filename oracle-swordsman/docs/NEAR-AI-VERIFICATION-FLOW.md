@@ -230,7 +230,7 @@ STM-rpp[v01]|ACT:7|E:[emoji]|[proverb]|MS:0.92|H:[hash]|REF:[shielded_txid]
    → node spend-act7-to-simple-p2sh.js  # Act P2SH → Simple P2SH
    → node inscribe-act7.js         # Simple P2SH → Inscription TX
 
-5. Inscription on-chain with MS score
+5. Inscription onchain with MS score
 ```
 
 ## Troubleshooting
