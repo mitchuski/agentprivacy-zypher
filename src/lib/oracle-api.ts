@@ -3,7 +3,7 @@
  * Connects frontend to Oracle backend for submission tracking
  */
 
-const ORACLE_API_URL = process.env.NEXT_PUBLIC_ORACLE_API_URL || 'http://localhost:3001';
+const ORACLE_API_URL = process.env.NEXT_PUBLIC_ORACLE_API_URL || 'http://localhost:3003';
 
 export interface SubmissionStatus {
   status: 'pending' | 'verified' | 'inscribed' | 'rejected' | 'failed';
