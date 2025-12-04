@@ -22,7 +22,7 @@
 | Zcash integration | ✅ Complete | Zebra + Zallet architecture |
 | Inscription scripts (Acts 1-12) | ✅ Complete | ZIP-244 sighash, P2SH, Ordinals-style |
 | AI verification | ✅ Complete | NEAR Cloud AI integrated |
-| Spellbook (IPFS) | ✅ Complete | v4.0.0-canonical |
+| Spellbook (IPFS) | ✅ Complete | v4.2.0-canonical |
 | Frontend | ✅ Complete | Next.js app (port 5000) |
 | Backend API | ✅ Complete | Express/TypeScript (port 3001) |
 | Database | ✅ Complete | PostgreSQL schema |
@@ -102,7 +102,7 @@ npm run dev
 ## Spellbook
 
 - **Version**: 4.0.0-canonical
-- **IPFS CID**: `bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`
+- **IPFS CID**: `bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq`
 - **Acts**: 12 (with proverbs for each)
 
 ---

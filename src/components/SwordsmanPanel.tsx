@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { formatZcashMemo, validateProverb } from '@/lib/zcash-memo';
+import UAddressDisplay from '@/components/UAddressDisplay';
 
 interface SwordsmanPanelProps {
   taleId: string;
@@ -141,7 +142,7 @@ export default function SwordsmanPanel({ taleId, actNumber, spellbook, actName, 
                 </div>
 
                 {/* Progressive System - Learning First */}
-                <div className="mb-6 space-y-3">
+                <div className="mb-6">
                   {/* Learning the Spell - Active & Focused */}
                   <div className="w-full text-left p-4 rounded-lg border-2 border-secondary bg-secondary/10">
                     <div className="flex items-center justify-between mb-2">
@@ -163,34 +164,6 @@ export default function SwordsmanPanel({ taleId, actNumber, spellbook, actName, 
                         <strong className="text-text">Experiment:</strong> Create your proverb, signal your understanding, and see how compression reveals meaning.
                       </p>
                     </div>
-                  </div>
-
-                  {/* Protecting the Spell - Locked */}
-                  <div className="w-full text-left p-4 rounded-lg border-2 border-surface/30 bg-surface/10 opacity-60 relative">
-                    <div className="absolute inset-0 bg-black/5 rounded-lg flex items-center justify-center">
-                      <div className="bg-surface/90 px-3 py-1 rounded border border-surface/50 shadow-lg">
-                        <span className="text-xs font-semibold text-text-muted">🔒 Locked</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <span>⚔️</span>
-                        <h3 className="font-semibold text-text-muted">Protecting the Spell</h3>
-                        <span className="text-xs bg-surface/30 text-text-muted px-2 py-0.5 rounded">Unlocks Later</span>
-                      </div>
-                      <span className="text-text-muted text-lg">🔒</span>
-                    </div>
-                    <div className="text-2xl font-bold text-text-muted mb-1">1 ZEC</div>
-                    <div className="text-sm text-text-muted mb-2">Guardians per act</div>
-                    <div className="text-xs text-text-muted mb-2">Proverb stored privately • Public stake proof</div>
-                    <div className="text-xs text-text-muted/60 border-t border-surface/20 pt-2 mt-2">
-                      <strong>Private:</strong> Proverb in spellbook • <strong>Public:</strong> 1 ZEC stake proof
-                    </div>
-                  <div className="mt-3 pt-3 border-t border-surface/20">
-                    <p className="text-xs text-text-muted italic">
-                      Available in future versions. Focus on learning and signaling your understanding first.
-                    </p>
-                  </div>
                   </div>
                 </div>
 
@@ -270,10 +243,13 @@ export default function SwordsmanPanel({ taleId, actNumber, spellbook, actName, 
                     )}
                   </button>
                   <p className="text-xs text-text-muted mt-2">
-                    Paste the memo into your Zashi wallet, set amount to <strong className="text-secondary">0.01 ZEC</strong>, and send to the Oracle address.
+                    Paste the memo into your Zashi wallet, set amount to <strong className="text-secondary">0.01 ZEC</strong>, and send to:
                   </p>
-                  <div className="mt-2 p-2 bg-secondary/10 border border-secondary/30 rounded text-xs text-text-muted">
-                    <strong className="text-text">Your signal:</strong> This is your proof of understanding—a compressed proverb that demonstrates you've engaged with the spellbook content. The Oracle will verify and inscribe it on the blockchain.
+                  <div className="mt-2">
+                    <UAddressDisplay
+                      label="zec"
+                      variant="small-button"
+                    />
                   </div>
                 </div>
 
@@ -285,18 +261,39 @@ export default function SwordsmanPanel({ taleId, actNumber, spellbook, actName, 
                     <li>Create a new z→z (shielded) transaction</li>
                     <li>Paste the memo into the memo field</li>
                     <li>Set amount to <strong className="text-secondary">0.01 ZEC</strong></li>
-                    <li>Send to spellbook address</li>
-                    <li>Your signal is recorded on-chain</li>
+                    <li>Send to the address above</li>
                   </ol>
                   <div className="mt-3 pt-3 border-t border-secondary/20">
                     <p className="text-xs text-text-muted">
-                      <strong className="text-text">v1 Focus:</strong> Experiment with creating proverbs and signaling your understanding. 
+                      <strong className="text-text">v1 Focus:</strong> Experiment with creating proverbs and signaling your understanding.
                       Protection features will be available in future versions.
                     </p>
                   </div>
                   <p className="text-xs text-text-muted mt-3 italic">
                     Your wallet is your Swordsman. You control the transaction. The Mage signals your learning. ⚔️🧙‍♂️
                   </p>
+                </div>
+
+                {/* Protecting the Spell - Locked */}
+                <div className="mt-6 w-full text-left p-4 rounded-lg border-2 border-surface/30 bg-surface/10 opacity-60 relative">
+                  <div className="absolute inset-0 bg-black/5 rounded-lg flex items-center justify-center">
+                    <div className="bg-surface/90 px-3 py-1 rounded border border-surface/50 shadow-lg">
+                      <span className="text-xs font-semibold text-text-muted">🔒 Locked</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <span>🛡️</span>
+                      <h3 className="font-semibold text-text-muted">Protecting the Spell</h3>
+                      <span className="text-xs bg-surface/30 text-text-muted px-2 py-0.5 rounded">Coming Soon</span>
+                    </div>
+                  </div>
+                  <div className="text-xl font-bold text-text-muted mb-1">1 ZEC</div>
+                  <div className="text-sm text-text-muted mb-2">Swordsmen stake 1 ZEC to protect the spellbook</div>
+                  <div className="text-xs text-text-muted mb-2">Via Zashi wallet • Guardians store proverb privately</div>
+                  <div className="text-xs text-text-muted/60 border-t border-surface/20 pt-2 mt-2">
+                    <strong>Private:</strong> Proverb in spellbook • <strong>Public:</strong> 1 ZEC stake proof
+                  </div>
                 </div>
 
                 {/* Act/Spell Matching Info */}

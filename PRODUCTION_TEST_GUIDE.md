@@ -71,7 +71,7 @@ NEAR_MODEL=openai/gpt-oss-120b
 
 # IPFS Configuration
 IPFS_GATEWAY=https://red-acute-chinchilla-216.mypinata.cloud
-SPELLBOOK_CID=bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4
+SPELLBOOK_CID=bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq
 
 # Service Ports
 ORACLE_PORT=3000
@@ -484,7 +484,7 @@ curl -X POST http://localhost:8232 \
   -d '{"jsonrpc":"1.0","id":"test","method":"getblockcount","params":[]}'
 
 # 2. Test IPFS spellbook
-curl -s "https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4" | jq '.version'
+curl -s "https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq" | jq '.version'
 
 # 3. Test Oracle health
 curl http://localhost:3000/health

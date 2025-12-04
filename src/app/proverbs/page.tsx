@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import SwordsmanPanel from '@/components/SwordsmanPanel';
+import UAddressDisplay from '@/components/UAddressDisplay';
+import TAddressDisplay from '@/components/TAddressDisplay';
 import { getTaleIdFromAct } from '@/lib/zcash-memo';
 import { getInscriptions } from '@/lib/oracle-api';
 
@@ -172,6 +174,19 @@ export default function ProverbsPage() {
             <p className="text-text-muted">
               A <strong className="text-text">public proverb proof</strong> is a published inscription that serves as a commitment to understanding. A verifiable demonstration of deep engagement with each tale. While proverb proofs can be used locally in peer-to-peer private exchanges, the public proof makes your engagement visible and verifiable on the blockchain, creating a permanent record that contributes to the collective wisdom of the community.
             </p>
+          </motion.div>
+
+          {/* Address Display Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.05 }}
+            className="mb-8"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <UAddressDisplay variant="proverb-button" />
+              <TAddressDisplay variant="proverb-button" label="inscription address" />
+            </div>
           </motion.div>
 
           {/* VRC System Info */}

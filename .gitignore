@@ -92,9 +92,18 @@ oracle-swordsman/verify-act.js
 # Inscription scripts with private keys
 oracle-swordsman/inscribe-act*.js
 oracle-swordsman/spend-act*.js
+oracle-swordsman/deshield-act*.js
+
+# WIF private key files
+*.wif
+wif.txt
+**/wif.txt
 # Files with hardcoded secrets - DO NOT TRACK
 oracle-swordsman/scripts/archive/
 oracle-swordsman/scripts/deployment/setup-with-keys.ts
 oracle-swordsman/scripts/key-generation/generate-addresses-proper.ts
 oracle-swordsman/scripts/key-generation/SPELLBOOK_ADDRESS_GUIDE.md
 oracle-swordsman/tests/integration/test-secretsigner.ts
+
+# Backup files
+*.bak

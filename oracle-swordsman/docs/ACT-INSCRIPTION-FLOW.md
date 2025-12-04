@@ -49,8 +49,8 @@ Proverb inscriptions use a 3-transaction P2SH flow to embed inscription data in 
 │  STEP 3: INSCRIPTION TX                                         │
 │  Simple P2SH → Main T1 Address                                  │
 │                                                                 │
-│  Source: Simple P2SH (t3ZAiVsfdL85w2sAEsTYAdzSCQDvqF66mq7)      │
-│  Destination: Main t1 (t1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJY2Q)     │
+│  Source: Simple P2SH (see docs/security for address)            │
+│  Destination: Treasury t1 (t1aMR9MKx3xLso9c4Uq4MYX3cRvnDTp42av) │
 │  Amount: Previous - fee                                         │
 │  scriptSig: Contains inscription envelope with proverb data     │
 │  Purpose: Embed inscription on-chain in scriptSig               │
@@ -93,7 +93,7 @@ Proverb inscriptions use a 3-transaction P2SH flow to embed inscription data in 
 
 **Script**: `inscribe-act7.js`
 - **From**: `t3ZAiVsfdL85w2sAEsTYAdzSCQDvqF66mq7` (Simple P2SH)
-- **To**: `t1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJY2Q` (Main inscription address)
+- **To**: `t1aMR9MKx3xLso9c4Uq4MYX3cRvnDTp42av` (Treasury t1 address)
 - **Amount**: 0.00578034 ZEC (previous - 0.003 inscription fee)
 - **TXID**: `93ca15f64ea3b067921286df86dd02efdea94ba54b1c35e270fcbe6b2931c864`
 - **Block Height**: 3153400
@@ -134,8 +134,13 @@ STM-rpp[v01]|ACT:7|E:1️⃣🤖 → 🪞→👤 2️⃣🤖 → 🪞→✨ + �
 | 11 | `t3cTVUehSQom21SojguNPgVhRfzeUhkGc6M` | OP_11 OP_DROP ... |
 | 12 | `t3dVXHBYp2EAj9ZhkmwKMrwdSiRDD1suC51` | OP_12 OP_DROP ... |
 
-**Simple Inscription P2SH**: `t3ZAiVsfdL85w2sAEsTYAdzSCQDvqF66mq7`
-**Main T1 Output Address**: `t1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJY2Q`
+**Note**: The table above shows LEGACY P2SH addresses used for Acts 1-7.
+For Acts 8+, use the new P2SH addresses - see `act-p2sh-addresses.txt`
+
+**Treasury T1 Address**: `t1aMR9MKx3xLso9c4Uq4MYX3cRvnDTp42av` (current)
+**Legacy T1 Addresses**:
+- `t1J6DrkJKovnYfvQoYBWCEAakScdJ8bHBCJ` (rotated 2025-12-02)
+- `t1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJY2Q` (rotated earlier, canary bounty)
 
 ---
 
@@ -167,7 +172,7 @@ node scan-inscriptions.js
 ```
 
 This script:
-1. Uses Zebra's `getaddresstxids` RPC to find all transactions to `t1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJY2Q`
+1. Uses Zebra's `getaddresstxids` RPC to find all transactions to treasury t1 (scans both current and legacy)
 2. Scans each transaction's scriptSig for inscription envelopes
 3. Parses `STM-rpp` or `STS|` format inscription content
 4. Saves new inscriptions to PostgreSQL `proverb_inscriptions` table

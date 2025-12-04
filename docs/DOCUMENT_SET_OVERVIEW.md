@@ -243,7 +243,7 @@ The implementation proves the architecture works in production while the living 
 
 ### Implementation
 - **GitHub**: https://github.com/mitchuski/agentprivacy-zypher
-- **Spellbook IPFS**: `bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`
+- **Spellbook IPFS**: `bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq`
 
 ### Community
 - **Contact**: mage@agentprivacy.ai

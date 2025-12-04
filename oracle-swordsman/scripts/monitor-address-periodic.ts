@@ -14,7 +14,7 @@ import logger from '../src/logger';
 import { autoDecodeProverb } from '../src/hex-decoder';
 
 const CHECK_INTERVAL_MS = 10 * 60 * 1000; // 10 minutes
-const TARGET_ADDRESS = process.argv[2] || 't1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJY2Q';
+const TARGET_ADDRESS = process.argv[2] || 't1aMR9MKx3xLso9c4Uq4MYX3cRvnDTp42av';
 const AUTO_IMPORT = process.argv.includes('--auto-import');
 
 interface ProcessedTx {

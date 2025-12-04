@@ -3,7 +3,7 @@
 **Generated**: December 2025  
 **Project**: 0xagentprivacy — Privacy-preserving AI agents on Zcash  
 **Event**: Zypherpunk Hack 2025  
-**Status**: ✅ **PRODUCTION — Acts 1-7 Live on Mainnet**
+**Status**: ✅ **PRODUCTION — Acts 1-12 Live on Mainnet**
 
 ---
 
@@ -13,14 +13,14 @@ The **Proof of Proverb Revelation Protocol** is the Zypherpunk Hack 2025 impleme
 
 **What We Built**: The first concrete expression of the dual-agent architecture—proving that cryptographic separation of viewing and spending authority enables new forms of privacy-preserving AI agent interactions.
 
-**Current Status**: ✅ **Production-Verified** — Complete oracle flow operational, Acts 1-7 inscribed on Zcash mainnet.
+**Current Status**: ✅ **Production-Verified** — Complete oracle flow operational, Acts 1-12 inscribed on Zcash mainnet.
 
 ### Key Achievements
 
 | Milestone | Status | Evidence |
 |-----------|--------|----------|
 | Oracle Flow | ✅ Production | Signal detection → verification → inscription |
-| Acts 1-7 | ✅ On Mainnet | Permanent on-chain inscriptions |
+| Acts 1-12 | ✅ On Mainnet | Permanent on-chain inscriptions |
 | Golden Split | ✅ Verified | 61.8%/38.2% confirmed on-chain |
 | AI Verification | ✅ Operational | NEAR Cloud AI integration |
 | End-to-End | ✅ Complete | Full First Person → Inscription flow |
@@ -101,16 +101,15 @@ This implementation aligns with the 0xagentprivacy living documentation:
 
 ### Acts Inscribed on Mainnet
 
-| Act | Title | Status | TXID |
-|-----|-------|--------|------|
-| Act 1 | The Blade's Awakening | ✅ Confirmed | `6c31029aafdbf74b3c861da88f1c9d6091e8d2e15e8636a9ecd0899a13fca9f0` |
-| Act 2 | The Mage's Projection | ✅ Inscribed | On-chain |
-| Act 3 | The Dragon's Awakening | ✅ Inscribed | On-chain |
-| Act 4 | The Gap Between | ✅ Inscribed | On-chain |
-| Act 5 | The Golden Split | ✅ Inscribed | On-chain |
-| Act 6 | The Chronicle | ✅ Inscribed | On-chain |
-| Act 7 | The Web of Trust | ✅ Inscribed | On-chain |
-| Act 8-12 | Remaining Acts | 📋 Ready | P2SH funded |
+| Act | Status | TXID |
+|-----|--------|------|
+| Act 1 | ✅ Confirmed | `6c31029aafdbf74b3c861da88f1c9d6091e8d2e15e8636a9ecd0899a13fca9f0` |
+| Act 2-7 | ✅ Confirmed | On-chain |
+| Act 8 | ✅ Confirmed | `38649fafa2c12007f50b19a0517255c6abe8889b414e1e16b422fd5394aa739d` |
+| Act 9 | ✅ Confirmed | `adde24ee95348e29d88a6e1c2ccf76e8fe0f2f83c18c371416ec1c4ff58ebe06` |
+| Act 10 | ✅ Confirmed | `7a4ff784935bcaf4ee9d711931ad367ec7e8ed647ce756392800a9729a80c100` |
+| Act 11 | ✅ Confirmed | `32a601ed83d2214c776a70b5e1068e892224c4500a20d1ed450d3d72c5bd3c60` |
+| Act 12 | ✅ Confirmed | `293cf3245ac8c58dd85f3a28b94f87f397d81e26f3ed157864bcb7357c3d566e` |
 
 ### Inscription Format
 
@@ -283,7 +282,7 @@ Each verified proverb creates a **Verifiable Relationship Credential**:
 
 ### Immediate
 
-1. **Complete Acts 8-12** — P2SH addresses funded, ready for inscription
+1. **All Acts 1-12 inscribed on mainnet
 2. **Documentation Polish** — Final cleanup for submission
 3. **Demo Video** — Record walkthrough
 
@@ -299,7 +298,7 @@ Each verified proverb creates a **Verifiable Relationship Credential**:
 
 ### Technical Excellence
 
-1. **Production System**: Acts 1-7 inscribed on Zcash mainnet
+1. **Production System**: Acts 1-12 inscribed on Zcash mainnet
 2. **Cryptographic Privacy**: Dual-agent separation verified
 3. **AI Integration**: Privacy-preserving verification operational
 4. **Blockchain Innovation**: Novel inscription protocol working
@@ -324,7 +323,7 @@ Each verified proverb creates a **Verifiable Relationship Credential**:
 ### Spellbook
 
 - **Version**: 4.0.1-canonical
-- **IPFS CID**: `bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`
+- **IPFS CID**: `bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq`
 
 ---
 

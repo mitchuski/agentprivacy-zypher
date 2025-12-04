@@ -15,7 +15,8 @@ require('dotenv').config();
 
 // Configuration
 const ZEBRA_RPC = 'http://127.0.0.1:8233';
-const MAIN_T1_ADDRESS = 't1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJY2Q';
+const MAIN_T1_ADDRESS = 't1aMR9MKx3xLso9c4Uq4MYX3cRvnDTp42av';  // New treasury (2025-12-02)
+const LEGACY_T1_ADDRESS = 't1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJY2Q'; // Legacy (rotated)
 const DATABASE_URL = process.env.DATABASE_URL;
 
 // Act titles from spellbook
@@ -34,8 +35,24 @@ const ACT_TITLES = {
   12: 'The Forgetting / Proverbiogenesis',
 };
 
-// Act P2SH addresses for source identification
+// PRIMARY Act P2SH addresses for NEW inscriptions
 const ACT_P2SH_ADDRESSES = {
+  1: 't3gLXGanUTif8WLpX7EZXtR3kX5f1ZoWuUT',
+  2: 't3UpuXZq8CrX2EubNYVDKo4nWRXbyZ5wVUV',
+  3: 't3PPLb9EbeqSyzQwQgKwF9ugQNeFBxHtfeX',
+  4: 't3hiQfbJ5K45qmm4H1Q6N6CZD3AoppyS63g',
+  5: 't3fepr2dZh1xPEtZLf575kBBGNQa1U4AhuC',
+  6: 't3UrTbeMjjUUbccNKCSEn9qfBRB3jJVF7A6',
+  7: 't3cnddicBRoJDHPqU2NbHdArz7Cd9xEZ9Hs',
+  8: 't3V4tmaxC48diu8qvQT8kPP2Kcr4btXEoDD',
+  9: 't3cY6cRjiba4k3vu2vnKEGBBZWwA21zn6tg',
+  10: 't3MYZJnESAw7tqwcECB611NLEZA6N51YPLj',
+  11: 't3eEy9gLy4o5Y62zBu2QEherULxfajFTz5R',
+  12: 't3aQzhfwgvocsrHt9fskS7htBc5brkWFVBm',
+};
+
+// LEGACY Act P2SH addresses (rotated key - still scan for historical)
+const LEGACY_ACT_P2SH_ADDRESSES = {
   1: 't3VRbiCNhtiWjVcbSEhxnrThDqnYHPGegU2',
   2: 't3bj1ifQRvdvgrg5d7a58HCjoPsrzRVWBen',
   3: 't3dfk8Wnz9NCx2W3hLXixopwUHv8XFgoN6D',
@@ -305,10 +322,17 @@ async function main() {
     )
   `);
 
-  // Get all transactions to the main address
+  // Get all transactions to both main and legacy addresses
   console.log('\nFetching transactions via getaddresstxids...');
-  const txids = await zebraRpc('getaddresstxids', [{ addresses: [MAIN_T1_ADDRESS] }]);
-  console.log(`Found ${txids.length} transactions to main address\n`);
+  const mainTxids = await zebraRpc('getaddresstxids', [{ addresses: [MAIN_T1_ADDRESS] }]);
+  console.log(`Found ${mainTxids.length} transactions to new treasury`);
+
+  const legacyTxids = await zebraRpc('getaddresstxids', [{ addresses: [LEGACY_T1_ADDRESS] }]);
+  console.log(`Found ${legacyTxids.length} transactions to legacy treasury`);
+
+  // Combine and dedupe
+  const txids = [...new Set([...mainTxids, ...legacyTxids])];
+  console.log(`Total unique transactions: ${txids.length}\n`);
 
   // Check which are already in the database
   const existingResult = await pool.query('SELECT txid FROM proverb_inscriptions');

@@ -50,7 +50,7 @@ NEAR_SWORDSMAN_API_KEY=your_near_cloud_ai_key
 
 # IPFS
 PINATA_JWT=your_pinata_jwt_token
-SPELLBOOK_CID=bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4
+SPELLBOOK_CID=bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq
 
 # Economic Parameters [Tokenomics v2.0]
 SIGNAL_COST=0.01         # ZEC per signal

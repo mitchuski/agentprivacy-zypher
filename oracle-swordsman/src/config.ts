@@ -25,8 +25,8 @@ export const config = {
   ipfs: {
     jwt: process.env.PINATA_JWT!,
     gateway: process.env.PINATA_GATEWAY || 'https://red-acute-chinchilla-216.mypinata.cloud',
-    spellbookCid: process.env.SPELLBOOK_CID || 'bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4',
-    spellbookUrl: process.env.SPELLBOOK_URL || 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4',
+    spellbookCid: process.env.SPELLBOOK_CID || 'bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq',
+    spellbookUrl: process.env.SPELLBOOK_URL || 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq',
   },
 
   // Zebra (full node - blockchain data only, NO wallet functionality)

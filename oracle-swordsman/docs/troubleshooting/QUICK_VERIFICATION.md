@@ -41,7 +41,7 @@ Expected: All three tests pass (attestation, chat, signature)
 
 ### ✅ Config → IPFS Client
 - `config.ipfs.spellbookUrl` → `ipfsClient.spellbookUrl`
-- Default URL: `https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`
+- Default URL: `https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq`
 
 ### ✅ IPFS Client → Verifier
 - `ipfsClient.fetchSpellbook()` → `nearVerifier.verify(proverb, spellbook)`

@@ -12,14 +12,14 @@ Shielded Pool → Act-specific P2SH → Simple P2SH → Inscription TX
 
 | Address | Type | Purpose |
 |---------|------|---------|
-| `t3ZAiVsfdL85w2sAEsTYAdzSCQDvqF66mq7` | Simple P2SH | Inscription source (OP_DROP pattern) |
-| `t1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJY2Q` | t1 | Change/recirculation address |
+| `LEGACY - see docs/security` | Simple P2SH | Inscription source (OP_DROP pattern) |
+| `t1J6DrkJKovnYfvQoYBWCEAakScdJ8bHBCJ | Treasury t1 | Change/recirculation address |
 | See `act-p2sh-addresses.txt` | Act P2SH | Act-specific funding addresses |
 
 ## Private Key
 
-**WIF:** `KzoH5Lehi3AM4TagFAto1V3Pj18hsMR4oNDMf5oDzskJeTi2xty1`
-**Public Key:** `03845d673f785ea0f19d6d8507f0ff409b88b3aadf0aa7a784e89572e19b12f7d0`
+**WIF:** `ROTATED - See docs/security/KEY_ROTATION_PROCESS.md`
+**Public Key:** `03a92c73b25ec06cdb7d70aaaef178a1ede2969f11169f332b56a5bfed47c66223`
 
 ## Inscription Format (STM-rpp)
 
@@ -46,9 +46,9 @@ z_sendmany "<source_UA>" '[{"address":"<act_N_p2sh>","amount":0.0055}]' 1 null "
 ```
 
 Act P2SH addresses (from `act-p2sh-addresses.txt`):
-- Act 1: `t3VRbiCNhtiWjVcbSEhxnrThDqnYHPGegU2`
-- Act 2: `t3bj1ifQRvdvgrg5d7a58HCjoPsrzRVWBen`
-- Act 3: `t3dfk8Wnz9NCx2W3hLXixopwUHv8XFgoN6D`
+- Act 1: `t3gLXGanUTif8WLpX7EZXtR3kX5f1ZoWuUT` (NEW)
+- Act 2: `t3UpuXZq8CrX2EubNYVDKo4nWRXbyZ5wVUV` (NEW)
+- Act 3: `t3PPLb9EbeqSyzQwQgKwF9ugQNeFBxHtfeX` (NEW)
 - etc.
 
 ### Step 2: Spend to Simple P2SH
@@ -71,7 +71,7 @@ const ACT_REDEEM_SCRIPT = '<act_N_redeem_script>';  // From act-p2sh-addresses.t
 - Act 1: `51752103845d673f...ac` (OP_1 OP_DROP)
 - Act 2: `52752103845d673f...ac` (OP_2 OP_DROP)
 - Act 3: `53752103845d673f...ac` (OP_3 OP_DROP)
-- Pattern: `<0x50+N>752103845d673f785ea0f19d6d8507f0ff409b88b3aadf0aa7a784e89572e19b12f7d0ac`
+- Pattern: `<0x50+N>752103a92c73b25ec06cdb7d70aaaef178a1ede2969f11169f332b56a5bfed47c66223ac`
 
 ### Step 3: Inscribe from Simple P2SH
 

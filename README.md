@@ -327,8 +327,8 @@ This implementation aligns with the 0xagentprivacy living documentation:
 
 ### Spellbook
 
-- **Version**: 4.2.0-canonical
-- **IPFS CID**: `bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`
+- **Version**: 4.0.0-canonical
+- **IPFS CID**: `bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq`
 - **Content**: 12 Acts + 30 Tales
 
 ### Collaborators
@@ -372,3 +372,10 @@ CC BY-SA 4.0
 ---
 
 **Privacy is Value. Take back the 7th Capital.**
+
+---
+
+## Security Documentation
+
+- [Inscription Key Architecture](oracle-swordsman/docs/security/INSCRIPTION_KEY_ARCHITECTURE.md) - Zero-leakage key isolation design
+- [Key Rotation Process](oracle-swordsman/docs/security/KEY_ROTATION_PROCESS.md) - How to safely rotate inscription keys

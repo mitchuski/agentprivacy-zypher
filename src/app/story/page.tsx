@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import SwordsmanPanel from '@/components/SwordsmanPanel';
+import UAddressDisplay from '@/components/UAddressDisplay';
 import { getTaleIdFromAct } from '@/lib/zcash-memo';
 
 // Spell mappings for story spellbook - must match inscriptions
@@ -728,6 +729,7 @@ export default function StoryPage() {
                     {isLoading ? (
                       <p className="text-text-muted">Loading...</p>
                     ) : markdownContent ? (
+                      <>
                       <ReactMarkdown 
                         remarkPlugins={[remarkGfm]}
                         rehypePlugins={[rehypeRaw]}
@@ -753,6 +755,7 @@ export default function StoryPage() {
                       >
                         {markdownContent}
                       </ReactMarkdown>
+                      </>
                     ) : (
                       <p className="text-text-muted text-lg">
                         Content will be available soon...
@@ -764,6 +767,14 @@ export default function StoryPage() {
               </motion.div>
             </AnimatePresence>
             
+            {/* ZEC Send Proverbs Button - Bottom Left */}
+            <div className="absolute bottom-6 sm:bottom-8 left-2 sm:left-4 z-10">
+              <UAddressDisplay
+                label="zec"
+                variant="small-button"
+              />
+            </div>
+
             {/* Previous, Copy and Next Buttons */}
             <div className="absolute bottom-6 sm:bottom-8 right-2 sm:right-4 flex items-center gap-2 sm:gap-3 justify-end flex-wrap-reverse" style={{ maxWidth: 'calc(100% - 0.5rem)' }}>
               {hasPrevious && (

@@ -46,3 +46,16 @@ temp/
 # Build artifacts
 .next/
 out/
+INSCRIPTION_WORKFLOW.md
+
+# Scripts with hardcoded keys (NEVER COMMIT)
+generate-acts-*.js
+sweep-*.js
+patch*.js
+
+# Scripts with hardcoded API keys (NEVER COMMIT)
+create-nillion-attestation.js
+verify-act-deepseek.js
+verify-act-gpt.js
+ZALLET_RPC_REFERENCE.md
+docs/INSCRIPTION_FLOW_GUIDE.md

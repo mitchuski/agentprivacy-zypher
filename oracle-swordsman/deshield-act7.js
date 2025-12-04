@@ -25,7 +25,7 @@ const DESHIELD_AMOUNT = 0.00618034;
 // Act 7 P2SH address components
 // Redeem script: OP_7 OP_DROP <pubkey> OP_CHECKSIG
 // OP_7 = 0x57, OP_DROP = 0x75, <pubkey 33 bytes>, OP_CHECKSIG = 0xac
-const PUBKEY = '03845d673f785ea0f19d6d8507f0ff409b88b3aadf0aa7a784e89572e19b12f7d0';
+const PUBKEY = '03a92c73b25ec06cdb7d70aaaef178a1ede2969f11169f332b56a5bfed47c66223';
 
 // Build Act 7 redeem script
 function buildAct7RedeemScript() {

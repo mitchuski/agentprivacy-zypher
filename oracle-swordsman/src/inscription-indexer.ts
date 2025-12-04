@@ -14,8 +14,27 @@ import logger from './logger';
 import { config } from './config';
 import { hexToText } from './hex-decoder';
 
-// Act P2SH addresses for inscription detection (all 12 acts)
+// PRIMARY Act P2SH addresses for NEW inscriptions (all 12 acts)
+// Generated: 2024-12-02 - Isolated TEE key ceremony
+// Public Key: 03a92c73b25ec06cdb7d70aaaef178a1ede2969f11169f332b56a5bfed47c66223
 export const ACT_P2SH_ADDRESSES: Record<number, string> = {
+  1: 't3gLXGanUTif8WLpX7EZXtR3kX5f1ZoWuUT',
+  2: 't3UpuXZq8CrX2EubNYVDKo4nWRXbyZ5wVUV',
+  3: 't3PPLb9EbeqSyzQwQgKwF9ugQNeFBxHtfeX',
+  4: 't3hiQfbJ5K45qmm4H1Q6N6CZD3AoppyS63g',
+  5: 't3fepr2dZh1xPEtZLf575kBBGNQa1U4AhuC',
+  6: 't3UrTbeMjjUUbccNKCSEn9qfBRB3jJVF7A6',
+  7: 't3cnddicBRoJDHPqU2NbHdArz7Cd9xEZ9Hs',
+  8: 't3V4tmaxC48diu8qvQT8kPP2Kcr4btXEoDD',
+  9: 't3cY6cRjiba4k3vu2vnKEGBBZWwA21zn6tg',
+  10: 't3MYZJnESAw7tqwcECB611NLEZA6N51YPLj',
+  11: 't3eEy9gLy4o5Y62zBu2QEherULxfajFTz5R',
+  12: 't3aQzhfwgvocsrHt9fskS7htBc5brkWFVBm',
+};
+
+// LEGACY Act P2SH addresses (rotated key - still index for historical inscriptions)
+// These inscriptions are still valid on-chain, just using a rotated-out key
+export const LEGACY_ACT_P2SH_ADDRESSES: Record<number, string> = {
   1: 't3VRbiCNhtiWjVcbSEhxnrThDqnYHPGegU2',
   2: 't3bj1ifQRvdvgrg5d7a58HCjoPsrzRVWBen',
   3: 't3dfk8Wnz9NCx2W3hLXixopwUHv8XFgoN6D',
@@ -30,13 +49,46 @@ export const ACT_P2SH_ADDRESSES: Record<number, string> = {
   12: 't3dVXHBYp2EAj9ZhkmwKMrwdSiRDD1suC51',
 };
 
-// Reverse lookup: address -> act number
-export const ADDRESS_TO_ACT: Record<string, number> = Object.fromEntries(
-  Object.entries(ACT_P2SH_ADDRESSES).map(([act, addr]) => [addr, parseInt(act)])
-);
+// Combined: all addresses we index (primary + legacy)
+export const ALL_ACT_P2SH_ADDRESSES: Record<number, string[]> = {
+  1: [ACT_P2SH_ADDRESSES[1], LEGACY_ACT_P2SH_ADDRESSES[1]],
+  2: [ACT_P2SH_ADDRESSES[2], LEGACY_ACT_P2SH_ADDRESSES[2]],
+  3: [ACT_P2SH_ADDRESSES[3], LEGACY_ACT_P2SH_ADDRESSES[3]],
+  4: [ACT_P2SH_ADDRESSES[4], LEGACY_ACT_P2SH_ADDRESSES[4]],
+  5: [ACT_P2SH_ADDRESSES[5], LEGACY_ACT_P2SH_ADDRESSES[5]],
+  6: [ACT_P2SH_ADDRESSES[6], LEGACY_ACT_P2SH_ADDRESSES[6]],
+  7: [ACT_P2SH_ADDRESSES[7], LEGACY_ACT_P2SH_ADDRESSES[7]],
+  8: [ACT_P2SH_ADDRESSES[8], LEGACY_ACT_P2SH_ADDRESSES[8]],
+  9: [ACT_P2SH_ADDRESSES[9], LEGACY_ACT_P2SH_ADDRESSES[9]],
+  10: [ACT_P2SH_ADDRESSES[10], LEGACY_ACT_P2SH_ADDRESSES[10]],
+  11: [ACT_P2SH_ADDRESSES[11], LEGACY_ACT_P2SH_ADDRESSES[11]],
+  12: [ACT_P2SH_ADDRESSES[12], LEGACY_ACT_P2SH_ADDRESSES[12]],
+};
 
-// Main t1 address that receives inscription outputs
-export const MAIN_T1_ADDRESS = 't1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJY2Q';
+// Reverse lookup: address -> act number (includes both primary and legacy)
+export const ADDRESS_TO_ACT: Record<string, number> = {
+  // Primary addresses
+  ...Object.fromEntries(
+    Object.entries(ACT_P2SH_ADDRESSES).map(([act, addr]) => [addr, parseInt(act)])
+  ),
+  // Legacy addresses
+  ...Object.fromEntries(
+    Object.entries(LEGACY_ACT_P2SH_ADDRESSES).map(([act, addr]) => [addr, parseInt(act)])
+  ),
+};
+
+// Check if address is legacy (rotated key)
+export const isLegacyAddress = (address: string): boolean => {
+  return Object.values(LEGACY_ACT_P2SH_ADDRESSES).includes(address);
+};
+
+// Main t1 address that receives inscription outputs (treasury)
+// Updated 2025-12-02 - Fresh Zallet wallet
+export const MAIN_T1_ADDRESS = 't1aMR9MKx3xLso9c4Uq4MYX3cRvnDTp42av';
+
+// Legacy t1 addresses (rotated out)
+export const LEGACY_T1_ADDRESS = 't1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJY2Q'; // Original - left 0.001337 ZEC as bounty
+export const LEGACY_T1_ADDRESS_2 = 't1J6DrkJKovnYfvQoYBWCEAakScdJ8bHBCJ'; // Rotated 2025-12-02
 
 // Act titles from spellbook
 export const ACT_TITLES: Record<number, string> = {
@@ -111,6 +163,9 @@ export function parseInscriptionContent(content: string): ParsedInscription | nu
       const versionMatch = parts[0].match(/STM-rpp\[([^\]]+)\]/);
       version = versionMatch ? versionMatch[1] : 'v01';
 
+      // Known prefixes that are NOT proverbs
+      const knownPrefixes = ['ACT:', 'E:', 'MS:', 'H:', 'REF:'];
+
       for (let i = 1; i < parts.length; i++) {
         const part = parts[i];
         if (part.startsWith('ACT:')) {
@@ -123,9 +178,10 @@ export function parseInscriptionContent(content: string): ParsedInscription | nu
           contentHash = part.slice(2);
         } else if (part.startsWith('REF:')) {
           refTxid = part.slice(4);
-        } else if (!part.includes(':') && part.length > 10) {
-          // This is likely the proverb text
-          proverb = part;
+        } else if (!knownPrefixes.some(prefix => part.startsWith(prefix)) && part.length > 5) {
+          // This is likely the proverb text (may contain colons like "φ = 1.618:")
+          // Append to proverb in case it was split by | in the middle
+          proverb = proverb ? proverb + '|' + part : part;
         }
       }
     } else if (content.startsWith('STS|')) {
@@ -481,33 +537,37 @@ export class InscriptionIndexer {
 
   /**
    * Scan all Act P2SH addresses for inscription transactions
+   * Scans both primary (new) and legacy (rotated) addresses
    */
   async scanAllAddresses(): Promise<number> {
     let count = 0;
 
-    for (const [actNum, address] of Object.entries(ACT_P2SH_ADDRESSES)) {
-      try {
-        const txids = await getAddressTransactions(address);
-        logger.info(`Found ${txids.length} transactions for Act ${actNum}`, { address });
+    for (const [actNum, addresses] of Object.entries(ALL_ACT_P2SH_ADDRESSES)) {
+      for (const address of addresses) {
+        const isLegacy = isLegacyAddress(address);
+        try {
+          const txids = await getAddressTransactions(address);
+          logger.info(`Found ${txids.length} transactions for Act ${actNum}${isLegacy ? ' (legacy)' : ''}`, { address });
 
-        for (const txid of txids) {
-          // Check if already indexed
-          const existing = await this.pool.query(
-            'SELECT txid FROM proverb_inscriptions WHERE txid = $1',
-            [txid]
-          );
+          for (const txid of txids) {
+            // Check if already indexed
+            const existing = await this.pool.query(
+              'SELECT txid FROM proverb_inscriptions WHERE txid = $1',
+              [txid]
+            );
 
-          if (existing.rows.length > 0) continue;
+            if (existing.rows.length > 0) continue;
 
-          // Scan transaction
-          const inscription = await scanTransactionForInscription(txid);
-          if (inscription) {
-            await this.saveInscription(inscription);
-            count++;
+            // Scan transaction
+            const inscription = await scanTransactionForInscription(txid);
+            if (inscription) {
+              await this.saveInscription(inscription);
+              count++;
+            }
           }
+        } catch (error) {
+          logger.warn(`Error scanning Act ${actNum} address${isLegacy ? ' (legacy)' : ''}`, { address, error });
         }
-      } catch (error) {
-        logger.warn(`Error scanning Act ${actNum} address`, { address, error });
       }
     }
 

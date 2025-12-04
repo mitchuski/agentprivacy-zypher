@@ -358,7 +358,7 @@ The spellbook must be uploaded to IPFS so the oracle backend can verify proverbs
 1. Go to [Pinata Pin Manager](https://app.pinata.cloud/pinmanager)
 2. Click "Upload"
 3. Select `spellbook/spellbook-acts.json`
-4. Copy the IPFS CID (e.g., `bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`)
+4. Copy the IPFS CID (e.g., `bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq`)
 5. Your spellbook will be available at:
    ```
    https://gateway.pinata.cloud/ipfs/YOUR_CID

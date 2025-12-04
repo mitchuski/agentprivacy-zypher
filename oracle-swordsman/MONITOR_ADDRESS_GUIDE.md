@@ -14,7 +14,7 @@ npx ts-node scripts/monitor-address-periodic.ts <address>
 
 Example:
 ```bash
-npx ts-node scripts/monitor-address-periodic.ts t1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJY2Q
+npx ts-node scripts/monitor-address-periodic.ts t1aMR9MKx3xLso9c4Uq4MYX3cRvnDTp42av
 ```
 
 ### With Auto-Import
@@ -27,7 +27,7 @@ npx ts-node scripts/monitor-address-periodic.ts <address> --auto-import
 
 Example:
 ```bash
-npx ts-node scripts/monitor-address-periodic.ts t1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJY2Q --auto-import
+npx ts-node scripts/monitor-address-periodic.ts t1aMR9MKx3xLso9c4Uq4MYX3cRvnDTp42av --auto-import
 ```
 
 ### Using PowerShell Script
@@ -35,12 +35,12 @@ npx ts-node scripts/monitor-address-periodic.ts t1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJ
 On Windows, you can use the PowerShell helper:
 
 ```powershell
-.\scripts\start-monitor.ps1 -Address "t1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJY2Q"
+.\scripts\start-monitor.ps1 -Address "t1aMR9MKx3xLso9c4Uq4MYX3cRvnDTp42av"
 ```
 
 With auto-import:
 ```powershell
-.\scripts\start-monitor.ps1 -Address "t1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJY2Q" -AutoImport
+.\scripts\start-monitor.ps1 -Address "t1aMR9MKx3xLso9c4Uq4MYX3cRvnDTp42av" -AutoImport
 ```
 
 ## How It Works
@@ -91,7 +91,7 @@ Will check for new transactions every 10 minutes.
 npm install -g pm2
 
 # Start monitor
-pm2 start "npx ts-node scripts/monitor-address-periodic.ts t1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJY2Q --auto-import" --name address-monitor
+pm2 start "npx ts-node scripts/monitor-address-periodic.ts t1aMR9MKx3xLso9c4Uq4MYX3cRvnDTp42av --auto-import" --name address-monitor
 
 # View logs
 pm2 logs address-monitor
@@ -116,7 +116,7 @@ After=network.target
 Type=simple
 User=your-user
 WorkingDirectory=/path/to/oracle-swordsman
-ExecStart=/usr/bin/npx ts-node scripts/monitor-address-periodic.ts t1Ko5s5CrSnAPxg3kq6JUwsz4paxzLBJY2Q --auto-import
+ExecStart=/usr/bin/npx ts-node scripts/monitor-address-periodic.ts t1aMR9MKx3xLso9c4Uq4MYX3cRvnDTp42av --auto-import
 Restart=always
 RestartSec=10
 

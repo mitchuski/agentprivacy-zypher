@@ -120,8 +120,8 @@ See `.env.example` for all required variables.
 - `NEAR_API_KEY` - Mage agent API key (frontend/website, required)
 - `NEAR_SWORDSMAN_API_KEY` - Swordsman agent API key (oracle verification, **MUST be separate from mage key**, required)
 - `NEAR_MODEL` - AI model (default: `openai/gpt-oss-120b`)
-- `SPELLBOOK_URL` - Direct IPFS URL to spellbook (default: `https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`)
-- `SPELLBOOK_CID` - IPFS content ID (default: `bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`)
+- `SPELLBOOK_URL` - Direct IPFS URL to spellbook (default: `https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq`)
+- `SPELLBOOK_CID` - IPFS content ID (default: `bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq`)
 - `PINATA_JWT` - IPFS access (optional, only needed for uploading)
 - `PINATA_GATEWAY` - IPFS gateway URL (default: `https://red-acute-chinchilla-216.mypinata.cloud`)
 - `DATABASE_URL` - PostgreSQL connection (required)
@@ -148,7 +148,7 @@ See `.env.example` for all required variables.
 - ⏳ Nillion TEE integration (optional, pending API key)
 - ⏳ Main Oracle loop (ready for testing)
 
-**Current Spellbook**: IPFS CID `bafkreiesrv2eolghj6mpbfpqwnff66fl5glevqmps3q6bzlhg5gtyf5jz4`
+**Current Spellbook**: IPFS CID `bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq`
 
 ## Documentation
 
@@ -161,3 +161,36 @@ See `.env.example` for all required variables.
 
 MIT
 
+
+## Key Architecture
+
+The oracle uses **isolated signing keys** to separate inscription operations from treasury funds:
+
+```
+Treasury (Mnemonic)  -->  Deshield  -->  P2SH (TEE Key)  -->  Inscription
+                                              |
+                                              v
+                                    Change --> Treasury t1
+```
+
+**Key security features:**
+- Inscription WIF is NOT derived from treasury mnemonic
+- TEE compromise cannot access treasury funds
+- All change returns to treasury t1 address
+- Key rotation is simple and doesn't affect treasury
+
+See: [docs/security/INSCRIPTION_KEY_ARCHITECTURE.md](docs/security/INSCRIPTION_KEY_ARCHITECTURE.md)
+
+### Current Addresses (2025-12-02)
+
+| Type | Address |
+|------|---------|
+| Treasury t1 | `t1aMR9MKx3xLso9c4Uq4MYX3cRvnDTp42av` |
+| Act 1 P2SH | `t3gLXGanUTif8WLpX7EZXtR3kX5f1ZoWuUT` |
+| Act 2 P2SH | `t3UpuXZq8CrX2EubNYVDKo4nWRXbyZ5wVUV` |
+| ... | (see inscription-indexer.ts for full list) |
+
+### Security Documentation
+
+- [Inscription Key Architecture](docs/security/INSCRIPTION_KEY_ARCHITECTURE.md)
+- [Key Rotation Process](docs/security/KEY_ROTATION_PROCESS.md)
